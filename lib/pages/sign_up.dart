@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:glassmorphism/glassmorphism.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
 class SignUp extends StatefulWidget {
@@ -65,22 +66,49 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
+        alignment: Alignment.center,
         children: [
           //  First part gradient background
           buildBackground(),
           //  Part 2
           buildBobbleWeight(context),
           //    Part III Gaussian
-          buildBlurWeight(),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              //    Steady on the top of the top
-              buildTopText(),
-              //    Part 5 Input Area
-              buildBottomColumn()
-            ],
-          )
+          // buildBlurWeight(),
+          GlassmorphicContainer(
+            width: MediaQuery.of(context).size.width - 60,
+            height: MediaQuery.of(context).size.height * 0.8,
+            borderRadius: 20,
+            linearGradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                const Color(0xFFffffff).withOpacity(0.1),
+                const Color(0xFFFFFFFF).withOpacity(0.05),
+              ],
+            ),
+            border: 1,
+            blur: 5,
+            borderGradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                const Color(0xFFffffff).withOpacity(0.5),
+                const Color((0xFFFFFFFF)).withOpacity(0.5),
+              ],
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 20),
+                  //    Steady on the top of the top
+                  buildTopText(),
+                  //    Part 5 Input Area
+                  buildBottomColumn()
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -121,19 +149,15 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
   }
 
   buildTopText() {
-    return Positioned(
-      left: MediaQuery.of(context).size.width / 2,
-      top: 30,
-      child: Container(
-        height: 150,
-        width: 150,
-        alignment: Alignment.center,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(200)),
-          image: DecorationImage(
-            image: AssetImage('assets/efficacy_logo.jpg'),
-            fit: BoxFit.cover,
-          ),
+    return Container(
+      height: 120,
+      width: 120,
+      alignment: Alignment.center,
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(200)),
+        image: DecorationImage(
+          image: AssetImage('assets/efficacy_logo.jpg'),
+          fit: BoxFit.cover,
         ),
       ),
     );
@@ -147,10 +171,10 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
         children: [
           // Custom text input box
           const SizedBox(
-            height: 60,
+            height: 30,
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(50.0, 0, 50.0, 0),
+            padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
             child: TextFieldWidget(
               obscureText: false,
               labelText: "Email",
@@ -161,31 +185,31 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
             height: 14,
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(50.0, 0, 50.0, 0),
+            padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
             child: TextFieldWidget(
               obscureText: false,
               labelText: "Name",
+              prefixIconData: Icons.person,
             ),
           ),
           const SizedBox(
             height: 14,
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(50.0, 0, 50.0, 0),
+          Container(
+            padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
             child: IntlPhoneField(
               decoration: const InputDecoration(
                 labelText: 'Phone Number',
                 border: OutlineInputBorder(
                   borderSide: BorderSide(),
                 ),
+                enabledBorder: InputBorder.none,
               ),
               onChanged: (phone) {},
               initialCountryCode: 'IN',
             ),
           ),
-          const SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 10),
           SizedBox(
             height: 42,
             width: 130,
@@ -256,29 +280,22 @@ class TextFieldWidget extends StatelessWidget {
 
 class CustomMyPainter extends CustomPainter {
   List<BobbleBean> list;
-
   Random random;
-
   final Paint _paint = Paint()..isAntiAlias = true;
-
   CustomMyPainter({required this.list, required this.random});
 
   @override
   void paint(Canvas canvas, Size size) {
     for (var element in list) {
       Offset newCenterOffset = calculateXY(element.speed, element.theta);
-
       double dx = newCenterOffset.dx + element.position.dx;
       double dy = newCenterOffset.dx + element.position.dy;
-
       if (dx < 0 || dx > size.width) {
         dx = random.nextDouble() * size.width;
       }
-
       if (dy < 0 || dy > size.height) {
         dy = random.nextDouble() * size.height;
       }
-
       element.position = Offset(dx, dy);
     }
 
