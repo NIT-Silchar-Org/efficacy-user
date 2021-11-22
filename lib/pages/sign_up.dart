@@ -203,7 +203,6 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                 border: OutlineInputBorder(
                   borderSide: BorderSide(),
                 ),
-                enabledBorder: InputBorder.none,
               ),
               onChanged: (phone) {},
               initialCountryCode: 'IN',
