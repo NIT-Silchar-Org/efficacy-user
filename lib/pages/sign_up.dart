@@ -72,10 +72,10 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
           //  Part 2
           buildBobbleWeight(context),
           //    Part III Gaussian
-          // buildBlurWeight(),
           GlassmorphicContainer(
+            alignment: Alignment.center,
             width: MediaQuery.of(context).size.width - 60,
-            height: MediaQuery.of(context).size.height * 0.8,
+            height: MediaQuery.of(context).size.height * 0.77,
             borderRadius: 20,
             linearGradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -138,15 +138,6 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
     );
   }
 
-  buildBlurWeight() {
-    return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 0.3, sigmaY: 0.3),
-      child: Container(
-        color: Colors.white.withOpacity(0.1),
-      ),
-    );
-  }
-
   buildTopText() {
     return Container(
       height: 120,
@@ -172,31 +163,48 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
           const SizedBox(
             height: 30,
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
-            child: TextFieldWidget(
-              obscureText: false,
-              labelText: "Email",
-              prefixIconData: Icons.email_outlined,
-            ),
-          ),
-          const SizedBox(
-            height: 14,
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
-            child: TextFieldWidget(
-              obscureText: false,
-              labelText: "Name",
-              prefixIconData: Icons.person,
-            ),
-          ),
-          const SizedBox(
-            height: 14,
-          ),
           Container(
             padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
-            child: PhoneWidget(),
+            child: TextFormField(
+              obscureText: false,
+              decoration: const InputDecoration(
+                contentPadding: EdgeInsets.all(12.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderSide: BorderSide(
+                    color: Color.fromRGBO(43, 158, 179, 0.19),
+                    width: 0.1,
+                  ),
+                ),
+                fillColor: Colors.transparent,
+                prefixIcon: Icon(Icons.email_outlined),
+                labelText: 'Email',
+              ),
+            ),
+          ),
+          const SizedBox(height: 14),
+          Container(
+            padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
+            child: TextFormField(
+              decoration: const InputDecoration(
+                contentPadding: EdgeInsets.all(12.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderSide: BorderSide(
+                    color: Color.fromRGBO(43, 158, 179, 0.19),
+                    width: 0.1,
+                  ),
+                ),
+                fillColor: Colors.transparent,
+                prefixIcon: Icon(Icons.person),
+                labelText: 'Name',
+              ),
+            ),
+          ),
+          const SizedBox(height: 14),
+          Container(
+            padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
+            child: const PhoneWidget(),
           ),
           const SizedBox(height: 10),
           SizedBox(
@@ -323,16 +331,15 @@ class BobbleBean {
   late double radius;
 }
 
-// Custom Phone Widget
-
 class PhoneWidget extends StatefulWidget {
+  const PhoneWidget({Key? key}) : super(key: key);
   @override
   _PhoneWidgetState createState() => _PhoneWidgetState();
 }
 
 class _PhoneWidgetState extends State<PhoneWidget> {
   String _selectedCountryCode = '+91';
-  List<String> _countryCodes = ['+91', '+23'];
+  final List<String> _countryCodes = ['+91', '+23'];
 
   @override
   Widget build(BuildContext context) {
@@ -340,7 +347,7 @@ class _PhoneWidgetState extends State<PhoneWidget> {
       decoration: const BoxDecoration(
         color: Colors.transparent,
         border: Border(
-          right: BorderSide(width: 0.5, color: Colors.grey),
+          right: BorderSide(width: 1, color: Colors.blueGrey),
         ),
       ),
       height: 45.0,
@@ -356,7 +363,7 @@ class _PhoneWidgetState extends State<PhoneWidget> {
                   value: value,
                   child: Text(
                     value,
-                    style: TextStyle(fontSize: 12.0),
+                    style: const TextStyle(fontSize: 12.0),
                   ));
             }).toList(),
             onChanged: (value) {
@@ -370,21 +377,22 @@ class _PhoneWidgetState extends State<PhoneWidget> {
     );
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.only(top: 10.0, bottom: 10.0, right: 3.0),
       color: Colors.transparent,
       child: TextFormField(
         validator: (value) {
           if (value!.isEmpty) {
-            return 'Please enter some text';
+            return 'phone number should not be empty';
+          } else {
+            return null;
           }
         },
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.all(12.0),
+          contentPadding: const EdgeInsets.all(10.0),
           border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(
-              color: Color(0xFFE0E0E0),
+              color: Color.fromRGBO(43, 158, 179, 0.19),
               width: 0.1,
             ),
           ),
