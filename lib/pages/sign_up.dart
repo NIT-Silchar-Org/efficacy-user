@@ -2,7 +2,6 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:glassmorphism/glassmorphism.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -197,16 +196,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
           ),
           Container(
             padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
-            child: IntlPhoneField(
-              decoration: const InputDecoration(
-                labelText: 'Phone Number',
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(),
-                ),
-              ),
-              onChanged: (phone) {},
-              initialCountryCode: 'IN',
-            ),
+            child: PhoneWidget(),
           ),
           const SizedBox(height: 10),
           SizedBox(
@@ -331,4 +321,78 @@ class BobbleBean {
 
   //  radius
   late double radius;
+}
+
+// Custom Phone Widget
+
+class PhoneWidget extends StatefulWidget {
+  @override
+  _PhoneWidgetState createState() => _PhoneWidgetState();
+}
+
+class _PhoneWidgetState extends State<PhoneWidget> {
+  String _selectedCountryCode = '+91';
+  List<String> _countryCodes = ['+91', '+23'];
+
+  @override
+  Widget build(BuildContext context) {
+    var countryDropDown = Container(
+      decoration: const BoxDecoration(
+        color: Colors.transparent,
+        border: Border(
+          right: BorderSide(width: 0.5, color: Colors.grey),
+        ),
+      ),
+      height: 45.0,
+      margin: const EdgeInsets.all(3.0),
+      //width: 300.0,
+      child: DropdownButtonHideUnderline(
+        child: ButtonTheme(
+          alignedDropdown: true,
+          child: DropdownButton(
+            value: _selectedCountryCode,
+            items: _countryCodes.map((String value) {
+              return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(
+                    value,
+                    style: TextStyle(fontSize: 12.0),
+                  ));
+            }).toList(),
+            onChanged: (value) {
+              setState(() {
+                _selectedCountryCode = value as String;
+              });
+            },
+          ),
+        ),
+      ),
+    );
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.only(top: 10.0, bottom: 10.0, right: 3.0),
+      color: Colors.transparent,
+      child: TextFormField(
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Please enter some text';
+          }
+        },
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.all(12.0),
+          border: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(
+              color: Color(0xFFE0E0E0),
+              width: 0.1,
+            ),
+          ),
+          fillColor: Colors.transparent,
+          prefixIcon: countryDropDown,
+          labelText: 'Phone Number',
+        ),
+      ),
+    );
+  }
 }
