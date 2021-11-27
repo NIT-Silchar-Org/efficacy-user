@@ -16,4 +16,5 @@ class AppColorLight {
   static Color buttontextcolor = const Color(0xff1976D2);
   static Color bubble = const Color.fromRGBO(129, 220, 237, 0.19);
   static Color error = Colors.red;
+  static Color glassBordercolor = const Color(0xffbde6ed);
 }

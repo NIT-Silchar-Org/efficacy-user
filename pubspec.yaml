@@ -32,6 +32,7 @@ dependencies:
     sdk: flutter
   glassmorphism: ^3.0.0
   intl_phone_field: ^2.1.0
+  flutter_icons: ^1.1.0
 
 dev_dependencies:
   flutter_lints: ^1.0.0
@@ -49,7 +50,11 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
+<<<<<<< HEAD
     - assets/
+=======
+     - assets/
+>>>>>>> 4e8d968aaa6f366ca05db8a681e686471a27d29a
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

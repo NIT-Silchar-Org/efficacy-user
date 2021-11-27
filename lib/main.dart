@@ -1,5 +1,6 @@
 import 'package:efficacy_user/pages/sign_up.dart';
 import 'package:flutter/material.dart';
+import 'package:efficacy_user/pages/google_sign_in.dart';
 
 void main() => runApp(const MyApp());
 
@@ -15,7 +16,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SignUp(),
+      home: signIn(),
     );
   }
 }
