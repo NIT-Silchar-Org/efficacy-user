@@ -4,18 +4,17 @@ import 'package:efficacy_user/pages/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:glassmorphism/glassmorphism.dart';
-class signIn extends StatefulWidget {
-  const signIn({Key? key}) : super(key: key);
+
+class SignIn extends StatefulWidget {
+  const SignIn({Key? key}) : super(key: key);
 
   @override
-  _signInState createState() => _signInState();
+  _SignInState createState() => _SignInState();
 }
 
-class _signInState extends State<signIn> with TickerProviderStateMixin {
+class _SignInState extends State<SignIn> with TickerProviderStateMixin {
   final List<BobbleBean> _list = [];
-  final Random _random = Random(DateTime
-      .now()
-      .microsecondsSinceEpoch);
+  final Random _random = Random(DateTime.now().microsecondsSinceEpoch);
 
   //  Motion speed control
   final double _maxSpeed = 1.3;
@@ -65,7 +64,6 @@ class _signInState extends State<signIn> with TickerProviderStateMixin {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,22 +86,19 @@ class _signInState extends State<signIn> with TickerProviderStateMixin {
               alignment: Alignment.bottomCenter,
               border: 2,
               linearGradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color(0xFFffffff).withOpacity(0.1),
-                    Color(0xFFFFFFFF).withOpacity(0.05),
-                  ],
-                  stops: [
-                    0.1,
-                    1,
-                  ]),
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  const Color(0xFFffffff).withOpacity(0.1),
+                  const Color(0xFFFFFFFF).withOpacity(0.05),
+                ],
+              ),
               borderGradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  Color(0xFFbde6ed).withOpacity(0.5),
-                  Color((0xFFbde6ed)).withOpacity(0.5),
+                  const Color(0xFFbde6ed).withOpacity(0.5),
+                  const Color((0xFFbde6ed)).withOpacity(0.5),
                 ],
               ),
               child: Column(
@@ -124,8 +119,8 @@ class _signInState extends State<signIn> with TickerProviderStateMixin {
                   const SizedBox(
                     height: 60,
                   ),
-                  SignInButton(),
-                  ],
+                  const SignInButton(),
+                ],
               ),
             ),
           )
@@ -133,8 +128,6 @@ class _signInState extends State<signIn> with TickerProviderStateMixin {
       ),
     );
   }
-
-
 
   //  First part gradient background
   buildBackground() {
@@ -152,6 +145,7 @@ class _signInState extends State<signIn> with TickerProviderStateMixin {
       ),
     );
   }
+
   buildTopText() {
     return Positioned(
       left: MediaQuery.of(context).size.width / 2,
@@ -174,9 +168,7 @@ class _signInState extends State<signIn> with TickerProviderStateMixin {
   buildBobbleWeight(BuildContext context) {
     //Drawboard
     return CustomPaint(
-      size: MediaQuery
-          .of(context)
-          .size,
+      size: MediaQuery.of(context).size,
       painter: CustomMyPainter(list: _list, random: _random),
     );
   }
@@ -190,9 +182,6 @@ class _signInState extends State<signIn> with TickerProviderStateMixin {
     );
   }
 }
-
-
-
 
 class CustomMyPainter extends CustomPainter {
   List<BobbleBean> list;
@@ -257,35 +246,35 @@ class BobbleBean {
   late double radius;
 }
 
-
 class SignInButton extends StatelessWidget {
-  @override
+  const SignInButton({Key? key}) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
         width: 312,
         decoration: BoxDecoration(
-          border: Border.all(color: AppColorLight.bordercolor),
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-            boxShadow: [
-              new CustomBoxShadow(
+            border: Border.all(color: AppColorLight.bordercolor),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            boxShadow: const [
+              CustomBoxShadow(
                   color: Colors.black,
-                  offset: new Offset(0,0),
+                  offset: Offset(0, 0),
                   blurRadius: 1.5,
-                  blurStyle: BlurStyle.outer
-              )
-            ]
-        ),
+                  blurStyle: BlurStyle.outer)
+            ]),
         child: TextButton(
-          onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUp()));
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const SignUp()));
           },
           child: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image(image: AssetImage('assets/google_logo.png'),
+              const Image(
+                image: AssetImage('assets/google_logo.png'),
                 width: 33,
                 height: 33,
               ),
@@ -296,19 +285,17 @@ class SignInButton extends StatelessWidget {
                   style: TextStyle(
                       color: AppColorLight.continueWithGoogleButton,
                       fontSize: 20,
-                      fontWeight: FontWeight.w400
-                  ),
+                      fontWeight: FontWeight.w400),
                 ),
               )
             ],
           ),
-
-
         ),
       ),
     );
   }
 }
+
 class CustomBoxShadow extends BoxShadow {
   final BlurStyle blurStyle;
 
@@ -323,10 +310,9 @@ class CustomBoxShadow extends BoxShadow {
   Paint toPaint() {
     final Paint result = Paint()
       ..color = color
-      ..maskFilter = MaskFilter.blur(this.blurStyle, blurSigma);
+      ..maskFilter = MaskFilter.blur(blurStyle, blurSigma);
     assert(() {
-      if (debugDisableShadows)
-        result.maskFilter = null;
+      if (debugDisableShadows) result.maskFilter = null;
       return true;
     }());
     return result;
