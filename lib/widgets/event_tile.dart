@@ -8,25 +8,30 @@ class EventTile extends StatelessWidget {
     Key? key,
     required this.cardBannerUrl,
     required this.gdscImageUrl,
+    required this.onPressed,
   }) : super(key: key);
 
   final String cardBannerUrl;
   final String gdscImageUrl;
+  final Function onPressed;
   //final EventCloud event;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shadowColor: AppColorLight.primary,
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      child: Padding(
-        padding: const EdgeInsets.all(10),
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Card(
+        shadowColor: AppColorLight.cardShadow,
+        elevation: 1,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Column(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.network(cardBannerUrl, fit: BoxFit.fitWidth),
+            GestureDetector(
+              onTap: () => onPressed(),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset(cardBannerUrl, fit: BoxFit.cover),
+              ),
             ),
             ExpandablePanel(
                 theme: const ExpandableThemeData(
@@ -38,7 +43,10 @@ class EventTile extends StatelessWidget {
                   contentPadding: const EdgeInsets.all(0),
                   leading: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: Image.network(gdscImageUrl, fit: BoxFit.cover),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 10, 0, 10),
+                      child: Image.network(gdscImageUrl, fit: BoxFit.cover),
+                    ),
                   ),
                   title: Text('Flutter Bootcamp',
                       style: Theme.of(context).textTheme.headline3),
@@ -79,7 +87,7 @@ class EventTile extends StatelessWidget {
                       ?.copyWith(fontSize: 13),
                 ),
                 builder: (_, collapsed, expanded) => Padding(
-                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                      padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
                       child: Expandable(
                         collapsed: collapsed,
                         expanded: expanded,

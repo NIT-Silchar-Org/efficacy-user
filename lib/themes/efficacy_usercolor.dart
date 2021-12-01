@@ -21,6 +21,8 @@ import 'package:flutter/material.dart';
 
 class AppColorLight {
   static Color primary = const Color(0xffADECFF);
+  static Color cardShadow = const Color(0xffD8F6FF).withOpacity(0.5);
+  static Color secondary = const Color(0xff00829B);
   static Color mainText = Colors.black;
   static Color subtitleText = const Color(0xff191C1D).withOpacity(0.6);
   static Color titleText = const Color(0xff191C1D);

@@ -211,7 +211,9 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
             height: 42,
             width: 130,
             child: OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/home_screen');
+              },
               child: const Text('FINISH'),
               style: ButtonStyle(
                 shape: MaterialStateProperty.all(
