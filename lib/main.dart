@@ -1,3 +1,6 @@
+// import 'package:efficacy_user/pages/homescreen.dart';
+// import 'package:efficacy_user/pages/sign_up.dart';
+import 'package:efficacy_user/themes/efficacy_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/pages/google_sign_in.dart';
 
@@ -13,9 +16,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: AppTheme.light,
       debugShowCheckedModeBanner: false,
-      home: SignIn(),
+      home: const SignIn(),
     );
   }
 }
