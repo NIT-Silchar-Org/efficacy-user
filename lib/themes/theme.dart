@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'efficacy_usercolor.dart';
 
 ThemeData lightTheme = ThemeData(
@@ -7,17 +8,42 @@ ThemeData lightTheme = ThemeData(
   primaryColor: AppColorLight.primary,
   backgroundColor: AppColorLight.background,
   scaffoldBackgroundColor: AppColorLight.background,
-  hintColor: AppColorLight.hintcolor,
   textTheme: TextTheme(
-    headline1: TextStyle(
-      color: AppColorLight.efficacytitle,
-      fontSize: 36.0,
-      fontWeight: FontWeight.w400,
+    headline1: GoogleFonts.poppins(
+      textStyle: TextStyle(
+        color: AppColorLight.mainText,
+        fontSize: 22.0,
+        fontWeight: FontWeight.w600,
+        letterSpacing: 0.5,
+      ),
     ),
-    headline6: TextStyle(
-      color: AppColorLight.inputtextcolor,
-      fontSize: 15.0,
-      fontWeight: FontWeight.w400,
+    // headline2: TextStyle(
+    //   color: AppColorLight.mainText,
+    //   fontSize: 17.0,
+    //   fontWeight: FontWeight.w500,
+    //   letterSpacing: 0.5,
+    // ),
+    headline3: GoogleFonts.poppins(
+      textStyle: TextStyle(
+        color: AppColorLight.titleText,
+        fontSize: 17.0,
+        fontWeight: FontWeight.w500,
+        letterSpacing: 0.1,
+      ),
+    ),
+    // headline4: TextStyle(
+    //   color: AppColor.mainText,
+    //   fontSize: 15.0,
+    //   fontWeight: FontWeight.w700,
+    //   letterSpacing: 0.5,
+    // ),
+    subtitle1: GoogleFonts.poppins(
+      textStyle: TextStyle(
+        color: AppColorLight.subtitleText,
+        fontSize: 15.0,
+        fontWeight: FontWeight.w500,
+        letterSpacing: 0.4,
+      ),
     ),
   ),
 );
