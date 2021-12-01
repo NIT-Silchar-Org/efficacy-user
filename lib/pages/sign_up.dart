@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:glassmorphism/glassmorphism.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -65,22 +65,49 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
+        alignment: Alignment.center,
         children: [
           //  First part gradient background
           buildBackground(),
           //  Part 2
           buildBobbleWeight(context),
           //    Part III Gaussian
-          buildBlurWeight(),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              //    Steady on the top of the top
-              buildTopText(),
-              //    Part 5 Input Area
-              buildBottomColumn()
-            ],
-          )
+          GlassmorphicContainer(
+            alignment: Alignment.center,
+            width: MediaQuery.of(context).size.width - 60,
+            height: MediaQuery.of(context).size.height * 0.77,
+            borderRadius: 20,
+            linearGradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                const Color(0xFFffffff).withOpacity(0.1),
+                const Color(0xFFFFFFFF).withOpacity(0.05),
+              ],
+            ),
+            border: 1,
+            blur: 5,
+            borderGradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                const Color(0xFFffffff).withOpacity(0.5),
+                const Color((0xFFFFFFFF)).withOpacity(0.5),
+              ],
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 20),
+                  //    Steady on the top of the top
+                  buildTopText(),
+                  //    Part 5 Input Area
+                  buildBottomColumn()
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -111,29 +138,16 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
     );
   }
 
-  buildBlurWeight() {
-    return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 0.3, sigmaY: 0.3),
-      child: Container(
-        color: Colors.white.withOpacity(0.1),
-      ),
-    );
-  }
-
   buildTopText() {
-    return Positioned(
-      left: MediaQuery.of(context).size.width / 2,
-      top: 30,
-      child: Container(
-        height: 150,
-        width: 150,
-        alignment: Alignment.center,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(200)),
-          image: DecorationImage(
-            image: AssetImage('assets/efficacy_logo.jpg'),
-            fit: BoxFit.cover,
-          ),
+    return Container(
+      height: 120,
+      width: 120,
+      alignment: Alignment.center,
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(200)),
+        image: DecorationImage(
+          image: AssetImage('assets/efficacy_logo.jpg'),
+          fit: BoxFit.cover,
         ),
       ),
     );
@@ -147,45 +161,52 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
         children: [
           // Custom text input box
           const SizedBox(
-            height: 60,
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(50.0, 0, 50.0, 0),
-            child: TextFieldWidget(
-              obscureText: false,
-              labelText: "Email",
-              prefixIconData: Icons.email_outlined,
-            ),
-          ),
-          const SizedBox(
-            height: 14,
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(50.0, 0, 50.0, 0),
-            child: TextFieldWidget(
-              obscureText: false,
-              labelText: "Name",
-            ),
-          ),
-          const SizedBox(
-            height: 14,
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(50.0, 0, 50.0, 0),
-            child: IntlPhoneField(
-              decoration: const InputDecoration(
-                labelText: 'Phone Number',
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(),
-                ),
-              ),
-              onChanged: (phone) {},
-              initialCountryCode: 'IN',
-            ),
-          ),
-          const SizedBox(
             height: 30,
           ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
+            child: TextFormField(
+              obscureText: false,
+              decoration: const InputDecoration(
+                contentPadding: EdgeInsets.all(12.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderSide: BorderSide(
+                    color: Color.fromRGBO(43, 158, 179, 0.19),
+                    width: 0.1,
+                  ),
+                ),
+                fillColor: Colors.transparent,
+                prefixIcon: Icon(Icons.email_outlined),
+                labelText: 'Email',
+              ),
+            ),
+          ),
+          const SizedBox(height: 14),
+          Container(
+            padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
+            child: TextFormField(
+              decoration: const InputDecoration(
+                contentPadding: EdgeInsets.all(12.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderSide: BorderSide(
+                    color: Color.fromRGBO(43, 158, 179, 0.19),
+                    width: 0.1,
+                  ),
+                ),
+                fillColor: Colors.transparent,
+                prefixIcon: Icon(Icons.person),
+                labelText: 'Name',
+              ),
+            ),
+          ),
+          const SizedBox(height: 14),
+          Container(
+            padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
+            child: const PhoneWidget(),
+          ),
+          const SizedBox(height: 10),
           SizedBox(
             height: 42,
             width: 130,
@@ -256,29 +277,22 @@ class TextFieldWidget extends StatelessWidget {
 
 class CustomMyPainter extends CustomPainter {
   List<BobbleBean> list;
-
   Random random;
-
   final Paint _paint = Paint()..isAntiAlias = true;
-
   CustomMyPainter({required this.list, required this.random});
 
   @override
   void paint(Canvas canvas, Size size) {
     for (var element in list) {
       Offset newCenterOffset = calculateXY(element.speed, element.theta);
-
       double dx = newCenterOffset.dx + element.position.dx;
       double dy = newCenterOffset.dx + element.position.dy;
-
       if (dx < 0 || dx > size.width) {
         dx = random.nextDouble() * size.width;
       }
-
       if (dy < 0 || dy > size.height) {
         dy = random.nextDouble() * size.height;
       }
-
       element.position = Offset(dx, dy);
     }
 
@@ -315,4 +329,78 @@ class BobbleBean {
 
   //  radius
   late double radius;
+}
+
+class PhoneWidget extends StatefulWidget {
+  const PhoneWidget({Key? key}) : super(key: key);
+  @override
+  _PhoneWidgetState createState() => _PhoneWidgetState();
+}
+
+class _PhoneWidgetState extends State<PhoneWidget> {
+  String _selectedCountryCode = '+91';
+  final List<String> _countryCodes = ['+91', '+23'];
+
+  @override
+  Widget build(BuildContext context) {
+    var countryDropDown = Container(
+      decoration: const BoxDecoration(
+        color: Colors.transparent,
+        border: Border(
+          right: BorderSide(width: 1, color: Colors.blueGrey),
+        ),
+      ),
+      height: 45.0,
+      margin: const EdgeInsets.all(3.0),
+      //width: 300.0,
+      child: DropdownButtonHideUnderline(
+        child: ButtonTheme(
+          alignedDropdown: true,
+          child: DropdownButton(
+            value: _selectedCountryCode,
+            items: _countryCodes.map((String value) {
+              return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(
+                    value,
+                    style: const TextStyle(fontSize: 12.0),
+                  ));
+            }).toList(),
+            onChanged: (value) {
+              setState(() {
+                _selectedCountryCode = value as String;
+              });
+            },
+          ),
+        ),
+      ),
+    );
+    return Container(
+      width: double.infinity,
+      color: Colors.transparent,
+      child: TextFormField(
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'phone number should not be empty';
+          } else {
+            return null;
+          }
+        },
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.all(10.0),
+          border: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(
+              color: Color.fromRGBO(43, 158, 179, 0.19),
+              width: 0.1,
+            ),
+          ),
+          fillColor: Colors.transparent,
+          prefixIcon: countryDropDown,
+          labelText: 'Phone Number',
+        ),
+      ),
+    );
+  }
 }
