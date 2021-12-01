@@ -1,7 +1,8 @@
-import 'package:efficacy_user/pages/homescreen.dart';
-import 'package:efficacy_user/pages/sign_up.dart';
+// import 'package:efficacy_user/pages/homescreen.dart';
+// import 'package:efficacy_user/pages/sign_up.dart';
 import 'package:efficacy_user/themes/efficacy_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:efficacy_user/pages/google_sign_in.dart';
 
 void main() => runApp(const MyApp());
 
@@ -18,7 +19,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: AppTheme.light,
       debugShowCheckedModeBanner: false,
-      home: const HomeScreen(),
+      home: const SignIn(),
     );
   }
 }

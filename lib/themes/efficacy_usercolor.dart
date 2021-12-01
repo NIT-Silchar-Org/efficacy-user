@@ -25,4 +25,12 @@ class AppColorLight {
   static Color subtitleText = const Color(0xff191C1D).withOpacity(0.6);
   static Color titleText = const Color(0xff191C1D);
   static Color background = Colors.white;
+  static Color buttoncolor = Colors.transparent;
+  static Color buttonbordercolor = const Color(0xff1976D2);
+  static Color hintcolor = const Color.fromRGBO(71, 131, 199, 0.3);
+  static Color buttontextcolor = const Color(0xff1976D2);
+  static Color bubble = const Color.fromRGBO(129, 220, 237, 0.19);
+  static Color error = Colors.red;
+  static Color glassBordercolor = const Color(0xffbde6ed);
+  static Color bordercolor = const Color(0xff4783C7);
 }
