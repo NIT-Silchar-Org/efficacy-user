@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'dart:ui';
+import 'package:efficacy_user/pages/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 
@@ -211,7 +212,12 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
             height: 42,
             width: 130,
             child: OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const HomeScreen()));
+              },
               child: const Text('FINISH'),
               style: ButtonStyle(
                 shape: MaterialStateProperty.all(

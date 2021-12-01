@@ -2,7 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:efficacy_user/pages/sign_up.dart';
 import 'package:flutter/material.dart';
-import 'package:efficacy_user/themes/efficacy_usercolor.dart';
+// import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 
 class SignIn extends StatefulWidget {
@@ -255,7 +255,7 @@ class SignInButton extends StatelessWidget {
       child: Container(
         width: 312,
         decoration: BoxDecoration(
-            border: Border.all(color: AppColorLight.bordercolor),
+            border: Border.all(color: const Color(0xff4783C7)),
             borderRadius: const BorderRadius.all(Radius.circular(10)),
             boxShadow: const [
               CustomBoxShadow(
@@ -272,18 +272,18 @@ class SignInButton extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Image(
+            children: const [
+              Image(
                 image: AssetImage('assets/google_logo.png'),
                 width: 33,
                 height: 33,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20),
+                padding: EdgeInsets.only(left: 20),
                 child: Text(
                   'Continue with Google',
                   style: TextStyle(
-                      color: AppColorLight.continueWithGoogleButton,
+                      color: Color(0xff1976D2),
                       fontSize: 20,
                       fontWeight: FontWeight.w400),
                 ),
