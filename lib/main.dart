@@ -1,5 +1,8 @@
 // import 'package:efficacy_user/pages/homescreen.dart';
 // import 'package:efficacy_user/pages/sign_up.dart';
+import 'package:efficacy_user/pages/event_screen.dart';
+import 'package:efficacy_user/pages/homescreen.dart';
+import 'package:efficacy_user/pages/sign_up.dart';
 import 'package:efficacy_user/themes/efficacy_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/pages/google_sign_in.dart';
@@ -20,6 +23,11 @@ class _MyAppState extends State<MyApp> {
       theme: AppTheme.light,
       debugShowCheckedModeBanner: false,
       home: const SignIn(),
+      routes: <String, WidgetBuilder>{
+        '/signup_screen': (BuildContext context) => const SignUp(),
+        '/home_screen': (BuildContext context) => const HomeScreen(),
+        '/event_screen': (BuildContext context) => const EventScreen(),
+      },
     );
   }
 }
