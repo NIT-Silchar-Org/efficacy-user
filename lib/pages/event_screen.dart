@@ -22,7 +22,7 @@ class _EventScreenState extends State<EventScreen> {
           children: [
             Container(
               width: MediaQuery.of(context).size.width,
-              height: 210,
+              height: 220,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/gdsc_android.png'),
