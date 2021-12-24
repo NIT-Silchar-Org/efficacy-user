@@ -17,11 +17,10 @@ class _EventScreenState extends State<EventScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Column(
           children: [
             Container(
-              margin: const EdgeInsets.only(top: 20),
               width: MediaQuery.of(context).size.width,
               height: 210,
               decoration: const BoxDecoration(
@@ -38,11 +37,12 @@ class _EventScreenState extends State<EventScreen> {
         showOnAppear: true,
         // canUserSwipe: false,
         maxHeight: MediaQuery.of(context).size.height - 300,
-        headerBar: const SizedBox(
+        headerBar: Divider(
+          color: const Color(0xff180000).withOpacity(0.17),
           height: 20,
-          child: Center(
-            child: Text("Swipe me!"),
-          ),
+          thickness: 2,
+          indent: 150,
+          endIndent: 150,
         ),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
