@@ -36,6 +36,8 @@ dependencies:
   flutter_lorem: ^2.0.0
   expandable: ^5.0.1
   material_design_icons_flutter: ^5.0.6595
+  solid_bottom_sheet: ^0.1.10
+
 
 dev_dependencies:
   flutter_lints: ^1.0.0
