@@ -40,7 +40,7 @@ ThemeData lightTheme = ThemeData(
     subtitle1: GoogleFonts.poppins(
       textStyle: TextStyle(
         color: AppColorLight.subtitleText,
-        fontSize: 15.0,
+        fontSize: 13.0,
         fontWeight: FontWeight.w500,
         letterSpacing: 0.4,
       ),
