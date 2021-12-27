@@ -63,88 +63,97 @@ class _EventTileState extends State<EventTile>
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          Card(
-            margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-            shadowColor: AppColorLight.cardShadow,
-            elevation: 3,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            child: Padding(
-              padding: EdgeInsets.all(_sizeAnimation.value),
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: () => widget.onPressed(),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child:
-                          Image.asset(widget.cardBannerUrl, fit: BoxFit.cover),
-                    ),
-                  ),
-                  ExpandablePanel(
-                      controller: _expandController,
-                      theme: const ExpandableThemeData(
-                        useInkWell: false,
-                        hasIcon: false,
-                        tapHeaderToExpand: false,
-                        tapBodyToCollapse: false,
+          Container(
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(
+                color: AppColorLight.cardShadow,
+                spreadRadius: 10,
+                blurRadius: 30,
+              ),
+            ]),
+            child: Card(
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+              shadowColor: AppColorLight.cardShadow,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              child: Padding(
+                padding: EdgeInsets.all(_sizeAnimation.value),
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () => widget.onPressed(),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset(widget.cardBannerUrl,
+                            fit: BoxFit.cover),
                       ),
-                      header: ListTile(
-                        contentPadding: const EdgeInsets.all(0),
-                        leading: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 10, 0, 10),
-                            child: Image.network(widget.gdscImageUrl,
-                                fit: BoxFit.cover),
+                    ),
+                    ExpandablePanel(
+                        controller: _expandController,
+                        theme: const ExpandableThemeData(
+                          useInkWell: false,
+                          hasIcon: false,
+                          tapHeaderToExpand: false,
+                          tapBodyToCollapse: false,
+                        ),
+                        header: ListTile(
+                          contentPadding: const EdgeInsets.all(0),
+                          leading: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(20, 10, 0, 10),
+                              child: Image.network(widget.gdscImageUrl,
+                                  fit: BoxFit.cover),
+                            ),
+                          ),
+                          title: Text('Flutter Bootcamp',
+                              style: Theme.of(context).textTheme.headline3),
+                          subtitle: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.calendar_today_rounded,
+                                color: AppColorLight.subtitleText,
+                                size: 17,
+                              ),
+                              const SizedBox(width: 5),
+                              Text(
+                                'Sep 28',
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                              const SizedBox(width: 10),
+                              Icon(
+                                Icons.schedule_rounded,
+                                color: AppColorLight.subtitleText,
+                                size: 17,
+                              ),
+                              const SizedBox(width: 5),
+                              Text(
+                                '6:00 PM',
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                            ],
                           ),
                         ),
-                        title: Text('Flutter Bootcamp',
-                            style: Theme.of(context).textTheme.headline3),
-                        subtitle: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.calendar_today_rounded,
-                              color: AppColorLight.subtitleText,
-                              size: 17,
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              'Sep 28',
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                            const SizedBox(width: 10),
-                            Icon(
-                              Icons.schedule_rounded,
-                              color: AppColorLight.subtitleText,
-                              size: 17,
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              '6:00 PM',
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                          ],
+                        collapsed: const SizedBox(),
+                        expanded: Text(
+                          lorem(paragraphs: 1, words: 30),
+                          textAlign: TextAlign.justify,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1
+                              ?.copyWith(fontSize: 13),
                         ),
-                      ),
-                      collapsed: const SizedBox(),
-                      expanded: Text(
-                        lorem(paragraphs: 1, words: 30),
-                        textAlign: TextAlign.justify,
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1
-                            ?.copyWith(fontSize: 13),
-                      ),
-                      builder: (_, collapsed, expanded) => Padding(
-                            padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                            child: Expandable(
-                              collapsed: collapsed,
-                              expanded: expanded,
-                            ),
-                          )),
-                ],
+                        builder: (_, collapsed, expanded) => Padding(
+                              padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                              child: Expandable(
+                                collapsed: collapsed,
+                                expanded: expanded,
+                              ),
+                            )),
+                  ],
+                ),
               ),
             ),
           ),
