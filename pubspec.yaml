@@ -36,6 +36,7 @@ dependencies:
   flutter_lorem: ^2.0.0
   expandable: ^5.0.1
   solid_bottom_sheet: ^0.1.10
+  sliding_up_panel: ^2.0.0+1
 
 
 dev_dependencies:
