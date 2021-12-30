@@ -28,16 +28,17 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.2
+  expandable: ^5.0.1
   flutter:
     sdk: flutter
-  glassmorphism: ^3.0.0
-  intl_phone_field: ^2.1.0
-  google_fonts: ^2.1.0
   flutter_lorem: ^2.0.0
-  expandable: ^5.0.1
+  font_awesome_flutter: ^9.2.0
+  glassmorphism: ^3.0.0
+  google_fonts: ^2.1.0
+  intl_phone_field: ^2.1.0
   material_design_icons_flutter: ^5.0.6595
+  sliding_up_panel: ^2.0.0+1
   solid_bottom_sheet: ^0.1.10
-
 
 dev_dependencies:
   flutter_lints: ^1.0.0
