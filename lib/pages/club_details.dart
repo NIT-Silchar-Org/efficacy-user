@@ -115,6 +115,72 @@ class _ClubDetailState extends State<ClubDetail>
                             ),
                             const SizedBox(height: 10),
                             const Text('Contact'),
+                            const SizedBox(height: 15),
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: devicesize.width / 3,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        height: devicesize.height / 7,
+                                        decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(12),
+                                          ),
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                'assets/moderator.jpg'),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      const Text(
+                                        'Henry Cavill',
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                      const SizedBox(height: 5),
+                                      const Text(
+                                        'Moderator',
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                SizedBox(
+                                  width: devicesize.width / 3,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        height: devicesize.height / 7,
+                                        decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(12),
+                                          ),
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                'assets/moderator.jpg'),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      const Text(
+                                        'Henry Cavill',
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                      const SizedBox(height: 5),
+                                      const Text(
+                                        'Moderator',
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
