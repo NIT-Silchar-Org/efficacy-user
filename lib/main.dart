@@ -1,6 +1,6 @@
 // import 'package:efficacy_user/pages/homescreen.dart';
 // import 'package:efficacy_user/pages/sign_up.dart';
-import 'package:efficacy_user/pages/club_details.dart';
+// import 'package:efficacy_user/pages/club_details.dart';
 import 'package:efficacy_user/pages/event_screen.dart';
 import 'package:efficacy_user/pages/homescreen.dart';
 import 'package:efficacy_user/pages/sign_up.dart';
@@ -23,7 +23,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: AppTheme.light,
       debugShowCheckedModeBanner: false,
-      home: const ClubDetail(),
+      home: const SignIn(),
       routes: <String, WidgetBuilder>{
         '/signup_screen': (BuildContext context) => const SignUp(),
         '/home_screen': (BuildContext context) => const HomeScreen(),
