@@ -1,4 +1,5 @@
 import 'package:efficacy_user/widgets/bell_notification.dart';
+import 'package:efficacy_user/widgets/bottom_navigation_bar.dart';
 import 'package:efficacy_user/widgets/expand_text.dart';
 import 'package:efficacy_user/widgets/subscribe_button.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class ClubDetail extends StatefulWidget {
+    static const route='club_detail';
   const ClubDetail({Key? key}) : super(key: key);
 
   @override
@@ -161,7 +163,8 @@ class _ClubDetailState extends State<ClubDetail>
                                           ),
                                           image: DecorationImage(
                                             image: AssetImage(
-                                                'assets/moderator.jpg'),
+                                              'assets/moderator.jpg',
+                                            ),
                                             fit: BoxFit.cover,
                                           ),
                                         ),
@@ -215,6 +218,7 @@ class _ClubDetailState extends State<ClubDetail>
             ),
           ),
         ),
+        //bottomNavigationBar: const BottomBar(),
       ),
     );
   }
