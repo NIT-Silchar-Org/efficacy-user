@@ -34,6 +34,7 @@ class _EventScreenState extends State<EventScreen> {
             padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
             child: ListView(
               // crossAxisAlignment: CrossAxisAlignment.start,
+              shrinkWrap: true,
               controller: sc,
               children: [
                 Container(
