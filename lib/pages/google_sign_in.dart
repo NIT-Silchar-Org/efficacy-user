@@ -5,6 +5,7 @@ import 'package:efficacy_user/widgets/signup_widget.dart';
 import 'package:flutter/material.dart';
 // import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:glassmorphism/glassmorphism.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -30,7 +31,22 @@ class _SignInState extends State<SignIn> with TickerProviderStateMixin {
       body: Stack(
         children: [
           //  First part gradient background
-          buildBackground(),
+          Positioned(
+            top: 0,
+            child: SvgPicture.asset(
+              'assets/wave-1.svg',
+              height: 230,
+              width: MediaQuery.of(context).size.width,
+            ),
+          ),
+          Positioned(
+            top: 0,
+            child: SvgPicture.asset(
+              'assets/wave.svg',
+              height: 120,
+              width: MediaQuery.of(context).size.width,
+            ),
+          ),
           //    Part III Gaussian
           Center(
             child: isauthenticate
@@ -88,21 +104,7 @@ class _SignInState extends State<SignIn> with TickerProviderStateMixin {
   }
 
   //  First part gradient background
-  buildBackground() {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Colors.lightBlueAccent.withOpacity(0.3),
-            Colors.lightBlue.withOpacity(0.3),
-            Colors.blue.withOpacity(0.3),
-          ],
-        ),
-      ),
-    );
-  }
+  
 
   buildTopText() {
     return Positioned(
