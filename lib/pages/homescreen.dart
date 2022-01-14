@@ -27,10 +27,10 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
-            backgroundColor: AppColorLight.background,
-            shadowColor: AppColorLight.background,
-            foregroundColor: Colors.black,
-            elevation: 0,
+            backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+            shadowColor: Theme.of(context).appBarTheme.shadowColor,
+            foregroundColor: Theme.of(context).appBarTheme.foregroundColor,
+            elevation: Theme.of(context).appBarTheme.elevation,
             title: Text(
               'Feed',
               style: Theme.of(context).textTheme.headline1?.copyWith(
@@ -53,13 +53,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Icon(
                           Icons.notifications_none_rounded,
                           size: 30,
-                          color: AppColorLight.mainText,
+                          color: Theme.of(context).primaryIconTheme.color,
                         ),
                       ),
                     ),
                     CircleAvatar(
                       radius: 5,
-                      backgroundColor: AppColorLight.primary,
+                      backgroundColor: Theme.of(context).primaryColor,
                     ),
                   ],
                 ),
@@ -98,12 +98,16 @@ class _HomeScreenState extends State<HomeScreen> {
               topRight: Radius.circular(16),
             ),
             child: BottomNavigationBar(
-              elevation: 2,
-              backgroundColor: AppColorLight.background,
+              elevation: Theme.of(context).bottomNavigationBarTheme.elevation,
+              backgroundColor:
+                  Theme.of(context).bottomNavigationBarTheme.backgroundColor,
               type: BottomNavigationBarType.fixed,
-              selectedItemColor: AppColorLight.secondary,
+              selectedItemColor:
+                  Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
               selectedFontSize: 20,
-              unselectedItemColor: const Color(0xFF7D7D7D).withOpacity(0.5),
+              unselectedItemColor: Theme.of(context)
+                  .bottomNavigationBarTheme
+                  .unselectedItemColor,
               showUnselectedLabels: false,
               showSelectedLabels: false,
               currentIndex: _selectedIndex,
