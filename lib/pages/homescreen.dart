@@ -1,6 +1,8 @@
-// import 'package:efficacy_user/models/eventCloud.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:efficacy_user/pages/explore_screen.dart';
+import 'package:efficacy_user/pages/feed_screen.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
-import 'package:efficacy_user/widgets/event_tile.dart';
+import 'package:efficacy_user/widgets/filter_menu_item.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,6 +14,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  String selectedValue = 'Upcoming';
+  List<String> pageTitles = ['Feed', 'Clubs', 'Explore', 'Profile'];
+  List<String> filterOptions = ['Upcoming', 'Ongoing', 'Completed'];
+  List<Widget> screens = const [
+    FeedScreen(),
+    Text('clubs page'),
+    ExploreScreen(),
+    Text('accounts page'),
+  ];
   //String cardBannerUrl =
   //    'https://scontent.fgau4-1.fna.fbcdn.net/v/t39.30808-6/240820078_3519373158297668_146710064262806586_n.jpg?_nc_cat=107&ccb=1-5&_nc_sid=825194&_nc_ohc=Q5a-HvnCr6cAX8ntsnl&_nc_ht=scontent.fgau4-1.fna&oh=5ae2026a7153c9f565426b071e88f5a0&oe=61A78F7E';
   String gdscImageUrl =
@@ -32,66 +43,66 @@ class _HomeScreenState extends State<HomeScreen> {
             foregroundColor: Theme.of(context).appBarTheme.foregroundColor,
             elevation: Theme.of(context).appBarTheme.elevation,
             title: Text(
-              'Feed',
+              pageTitles[_selectedIndex],
               style: Theme.of(context).textTheme.headline1?.copyWith(
                     fontSize: 24,
                   ),
             ),
             actions: [
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Stack(
-                  alignment: Alignment.topRight,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.notifications_none_rounded,
-                          size: 30,
-                          color: Theme.of(context).primaryIconTheme.color,
+              Visibility(
+                visible: _selectedIndex == 2,
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton2(
+                    customButton: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.filter_alt_outlined,
+                            size: 30,
+                            color: Theme.of(context).primaryIconTheme.color,
+                          ),
                         ),
                       ),
                     ),
-                    CircleAvatar(
-                      radius: 5,
-                      backgroundColor: Theme.of(context).primaryColor,
+                    items: filterOptions
+                        .map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: FilterMenuItem(
+                              text: item,
+                              isSelected: selectedValue == item,
+                            )))
+                        .toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        selectedValue = value.toString();
+                      });
+                    },
+                    itemHeight: size.height * 0.05,
+                    itemWidth: size.width * 0.5,
+                    dropdownPadding: const EdgeInsets.symmetric(vertical: 20),
+                    dropdownDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                  ],
+                    offset: Offset(size.width * -0.35, 0),
+                    dropdownOverButton: false,
+                  ),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: CircleAvatar(
+                  backgroundColor: AppColorLight.secondary,
+                ),
+              )
             ],
           ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                children: [
-                  EventTile(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/event_screen');
-                    },
-                    cardBannerUrl: 'assets/android_study_jams.png',
-                    gdscImageUrl: gdscImageUrl,
-                  ),
-                  EventTile(
-                    onPressed: () {},
-                    cardBannerUrl: 'assets/flutter_bootcamp.png',
-                    gdscImageUrl: gdscImageUrl,
-                  ),
-                  EventTile(
-                    onPressed: () {},
-                    cardBannerUrl: 'assets/android_study_jams.png',
-                    gdscImageUrl: gdscImageUrl,
-                  ),
-                ],
-              ),
-            ),
-          ),
+          body: screens[_selectedIndex],
           bottomNavigationBar: ClipRRect(
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(16),

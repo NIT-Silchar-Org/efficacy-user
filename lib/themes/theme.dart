@@ -8,6 +8,8 @@ ThemeData lightTheme = ThemeData(
   primaryColor: AppColorLight.primary,
   backgroundColor: AppColorLight.background,
   scaffoldBackgroundColor: AppColorLight.background,
+  primaryColorLight: AppColorLight.dropDownSelectedColor,
+  primaryColorDark: AppColorLight.dropDownTextColor,
   appBarTheme: AppBarTheme(
     backgroundColor: AppColorLight.background,
     shadowColor: AppColorLight.background,
