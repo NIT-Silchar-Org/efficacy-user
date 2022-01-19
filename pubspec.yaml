@@ -42,6 +42,7 @@ dependencies:
   flutter_svg: ^1.0.0
   lottie: ^1.2.1
   dropdown_button2: ^1.0.7
+  readmore: ^2.1.0
 
 dev_dependencies:
   flutter_lints: ^1.0.0
