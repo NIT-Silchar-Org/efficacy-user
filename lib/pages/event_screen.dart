@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
+import 'package:efficacy_user/utils/divider.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -45,16 +46,7 @@ class _EventScreenState extends State<EventScreen> {
             shrinkWrap: true,
             controller: sc,
             children: [
-              Container(
-                margin: const EdgeInsets.only(top: 0, bottom: 10),
-                child: Divider(
-                  color: const Color(0xff180000).withOpacity(0.17),
-                  height: 20,
-                  thickness: 2,
-                  indent: 100,
-                  endIndent: 100,
-                ),
-              ),
+              const PanelDivider(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
