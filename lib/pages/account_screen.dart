@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
+<<<<<<< Updated upstream
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:efficacy_user/pages/club_details.dart';
 import 'package:group_radio_button/group_radio_button.dart';
+=======
+>>>>>>> Stashed changes
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({Key? key}) : super(key: key);
@@ -14,6 +17,7 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
   int _selectedIndex = 0;
+<<<<<<< Updated upstream
   BorderRadiusGeometry sheetRadius = const BorderRadius.only(
     topLeft: Radius.circular(24.0),
     topRight: Radius.circular(24.0),
@@ -205,6 +209,97 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
             ),
           ],
+=======
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return SizedBox(
+      height: size.height,
+      width: size.width,
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: AppColorLight.background,
+            shadowColor: AppColorLight.background,
+            foregroundColor: Colors.black,
+            elevation: 0,
+            title: Text(
+              'Subscriptions',
+              style: Theme.of(context).textTheme.headline1?.copyWith(
+                    fontSize: 24,
+                  ),
+            ),
+          ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: CircleAvatar(),
+                    title: Text('Illuminatis'),
+                    trailing: TextButton(
+                      onPressed: () {},
+                      child: Text('hail'),
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all()),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          bottomNavigationBar: ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
+            child: BottomNavigationBar(
+              elevation: 2,
+              backgroundColor: AppColorLight.background,
+              type: BottomNavigationBarType.fixed,
+              selectedItemColor: AppColorLight.secondary,
+              selectedFontSize: 20,
+              unselectedItemColor: const Color(0xFF7D7D7D).withOpacity(0.5),
+              showUnselectedLabels: false,
+              showSelectedLabels: false,
+              currentIndex: _selectedIndex,
+              onTap: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
+              items: const [
+                BottomNavigationBarItem(
+                  label: 'Home',
+                  tooltip: 'Home',
+                  icon: Icon(
+                    Icons.home_outlined,
+                  ),
+                ),
+                BottomNavigationBarItem(
+                  label: 'Clubs',
+                  icon: Icon(
+                    Icons.people_alt_outlined,
+                  ),
+                ),
+                BottomNavigationBarItem(
+                  label: 'Explore',
+                  icon: Icon(
+                    Icons.explore_outlined,
+                  ),
+                ),
+                BottomNavigationBarItem(
+                  label: 'Menu',
+                  icon: Icon(
+                    Icons.menu_rounded,
+                  ),
+                ),
+              ],
+            ),
+          ),
+>>>>>>> Stashed changes
         ),
       ),
     );
