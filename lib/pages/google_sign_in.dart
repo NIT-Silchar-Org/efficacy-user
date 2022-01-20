@@ -8,13 +8,14 @@ import 'package:glassmorphism/glassmorphism.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SignIn extends StatefulWidget {
+    static const route='sign_in';
   const SignIn({Key? key}) : super(key: key);
 
   @override
   _SignInState createState() => _SignInState();
 }
 
-class _SignInState extends State<SignIn> with TickerProviderStateMixin {
+class _SignInState extends State<SignIn> {
   bool isauthenticate = false;
   String initialcountry = 'IN';
 

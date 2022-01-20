@@ -6,6 +6,7 @@ import 'package:efficacy_user/widgets/filter_menu_item.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const route = '/home_screen';
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -23,8 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
     ExploreScreen(),
     Text('accounts page'),
   ];
-  //String cardBannerUrl =
-  //    'https://scontent.fgau4-1.fna.fbcdn.net/v/t39.30808-6/240820078_3519373158297668_146710064262806586_n.jpg?_nc_cat=107&ccb=1-5&_nc_sid=825194&_nc_ohc=Q5a-HvnCr6cAX8ntsnl&_nc_ht=scontent.fgau4-1.fna&oh=5ae2026a7153c9f565426b071e88f5a0&oe=61A78F7E';
   String gdscImageUrl =
       'https://res.cloudinary.com/devncode/image/upload/v1575267757/production_devncode/community/1575267756355.jpg';
 

@@ -7,6 +7,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:efficacy_user/pages/club_details.dart';
 
 class EventScreen extends StatefulWidget {
+    static const route='/event_screen';
   const EventScreen({Key? key}) : super(key: key);
 
   @override

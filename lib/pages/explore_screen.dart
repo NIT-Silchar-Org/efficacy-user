@@ -2,6 +2,7 @@ import 'package:efficacy_user/widgets/event_tile.dart';
 import 'package:flutter/material.dart';
 
 class ExploreScreen extends StatefulWidget {
+    static const route='explore_screen';
   const ExploreScreen({Key? key}) : super(key: key);
 
   @override
@@ -21,7 +22,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '  ' 'Ongoing Events',
+              'Ongoing Events',
               style: Theme.of(context).textTheme.headline3?.copyWith(),
             ),
             const SizedBox(height: 10),
