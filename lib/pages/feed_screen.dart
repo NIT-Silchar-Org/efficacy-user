@@ -2,6 +2,7 @@ import 'package:efficacy_user/widgets/event_tile.dart';
 import 'package:flutter/material.dart';
 
 class FeedScreen extends StatefulWidget {
+    static const route='feed_screen';
   const FeedScreen({Key? key}) : super(key: key);
 
   @override

@@ -16,6 +16,7 @@ import 'package:efficacy_user/utils/facebook_widget.dart';
 import 'package:efficacy_user/utils/gform_widget.dart';
 
 class EventScreen extends StatefulWidget {
+    static const route='/event_screen';
   const EventScreen({Key? key}) : super(key: key);
 
   @override
