@@ -39,25 +39,11 @@ class _MyAppState extends State<MyApp> {
           child: MaterialApp(
             theme: AppTheme.light,
             debugShowCheckedModeBanner: false,
-            home: snapshot.connectionState != ConnectionState.done
+            home: snapshot.connectionState == ConnectionState.waiting
                 ? const CircularProgressIndicator(
                     backgroundColor: Colors.orangeAccent,
                   )
-                : StreamBuilder(
-                    stream: FirebaseAuth.instance.authStateChanges(),
-                    builder: (ctx, userSnapShot) {
-                      if (userSnapShot.connectionState ==
-                          ConnectionState.waiting) {
-                        return const CircularProgressIndicator(
-                          backgroundColor: Colors.orangeAccent,
-                        );
-                      }
-                      if (userSnapShot.hasData) {
-                        return const HomeScreen();
-                      }
-                      return const SignIn();
-                    },
-                  ),
+                : const SignIn(),
             routes: <String, WidgetBuilder>{
               HomeScreen.route: (BuildContext context) => const HomeScreen(),
               EventScreen.route: (BuildContext context) => const EventScreen(),
