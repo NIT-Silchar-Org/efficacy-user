@@ -1,12 +1,14 @@
 // import 'package:efficacy_user/pages/homescreen.dart';
 // import 'package:efficacy_user/pages/sign_up.dart';
- import 'package:efficacy_user/pages/club_details.dart';
+import 'package:efficacy_user/pages/account_screen.dart';
+import 'package:efficacy_user/pages/club_details.dart';
 import 'package:efficacy_user/pages/event_screen.dart';
 import 'package:efficacy_user/pages/homescreen.dart';
 import 'package:efficacy_user/pages/sign_up.dart';
 import 'package:efficacy_user/themes/efficacy_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/pages/google_sign_in.dart';
+import 'package:efficacy_user/pages/subscription_page.dart';
 
 void main() => runApp(const MyApp());
 
