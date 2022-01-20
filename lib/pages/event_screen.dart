@@ -145,7 +145,10 @@ class _EventScreenState extends State<EventScreen> {
                   text1: "NIT Silchar",
                   text2: "On Campus",
                   icon: Icons.location_on_outlined),
-              const AddToCalender(),
+              const Padding(
+                padding: EdgeInsets.only(right: 180),
+                child: AddToCalender(),
+              ),
               Container(
                 margin: const EdgeInsets.only(top: 20),
                 child: Text(
@@ -189,7 +192,7 @@ class _EventScreenState extends State<EventScreen> {
           ),
         ),
         body: SafeArea(
-          child: Column(
+          child: Stack(
             children: [
               Container(
                 height: 250,
@@ -200,6 +203,27 @@ class _EventScreenState extends State<EventScreen> {
                   ),
                 ),
               ),
+              Positioned(
+                left: 20.0,
+                top: 25.0,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/home_screen');
+                  },
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: const Color(0xffDFE5E7).withOpacity(0.2),
+                    ),
+                    child: const Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
         ),
