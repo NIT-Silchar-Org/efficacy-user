@@ -4,6 +4,7 @@ import 'package:efficacy_user/pages/homescreen.dart';
 import 'package:efficacy_user/themes/efficacy_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/pages/google_sign_in.dart';
+import 'package:efficacy_user/pages/subscription_page.dart';
 
 void main() => runApp(const MyApp());
 

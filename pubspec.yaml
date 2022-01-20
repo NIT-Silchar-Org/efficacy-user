@@ -39,6 +39,8 @@ dependencies:
   material_design_icons_flutter: ^5.0.6595
   sliding_up_panel: ^2.0.0+1
   solid_bottom_sheet: ^0.1.10
+  group_radio_button: ^1.1.0
+  flutter_portal: ^0.4.0
   flutter_svg: ^1.0.0
   lottie: ^1.2.1
   dropdown_button2: ^1.0.7
