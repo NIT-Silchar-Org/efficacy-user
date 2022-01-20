@@ -7,13 +7,10 @@ import 'package:efficacy_user/provider/event_provider.dart';
 import 'package:efficacy_user/themes/efficacy_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/pages/google_sign_in.dart';
-<<<<<<< HEAD
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
-=======
 import 'package:efficacy_user/pages/subscription_page.dart';
->>>>>>> d27990e66b309a340abdaeb378c5656ebe96e018
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
