@@ -66,17 +66,16 @@ class _EventTileState extends State<EventTile>
           Container(
             decoration: BoxDecoration(boxShadow: [
               BoxShadow(
-                color: AppColorLight.cardShadow,
+                color: Theme.of(context).cardTheme.shadowColor!,
                 spreadRadius: 10,
                 blurRadius: 30,
               ),
             ]),
             child: Card(
-              margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-              shadowColor: AppColorLight.cardShadow,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)),
+              margin: Theme.of(context).cardTheme.margin,
+              shadowColor: Theme.of(context).cardTheme.shadowColor,
+              elevation: Theme.of(context).cardTheme.elevation,
+              shape: Theme.of(context).cardTheme.shape,
               child: Padding(
                 padding: EdgeInsets.all(_sizeAnimation.value),
                 child: Column(
@@ -114,7 +113,7 @@ class _EventTileState extends State<EventTile>
                             children: [
                               Icon(
                                 Icons.calendar_today_rounded,
-                                color: AppColorLight.subtitleText,
+                                color: Theme.of(context).iconTheme.color,
                                 size: 17,
                               ),
                               const SizedBox(width: 5),
@@ -125,7 +124,7 @@ class _EventTileState extends State<EventTile>
                               const SizedBox(width: 10),
                               Icon(
                                 Icons.schedule_rounded,
-                                color: AppColorLight.subtitleText,
+                                color: Theme.of(context).iconTheme.color,
                                 size: 17,
                               ),
                               const SizedBox(width: 5),
@@ -166,7 +165,7 @@ class _EventTileState extends State<EventTile>
               expandState
                   ? MdiIcons.chevronUpCircleOutline
                   : MdiIcons.chevronDownCircleOutline,
-              color: AppColorLight.mainText,
+              color: Theme.of(context).primaryIconTheme.color,
             ),
           ),
         ],

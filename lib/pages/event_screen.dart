@@ -4,6 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:efficacy_user/pages/club_details.dart';
+import 'package:efficacy_user/widgets/details_widget.dart';
+import 'package:efficacy_user/widgets/detail_card.dart';
+import 'package:efficacy_user/widgets/moderator.dart';
+import 'package:efficacy_user/utils/add_to_calender.dart';
+import 'package:efficacy_user/utils/like_widget.dart';
+import 'package:efficacy_user/utils/share_widget.dart';
+import 'package:efficacy_user/utils/follow_widget.dart';
+import 'package:efficacy_user/utils/facebook_widget.dart';
+import 'package:efficacy_user/utils/gform_widget.dart';
 
 class EventScreen extends StatefulWidget {
   const EventScreen({Key? key}) : super(key: key);
@@ -23,93 +33,71 @@ class _EventScreenState extends State<EventScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size devicesize = MediaQuery.of(context).size;
     return Scaffold(
       body: SlidingUpPanel(
-        panel: Center(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        maxHeight: devicesize.height,
+        minHeight: devicesize.height * 0.60,
+        panelBuilder: (sc) => Padding(
+          padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
+          child: ListView(
+            // crossAxisAlignment: CrossAxisAlignment.start,
+            shrinkWrap: true,
+            controller: sc,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 0, bottom: 10),
+                child: Divider(
+                  color: const Color(0xff180000).withOpacity(0.17),
+                  height: 20,
+                  thickness: 2,
+                  indent: 100,
+                  endIndent: 100,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 8, bottom: 10),
-                    child: Divider(
-                      color: const Color(0xff180000).withOpacity(0.17),
-                      height: 20,
-                      thickness: 2,
-                      indent: 100,
-                      endIndent: 100,
-                    ),
-                  ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 44,
-                            height: 44,
-                            child: Image.network(
-                                'https://res.cloudinary.com/devncode/image/upload/v1575267757/production_devncode/community/1575267756355.jpg',
-                                fit: BoxFit.cover),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, ClubDetail.route);
+                        },
+                        child: SizedBox(
+                          width: 44,
+                          height: 44,
+                          child: Image.network(
+                            'https://res.cloudinary.com/devncode/image/upload/v1575267757/production_devncode/community/1575267756355.jpg',
+                            fit: BoxFit.cover,
                           ),
-                          Container(
-                            margin: const EdgeInsets.only(left: 12),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Organized by",
-                                  style: GoogleFonts.poppins(
-                                    textStyle: TextStyle(
-                                      color: const Color(0xff191C1D)
-                                          .withOpacity(0.7),
-                                      fontSize: 12.0,
-                                      fontWeight: FontWeight.w400,
-                                      letterSpacing: 0.5,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  "Google Developer Student Clubs",
-                                  style: GoogleFonts.poppins(
-                                    textStyle: TextStyle(
-                                      color: const Color(0xff191C1D)
-                                          .withOpacity(0.7),
-                                      fontSize: 8.0,
-                                      fontWeight: FontWeight.w300,
-                                      letterSpacing: 0.5,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
+                        ),
                       ),
                       Container(
-                        width: 61,
-                        height: 20,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          color: const Color(0xffDAE5FF),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        margin: const EdgeInsets.only(left: 12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Icon(
-                              Icons.add_to_photos_outlined,
-                              size: 10,
-                              color: Color(0xff213F8D),
+                            Text(
+                              "Organized by",
+                              style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                  color:
+                                      const Color(0xff191C1D).withOpacity(0.7),
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w400,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
                             ),
                             Text(
-                              "Follow",
+                              "Google Developer Student Clubs",
                               style: GoogleFonts.poppins(
-                                textStyle: const TextStyle(
-                                  color: Color(0xff213F8D),
-                                  fontSize: 10.0,
+                                textStyle: TextStyle(
+                                  color:
+                                      const Color(0xff191C1D).withOpacity(0.7),
+                                  fontSize: 8.0,
                                   fontWeight: FontWeight.w300,
                                   letterSpacing: 0.5,
                                 ),
@@ -120,376 +108,86 @@ class _EventScreenState extends State<EventScreen> {
                       )
                     ],
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 22),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Android Study Jams",
-                          style: GoogleFonts.poppins(
-                            textStyle: TextStyle(
-                              color: const Color(0xff191C1D).withOpacity(0.7),
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 0.5,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 61,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Icon(
-                                Icons.thumb_up_alt_outlined,
-                                size: 16,
-                                color: Color(0xff213F8D),
-                              ),
-                              const Icon(
-                                Icons.share_outlined,
-                                size: 16,
-                                color: Color(0xff213F8D),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 21),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 36,
-                          height: 36,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: const Color(0xFFFFF0B6)),
-                          child: const Center(
-                            child: Icon(
-                              Icons.calendar_today_outlined,
-                              size: 14,
-                              color: Color(0xffFECC07),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 12),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Fri, 20 March, 2021",
-                                style: GoogleFonts.poppins(
-                                  textStyle: TextStyle(
-                                    color: const Color(0xff191C1D)
-                                        .withOpacity(0.7),
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: 0.5,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                "6:00 PM to 7:00 PM",
-                                style: GoogleFonts.poppins(
-                                  textStyle: TextStyle(
-                                    color: const Color(0xff191C1D)
-                                        .withOpacity(0.5),
-                                    fontSize: 8.0,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: 0.5,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 21),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 36,
-                          height: 36,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: const Color(0xFFFFF0B6)),
-                          child: const Center(
-                            child: Icon(
-                              Icons.location_on_outlined,
-                              size: 14,
-                              color: Color(0xffFECC07),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 12),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "NIT Silchar",
-                                style: GoogleFonts.poppins(
-                                  textStyle: TextStyle(
-                                    color: const Color(0xff191C1D)
-                                        .withOpacity(0.7),
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: 0.5,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                "On Campus",
-                                style: GoogleFonts.poppins(
-                                  textStyle: TextStyle(
-                                    color: const Color(0xff191C1D)
-                                        .withOpacity(0.5),
-                                    fontSize: 8.0,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: 0.5,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 20),
-                    width: 114,
-                    height: 20,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      color: const Color(0xffDAE5FF),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        const Icon(
-                          Icons.event_note_outlined,
-                          size: 10,
-                          color: Color(0xff213F8D),
-                        ),
-                        Text(
-                          "Add to Calender",
-                          style: GoogleFonts.poppins(
-                            textStyle: const TextStyle(
-                              color: Color(0xff213F8D),
-                              fontSize: 10.0,
-                              fontWeight: FontWeight.w300,
-                              letterSpacing: 0.5,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 20),
-                    child: Text(
-                      "Event Details",
+                  const Follow()
+                ],
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 22),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Android Study Jams",
                       style: GoogleFonts.poppins(
                         textStyle: TextStyle(
                           color: const Color(0xff191C1D).withOpacity(0.7),
-                          fontSize: 12.0,
+                          fontSize: 20.0,
                           fontWeight: FontWeight.w500,
                           letterSpacing: 0.5,
                         ),
                       ),
                     ),
-                  ),
-                  DetailsWidget(text: description),
-                  Container(
-                    margin: const EdgeInsets.only(top: 29),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Card(
-                          shadowColor: AppColorLight.cardShadow,
-                          elevation: 1,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: SizedBox(
-                            width: 125,
-                            height: 28,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Container(
-                                  width: 22,
-                                  height: 22,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage('assets/google.png'),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  "Google Form",
-                                  style: GoogleFonts.poppins(
-                                    textStyle: const TextStyle(
-                                      color: Color(0xFFFECC07),
-                                      fontSize: 12.0,
-                                      fontWeight: FontWeight.w400,
-                                      letterSpacing: 0.5,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Card(
-                          shadowColor: AppColorLight.cardShadow,
-                          elevation: 1,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: SizedBox(
-                            width: 125,
-                            height: 28,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                const Icon(
-                                  Icons.facebook,
-                                  size: 22,
-                                  color: Color(0xff1877F2),
-                                ),
-                                Text(
-                                  "Facebook",
-                                  style: GoogleFonts.poppins(
-                                    textStyle: const TextStyle(
-                                      color: Color(0xff213f8d),
-                                      fontSize: 12.0,
-                                      fontWeight: FontWeight.w400,
-                                      letterSpacing: 0.5,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 21),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.person,
-                          size: 32,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 12),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Random Name",
-                                style: GoogleFonts.poppins(
-                                  textStyle: TextStyle(
-                                    color: const Color(0xff191C1D)
-                                        .withOpacity(0.7),
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: 0.5,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                "Moderator",
-                                style: GoogleFonts.poppins(
-                                  textStyle: TextStyle(
-                                    color: const Color(0xff191C1D)
-                                        .withOpacity(0.5),
-                                    fontSize: 8.0,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: 0.5,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 20),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 36,
-                          height: 36,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: const Color(0xFFFFF0B6)),
-                          child: const Center(
-                            child: Icon(
-                              Icons.call_outlined,
-                              size: 14,
-                              color: Color(0xffFECC07),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 12),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "9876543210",
-                                style: GoogleFonts.poppins(
-                                  textStyle: TextStyle(
-                                    color: const Color(0xff191C1D)
-                                        .withOpacity(0.7),
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: 0.5,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 12, bottom: 20),
-                    child: Text(
-                      "published on 12 March,2021",
-                      style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
-                            color: const Color(0xff191C1D).withOpacity(0.7),
-                            fontSize: 8.0,
-                            fontWeight: FontWeight.w300,
-                            letterSpacing: 0.5,
-                            fontStyle: FontStyle.italic),
+                    SizedBox(
+                      width: 61,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [const Like(), const Share()],
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
-            ),
+              DetailCard(
+                  text1: "Fri, 20 March, 2021",
+                  text2: "6:00 PM to 7:00 PM",
+                  icon: Icons.calendar_today_outlined),
+              DetailCard(
+                  text1: "NIT Silchar",
+                  text2: "On Campus",
+                  icon: Icons.location_on_outlined),
+              const AddToCalender(),
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                child: Text(
+                  "Event Details",
+                  style: GoogleFonts.poppins(
+                    textStyle: TextStyle(
+                      color: const Color(0xff191C1D).withOpacity(0.7),
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ),
+              ),
+              DetailsWidget(text: description),
+              Container(
+                margin: const EdgeInsets.only(top: 29),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [const Gform(), const Facebook()],
+                ),
+              ),
+              Moderator(
+                  text1: "Random Name", text2: "Moderator", icon: Icons.person),
+              DetailCard(text1: "9876543210", icon: Icons.call_outlined),
+              Container(
+                margin: const EdgeInsets.only(top: 12, bottom: 20),
+                child: Text(
+                  "published on 12 March,2021",
+                  style: GoogleFonts.poppins(
+                    textStyle: TextStyle(
+                        color: const Color(0xff191C1D).withOpacity(0.7),
+                        fontSize: 8.0,
+                        fontWeight: FontWeight.w300,
+                        letterSpacing: 0.5,
+                        fontStyle: FontStyle.italic),
+                  ),
+                ),
+              )
+            ],
           ),
         ),
-        collapsed: null,
-        defaultPanelState: PanelState.OPEN,
         body: SafeArea(
           child: Column(
             children: [
@@ -556,91 +254,6 @@ class _EventScreenState extends State<EventScreen> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class DetailsWidget extends StatefulWidget {
-  final String text;
-
-  const DetailsWidget({Key? key, required this.text}) : super(key: key);
-  @override
-  _DetailsWidgetState createState() => _DetailsWidgetState();
-}
-
-class _DetailsWidgetState extends State<DetailsWidget> {
-  String firstHalf = "";
-  String secondHalf = "";
-
-  bool flag = true;
-
-  @override
-  void initState() {
-    super.initState();
-
-    if (widget.text.length > 80) {
-      firstHalf = widget.text.substring(0, 80);
-      secondHalf = widget.text.substring(80, widget.text.length);
-    } else {
-      firstHalf = widget.text;
-      secondHalf = "";
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 20),
-      child: secondHalf.isEmpty
-          ? Text(
-              firstHalf,
-              style: GoogleFonts.poppins(
-                textStyle: TextStyle(
-                  color: const Color(0xff191C1D).withOpacity(0.5),
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.w300,
-                  letterSpacing: 0.5,
-                ),
-              ),
-            )
-          : Column(
-              children: <Widget>[
-                Text(
-                  flag ? (firstHalf + "...") : (firstHalf + secondHalf),
-                  style: GoogleFonts.poppins(
-                    textStyle: TextStyle(
-                      color: const Color(0xff191C1D).withOpacity(0.5),
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w300,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                ),
-                InkWell(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        flag ? "show more" : "show less",
-                        style: GoogleFonts.poppins(
-                          textStyle: const TextStyle(
-                            color: Color(0xff213F8D),
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0.5,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  onTap: () {
-                    setState(() {
-                      flag = !flag;
-                    });
-                  },
-                ),
-              ],
-            ),
     );
   }
 }
