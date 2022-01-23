@@ -1,6 +1,7 @@
 // import 'package:efficacy_user/pages/homescreen.dart';
 // import 'package:efficacy_user/pages/sign_up.dart';
- import 'package:efficacy_user/pages/club_details.dart';
+import 'package:efficacy_user/pages/about_us.dart';
+import 'package:efficacy_user/pages/club_details.dart';
 import 'package:efficacy_user/pages/event_screen.dart';
 import 'package:efficacy_user/pages/homescreen.dart';
 import 'package:efficacy_user/pages/sign_up.dart';
@@ -28,6 +29,7 @@ class _MyAppState extends State<MyApp> {
         '/signup_screen': (BuildContext context) => const SignUp(),
         '/home_screen': (BuildContext context) => const HomeScreen(),
         '/event_screen': (BuildContext context) => const EventScreen(),
+        '/about_us': (BuildContext context) => const AboutUsPage(),
       },
     );
   }
