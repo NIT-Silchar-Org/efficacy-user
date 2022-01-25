@@ -2,7 +2,7 @@ import 'package:efficacy_user/widgets/event_tile.dart';
 import 'package:flutter/material.dart';
 
 class ExploreScreen extends StatefulWidget {
-    static const route='explore_screen';
+  static const route = 'explore_screen';
   const ExploreScreen({Key? key}) : super(key: key);
 
   @override
@@ -14,7 +14,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
       'https://res.cloudinary.com/devncode/image/upload/v1575267757/production_devncode/community/1575267756355.jpg';
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
