@@ -1,5 +1,4 @@
 import 'package:efficacy_user/widgets/bell_notification.dart';
-import 'package:efficacy_user/widgets/bottom_navigation_bar.dart';
 import 'package:efficacy_user/widgets/event_tile.dart';
 import 'package:efficacy_user/widgets/expand_text.dart';
 import 'package:efficacy_user/widgets/subscribe_button.dart';

@@ -18,7 +18,7 @@ class _BottomBarState extends State<BottomBar> {
       ),
       child: BottomNavigationBar(
         elevation: 0,
-        backgroundColor: Color(0x01EEEEEE),
+        backgroundColor: const Color(0x01EEEEEE),
         type: BottomNavigationBarType.fixed,
         selectedItemColor: const Color(0xff00829B),
         selectedFontSize: 20,

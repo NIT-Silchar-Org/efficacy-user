@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:efficacy_user/pages/event_screen.dart';
 
 class FeedScreen extends StatefulWidget {
-    static const route='feed_screen';
+  static const route = 'feed_screen';
   const FeedScreen({Key? key}) : super(key: key);
 
   @override
@@ -17,28 +17,26 @@ class _FeedScreenState extends State<FeedScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller.animateTo(-100,
-        duration: Duration(milliseconds: 1000), curve: Curves.easeIn);
+        duration: const Duration(milliseconds: 1000), curve: Curves.easeIn);
   }
 
   void _animateup() {
     _controller.animateTo(-100,
-        duration: Duration(milliseconds: 1000), curve: Curves.easeIn);
+        duration: const Duration(milliseconds: 1000), curve: Curves.easeIn);
   }
 
   void _animateToIndex(int index) {
     _controller.animateTo(
       index * 100,
-      duration: Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 1000),
       curve: Curves.easeIn,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       controller: _controller,
       child: Padding(
@@ -51,9 +49,9 @@ class _FeedScreenState extends State<FeedScreen> {
                 // Navigator.pushNamed(context, '/event_screen');
                 Navigator.of(context).push(PageRouteBuilder(
                     pageBuilder: (context, animation, anotherAnimation) {
-                      return EventScreen();
+                      return const EventScreen();
                     },
-                    transitionDuration: Duration(milliseconds: 1200),
+                    transitionDuration: const Duration(milliseconds: 1200),
                     transitionsBuilder:
                         (context, animation, anotherAnimation, child) {
                       animation = CurvedAnimation(
