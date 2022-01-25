@@ -1,29 +1,31 @@
 import 'package:dio/dio.dart';
 
-class Service {
+class NetworkEngine {
   late Dio _dio;
 
   final baseUrl = "https://localhost:3000/";
 
-  HttpService() {
-    _dio = Dio(BaseOptions(
-      baseUrl: baseUrl,
-    ));
-
+  Service() {
+    _dio = Dio(
+      BaseOptions(
+        baseUrl: baseUrl,
+        connectTimeout: 25,
+        receiveTimeout: 60,
+      ),
+    );
     initializeInterceptor();
   }
 
-  Future<Response> getRequest(String endPoint) async {
+  Future<Response> post(
+      {required Map<String, dynamic> data, required String endPoint}) async {
     Response response;
-
     try {
-      response = await _dio.get(endPoint);
+      response = await _dio.post(endPoint, data: data);
+      return response;
     } on DioError catch (e) {
       print(e.message);
       throw Exception(e.message);
     }
-
-    return response;
   }
 
   initializeInterceptor() {
