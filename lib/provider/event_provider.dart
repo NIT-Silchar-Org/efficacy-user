@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class EventProvider with ChangeNotifier {
+<<<<<<< HEAD
   EventModel fetchEvent(String eventId) {
     try {
       final token = FirebaseAuth.instance.currentUser!.getIdToken();
@@ -16,4 +17,7 @@ class EventProvider with ChangeNotifier {
       throw(e);
     }
   }
+=======
+  late EventModel _event;
+>>>>>>> 62315b35c4bea894a5b4323083582e53fb3c5e1c
 }
