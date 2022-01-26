@@ -1,5 +1,9 @@
 import 'package:efficacy_user/models/contacts_model.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'event_model.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class EventModel {
   EventModel({
     this.usersWhoLiked,
@@ -16,10 +20,10 @@ class EventModel {
     this.startTime,
     this.endTime,
     this.venue,
-    this.contacts,
+    this.contact,
   });
   List<String>? usersWhoLiked;
-  List<Contact>? contacts;
+  List<Contact>? contact;
   DateTime? startTime, endTime;
   String? eventName,
       eventId,
@@ -31,26 +35,8 @@ class EventModel {
       clubLogoURL,
       fbPostUrl,
       googleFormURL,
-      venue;
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> data = {};
-    data['usersWhoLiked'] = usersWhoLiked;
-    data['likeCount'] = usersWhoLiked!.length;
-    data['eventId'] = eventId;
-    data['posterURL'] = posterURL;
-    data['shortDescription'] = shortDescription;
-    data['longDescription'] = longDescription;
-    data['eventName'] = eventName;
-    data['clubId'] = clubId;
-    data['clubName'] = clubName;
-    data['clubLogoURL'] = clubLogoURL;
-    data['fbPostUrl'] = fbPostUrl;
-    data['googleFormURL'] = googleFormURL;
-    data['startTime'] = startTime;
-    data['endTime'] = endTime;
-    data['venue'] = venue;
-    data['duration'] = endTime!.difference(startTime!);
-    data['contacts'] = contacts;
-    return data;
-  }
+      venue; 
+  factory EventModel.fromJson(Map<String, dynamic> json) => _$EventModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$EventModelToJson(this);
 }

@@ -1,5 +1,9 @@
 import 'package:efficacy_user/models/contacts_model.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'club_model.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class ClubModel {
   String clubId,
       clubName,
@@ -20,4 +24,8 @@ class ClubModel {
       required this.linkedlnURL,
       required this.moderators,
       required this.followers});
+    factory ClubModel.fromJson(Map<String, dynamic> json) => _$ClubModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ClubModelToJson(this);
+
 }

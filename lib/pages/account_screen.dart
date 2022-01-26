@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:efficacy_user/pages/club_details.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -21,7 +20,7 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget infoFun(String s1, String s2) {
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Row(
@@ -56,13 +55,13 @@ class _AccountScreenState extends State<AccountScreen> {
                   width: 150,
                   height: 1,
                   color: const Color(0xff191C1D).withOpacity(0.2),
-                  child: Divider(),
+                  child: const Divider(),
                 )
               ],
             )
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         )
       ],
@@ -94,7 +93,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     endIndent: 100,
                   ),
                 ),
-                Text(
+                const Text(
                   'Personal Information',
                   style: TextStyle(color: Color(0xff213F8D), fontSize: 22),
                 ),
@@ -105,7 +104,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 infoFun('Degree', 'BTECH'),
                 infoFun('Email', 'ashas@gmail.com'),
                 infoFun('Phone No.', '8203887***'),
-                Text(
+                const Text(
                   'Theme',
                   style: TextStyle(color: Color(0xff213F8D), fontSize: 22),
                 ),
@@ -139,13 +138,13 @@ class _AccountScreenState extends State<AccountScreen> {
           body: Center(
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 45,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text(
