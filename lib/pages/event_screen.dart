@@ -1,6 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables
-
-import 'package:efficacy_user/utils/divider.dart';
+import 'package:efficacy_user/widgets/divider.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,15 +7,15 @@ import 'package:efficacy_user/pages/club_details.dart';
 import 'package:efficacy_user/widgets/details_widget.dart';
 import 'package:efficacy_user/widgets/detail_card.dart';
 import 'package:efficacy_user/widgets/moderator.dart';
-import 'package:efficacy_user/utils/add_to_calender.dart';
-import 'package:efficacy_user/utils/like_widget.dart';
-import 'package:efficacy_user/utils/share_widget.dart';
-import 'package:efficacy_user/utils/follow_widget.dart';
-import 'package:efficacy_user/utils/facebook_widget.dart';
-import 'package:efficacy_user/utils/gform_widget.dart';
+import 'package:efficacy_user/widgets/add_to_calender.dart';
+import 'package:efficacy_user/widgets/like_widget.dart';
+import 'package:efficacy_user/widgets/share_widget.dart';
+import 'package:efficacy_user/widgets/follow_widget.dart';
+import 'package:efficacy_user/widgets/facebook_widget.dart';
+import 'package:efficacy_user/widgets/gform_widget.dart';
 
 class EventScreen extends StatefulWidget {
-    static const route='/event_screen';
+  static const route = '/event_screen';
   const EventScreen({Key? key}) : super(key: key);
 
   @override
@@ -124,7 +122,10 @@ class _EventScreenState extends State<EventScreen> {
                       width: 61,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [const Like(), const Share()],
+                        children: const [
+                          Like(),
+                          Share(),
+                        ],
                       ),
                     )
                   ],
@@ -161,7 +162,7 @@ class _EventScreenState extends State<EventScreen> {
                 margin: const EdgeInsets.only(top: 29),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [const Gform(), const Facebook()],
+                  children: const [Gform(), Facebook()],
                 ),
               ),
               Moderator(

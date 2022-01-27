@@ -1,14 +1,12 @@
-// import 'dart:math';
 import '../widgets/signin_button.dart';
 import 'dart:ui';
 import 'package:efficacy_user/widgets/signup_widget.dart';
 import 'package:flutter/material.dart';
-// import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SignIn extends StatefulWidget {
-    static const route='sign_in';
+  static const route = 'sign_in';
   const SignIn({Key? key}) : super(key: key);
 
   @override
@@ -103,9 +101,6 @@ class _SignInState extends State<SignIn> {
       ),
     );
   }
-
-  //  First part gradient background
-  
 
   buildTopText() {
     return Positioned(

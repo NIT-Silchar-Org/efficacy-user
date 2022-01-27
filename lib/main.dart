@@ -46,7 +46,9 @@ class _MyAppState extends State<MyApp> {
                 ? const CircularProgressIndicator(
                     backgroundColor: Colors.orangeAccent,
                   )
-                : const SignIn(),
+                : snapshot.hasData
+                    ? const HomeScreen()
+                    : const SignIn(),
             routes: <String, WidgetBuilder>{
               HomeScreen.route: (BuildContext context) => const HomeScreen(),
               EventScreen.route: (BuildContext context) => const EventScreen(),
