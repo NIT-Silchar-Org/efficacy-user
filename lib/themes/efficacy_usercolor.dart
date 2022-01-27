@@ -35,4 +35,6 @@ class AppColorLight {
   static Color error = Colors.red;
   static Color glassBordercolor = const Color(0xffbde6ed);
   static Color bordercolor = const Color(0xff4783C7);
+  static Color dropDownTextColor = const Color(0xff213F8D);
+  static Color dropDownSelectedColor = const Color(0xffDAE5FF);
 }

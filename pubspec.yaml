@@ -39,6 +39,16 @@ dependencies:
   material_design_icons_flutter: ^5.0.6595
   sliding_up_panel: ^2.0.0+1
   solid_bottom_sheet: ^0.1.10
+  group_radio_button: ^1.1.0
+  flutter_portal: ^0.4.0
+  flutter_svg: ^1.0.0
+  lottie: ^1.2.1
+  dropdown_button2: ^1.0.7
+  firebase_storage: ^10.2.5
+  cloud_firestore: ^3.1.6
+  firebase_auth: ^3.3.5
+  provider: ^6.0.2
+  readmore: ^2.1.0
 
 dev_dependencies:
   flutter_lints: ^1.0.0
@@ -56,6 +66,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - lottie/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

@@ -1,4 +1,6 @@
 import 'package:efficacy_user/widgets/bell_notification.dart';
+import 'package:efficacy_user/widgets/bottom_navigation_bar.dart';
+import 'package:efficacy_user/widgets/event_tile.dart';
 import 'package:efficacy_user/widgets/expand_text.dart';
 import 'package:efficacy_user/widgets/subscribe_button.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class ClubDetail extends StatefulWidget {
+  static const route = 'club_detail';
   const ClubDetail({Key? key}) : super(key: key);
 
   @override
@@ -15,6 +18,8 @@ class ClubDetail extends StatefulWidget {
 class _ClubDetailState extends State<ClubDetail>
     with SingleTickerProviderStateMixin {
   late TabController _controller;
+  String gdscImageUrl =
+      'https://res.cloudinary.com/devncode/image/upload/v1575267757/production_devncode/community/1575267756355.jpg';
   final text =
       "What is Lorem Ipsum?Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry standard dummy text ever since the 1500s,when an unknown printer took a galleyof type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leapinto electronic typesetting, remaining essentially unchanged.It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum";
   @override
@@ -161,7 +166,8 @@ class _ClubDetailState extends State<ClubDetail>
                                           ),
                                           image: DecorationImage(
                                             image: AssetImage(
-                                                'assets/moderator.jpg'),
+                                              'assets/moderator.jpg',
+                                            ),
                                             fit: BoxFit.cover,
                                           ),
                                         ),
@@ -184,7 +190,25 @@ class _ClubDetailState extends State<ClubDetail>
                           ],
                         ),
                       ),
-                      const Text('Person'),
+                      ListView(
+                        children: [
+                          EventTile(
+                            onPressed: () {},
+                            cardBannerUrl: 'assets/android_study_jams.png',
+                            gdscImageUrl: gdscImageUrl,
+                          ),
+                          EventTile(
+                            onPressed: () {},
+                            cardBannerUrl: 'assets/flutter_bootcamp.png',
+                            gdscImageUrl: gdscImageUrl,
+                          ),
+                          EventTile(
+                            onPressed: () {},
+                            cardBannerUrl: 'assets/android_study_jams.png',
+                            gdscImageUrl: gdscImageUrl,
+                          ),
+                        ],
+                      ),
                     ],
                     controller: _controller,
                   ),
@@ -215,6 +239,7 @@ class _ClubDetailState extends State<ClubDetail>
             ),
           ),
         ),
+        //bottomNavigationBar: const BottomBar(),
       ),
     );
   }

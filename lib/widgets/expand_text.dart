@@ -9,12 +9,13 @@ class ExpandText extends StatefulWidget {
 }
 
 class _ExpandTextState extends State<ExpandText> {
-  late bool isclosed;
+  late bool isclosed; 
   @override
   void initState() {
     super.initState();
-    isclosed=true;
+    isclosed = true;
   }
+
   @override
   Widget build(BuildContext context) {
     return widget.text.length < 100
