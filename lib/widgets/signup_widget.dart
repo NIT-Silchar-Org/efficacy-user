@@ -144,7 +144,7 @@ class _SignUpState extends State<SignUp> {
                       onPressed: () {
                         bool isvalid = _formkey.currentState!.validate();
                         if (isvalid) {
-                            _formkey.currentState!.save();
+                          _formkey.currentState!.save();
                           final provider = Provider.of<GoogleSignInProvider>(
                               context,
                               listen: false);

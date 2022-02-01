@@ -19,7 +19,7 @@ class SignInButton extends StatelessWidget {
           onPressed: () async {
             final provider =
                 Provider.of<GoogleSignInProvider>(context, listen: false);
-            final user= await provider.preLogin();
+            final user = await provider.preLogin();
             callback(user);
           },
           child: Row(

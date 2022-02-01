@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -27,30 +27,26 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  flutter:
-    sdk: flutter
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   expandable: ^5.0.1
+  flutter:
+    sdk: flutter
   flutter_lorem: ^2.0.0
   font_awesome_flutter: ^9.2.0
   glassmorphism: ^3.0.0
-  google_fonts: ^2.2.0
-  intl_phone_field: ^3.0.1
+  google_fonts: ^2.1.0
+  intl_phone_field: ^2.1.0
   material_design_icons_flutter: ^5.0.6595
   sliding_up_panel: ^2.0.0+1
   solid_bottom_sheet: ^0.1.10
-  group_radio_button: ^1.2.0
+  group_radio_button: ^1.1.0
   flutter_portal: ^0.4.0
-  flutter_svg: ^1.0.3
+  flutter_svg: ^1.0.0
   lottie: ^1.2.1
   dropdown_button2: ^1.0.7
-  firebase_storage: ^10.2.6
-  cloud_firestore: ^3.1.7
-  firebase_auth: ^3.3.6
+  firebase_storage: ^10.2.5
+  cloud_firestore: ^3.1.6
+  firebase_auth: ^3.3.5
   provider: ^6.0.2
   readmore: ^2.1.0
   json_annotation: ^4.4.0
@@ -77,24 +73,30 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
 
+
+dev_dependencies:
+  build_runner: ^2.1.7
+  flutter_lints: ^1.0.0
+  flutter_test:
+    sdk: flutter
+  json_serializable: ^6.1.4
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+# The following section is specific to Flutter.
+flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
   assets:
     - assets/
     - lottie/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

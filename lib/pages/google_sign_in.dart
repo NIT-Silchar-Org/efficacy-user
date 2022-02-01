@@ -21,7 +21,7 @@ class _SignInState extends State<SignIn> {
   late GoogleSignInAccount _currentuser;
   void sign(GoogleSignInAccount user) {
     setState(() {
-        _currentuser=user;
+      _currentuser = user;
       isauthenticate = true;
     });
   }
@@ -31,7 +31,7 @@ class _SignInState extends State<SignIn> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
-        children: [ 
+        children: [
           Positioned(
             top: 0,
             child: SvgPicture.asset(
@@ -51,7 +51,7 @@ class _SignInState extends State<SignIn> {
           //    Part III Gaussian
           Center(
             child: isauthenticate
-                ?  SignUp(user:_currentuser)
+                ? SignUp(user: _currentuser)
                 : GlassmorphicContainer(
                     width: 350,
                     height: 400,
