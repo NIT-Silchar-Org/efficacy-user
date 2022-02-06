@@ -4,6 +4,7 @@ import 'package:efficacy_user/pages/explore_screen.dart';
 import 'package:efficacy_user/pages/feed_screen.dart';
 import 'package:efficacy_user/pages/homescreen.dart';
 import 'package:efficacy_user/provider/event_provider.dart';
+import 'package:efficacy_user/provider/google_signin_provider.dart';
 import 'package:efficacy_user/themes/efficacy_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/pages/google_sign_in.dart';
@@ -34,27 +35,31 @@ class _MyAppState extends State<MyApp> {
       builder: (context, snapshot) {
         return MultiProvider(
           providers: [
-            ChangeNotifierProvider<EventProvider>.value(value: EventProvider())
+            ChangeNotifierProvider<EventProvider>.value(value: EventProvider()),
+            ChangeNotifierProvider<GoogleSignInProvider>.value(
+                value: GoogleSignInProvider()),
           ],
-          child: MaterialApp(
-            theme: AppTheme.light,
-            debugShowCheckedModeBanner: false,
-            home: snapshot.connectionState == ConnectionState.waiting
-                ? const CircularProgressIndicator(
-                    backgroundColor: Colors.orangeAccent,
-                  )
-                : snapshot.hasData
-                    ? const HomeScreen()
-                    : const SignIn(),
-            routes: <String, WidgetBuilder>{
-              HomeScreen.route: (BuildContext context) => const HomeScreen(),
-              EventScreen.route: (BuildContext context) => const EventScreen(),
-              ClubDetail.route: (BuildContext context) => const ClubDetail(),
-              ExploreScreen.route: (BuildContext context) =>
-                  const ExploreScreen(),
-              FeedScreen.route: (BuildContext context) => const FeedScreen(),
-              SignIn.route: (BuildContext context) => const SignIn(),
-            },
+          child: Consumer<GoogleSignInProvider>(
+            builder:(context, value, child) =>  MaterialApp(
+              theme: AppTheme.light,
+              debugShowCheckedModeBanner: false,
+              home: snapshot.connectionState == ConnectionState.waiting
+                  ? const CircularProgressIndicator(
+                      backgroundColor: Colors.orangeAccent,
+                    )
+                  : value.currentUser()
+                      ? const HomeScreen()
+                      : const SignIn(),
+              routes: <String, WidgetBuilder>{
+                HomeScreen.route: (BuildContext context) => const HomeScreen(),
+                EventScreen.route: (BuildContext context) => const EventScreen(),
+                ClubDetail.route: (BuildContext context) => const ClubDetail(),
+                ExploreScreen.route: (BuildContext context) =>
+                    const ExploreScreen(),
+                FeedScreen.route: (BuildContext context) => const FeedScreen(),
+                SignIn.route: (BuildContext context) => const SignIn(),
+              },
+            ),
           ),
         );
       },
