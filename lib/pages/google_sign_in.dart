@@ -83,8 +83,7 @@ class _SignInState extends State<SignIn> {
                           width: 150,
                           alignment: Alignment.center,
                           decoration: const BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(200)),
+                            shape: BoxShape.circle,
                             image: DecorationImage(
                               image: AssetImage('assets/efficacy_logo.jpg'),
                               fit: BoxFit.cover,

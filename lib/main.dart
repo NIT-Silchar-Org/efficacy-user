@@ -39,25 +39,27 @@ class _MyAppState extends State<MyApp> {
             ChangeNotifierProvider<GoogleSignInProvider>.value(
                 value: GoogleSignInProvider()),
           ],
-          child: MaterialApp(
-            theme: AppTheme.light,
-            debugShowCheckedModeBanner: false,
-            home: snapshot.connectionState == ConnectionState.waiting
-                ? const CircularProgressIndicator(
-                    backgroundColor: Colors.orangeAccent,
-                  )
-                : !snapshot.hasData
-                    ? const HomeScreen()
-                    : const SignIn(),
-            routes: <String, WidgetBuilder>{
-              HomeScreen.route: (BuildContext context) => const HomeScreen(),
-              EventScreen.route: (BuildContext context) => const EventScreen(),
-              ClubDetail.route: (BuildContext context) => const ClubDetail(),
-              ExploreScreen.route: (BuildContext context) =>
-                  const ExploreScreen(),
-              FeedScreen.route: (BuildContext context) => const FeedScreen(),
-              SignIn.route: (BuildContext context) => const SignIn(),
-            },
+          child: Consumer<GoogleSignInProvider>(
+            builder:(context, value, child) =>  MaterialApp(
+              theme: AppTheme.light,
+              debugShowCheckedModeBanner: false,
+              home: snapshot.connectionState == ConnectionState.waiting
+                  ? const CircularProgressIndicator(
+                      backgroundColor: Colors.orangeAccent,
+                    )
+                  : value.currentUser()
+                      ? const HomeScreen()
+                      : const SignIn(),
+              routes: <String, WidgetBuilder>{
+                HomeScreen.route: (BuildContext context) => const HomeScreen(),
+                EventScreen.route: (BuildContext context) => const EventScreen(),
+                ClubDetail.route: (BuildContext context) => const ClubDetail(),
+                ExploreScreen.route: (BuildContext context) =>
+                    const ExploreScreen(),
+                FeedScreen.route: (BuildContext context) => const FeedScreen(),
+                SignIn.route: (BuildContext context) => const SignIn(),
+              },
+            ),
           ),
         );
       },
