@@ -1,3 +1,5 @@
+import 'package:google_sign_in/google_sign_in.dart';
+
 import '../widgets/signin_button.dart';
 import 'dart:ui';
 import 'package:efficacy_user/widgets/signup_widget.dart';
@@ -16,9 +18,10 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   bool isauthenticate = false;
   String initialcountry = 'IN';
-
-  void sign() {
+  late GoogleSignInAccount _currentuser;
+  void sign(GoogleSignInAccount user) {
     setState(() {
+      _currentuser = user;
       isauthenticate = true;
     });
   }
@@ -29,7 +32,6 @@ class _SignInState extends State<SignIn> {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          //  First part gradient background
           Positioned(
             top: 0,
             child: SvgPicture.asset(
@@ -49,7 +51,7 @@ class _SignInState extends State<SignIn> {
           //    Part III Gaussian
           Center(
             child: isauthenticate
-                ? const SignUp()
+                ? SignUp(user: _currentuser)
                 : GlassmorphicContainer(
                     width: 350,
                     height: 400,
@@ -81,8 +83,7 @@ class _SignInState extends State<SignIn> {
                           width: 150,
                           alignment: Alignment.center,
                           decoration: const BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(200)),
+                            shape: BoxShape.circle,
                             image: DecorationImage(
                               image: AssetImage('assets/efficacy_logo.jpg'),
                               fit: BoxFit.cover,

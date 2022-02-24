@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                     },
                     itemHeight: size.height * 0.05,
-                    itemWidth: size.width * 0.5,
+                    //itemWidth: size.width * 0.5,
                     dropdownPadding: const EdgeInsets.symmetric(vertical: 20),
                     dropdownDecoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
