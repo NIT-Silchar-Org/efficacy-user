@@ -3,9 +3,9 @@ import 'package:dio/dio.dart';
 class NetworkEngine {
   late Dio _dio;
 
-  final baseUrl = "https://localhost:3000/";
+  final baseUrl = "https://efficacy2back.herokuapp.com/api/";
 
-  Service() {
+  NetworkEngine() {
     _dio = Dio(
       BaseOptions(
         baseUrl: baseUrl,
