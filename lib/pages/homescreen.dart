@@ -1,9 +1,11 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:efficacy_user/pages/explore_screen.dart';
 import 'package:efficacy_user/pages/feed_screen.dart';
+import 'package:efficacy_user/provider/google_signin_provider.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:efficacy_user/widgets/filter_menu_item.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   static const route = '/home_screen';
@@ -95,8 +97,16 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.all(10),
-                child: CircleAvatar(
-                  backgroundColor: AppColorLight.secondary,
+                child: InkWell(
+                  onTap: () {
+                    // Provider.of<GoogleSignInProvider>(context, listen: false)
+                    //     .logOut();
+                    // Navigator.of(context).pushNamedAndRemoveUntil(
+                    //     '/', (Route<dynamic> route) => false);
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: AppColorLight.secondary,
+                  ),
                 ),
               )
             ],

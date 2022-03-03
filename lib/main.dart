@@ -8,6 +8,7 @@ import 'package:efficacy_user/pages/feed_screen.dart';
 import 'package:efficacy_user/pages/homescreen.dart';
 import 'package:efficacy_user/provider/event_provider.dart';
 import 'package:efficacy_user/provider/google_signin_provider.dart';
+import 'package:efficacy_user/provider/loading_provider.dart';
 import 'package:efficacy_user/themes/efficacy_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/pages/google_sign_in.dart';
@@ -41,9 +42,12 @@ class _MyAppState extends State<MyApp> {
             ChangeNotifierProvider<EventProvider>.value(value: EventProvider()),
             ChangeNotifierProvider<GoogleSignInProvider>.value(
                 value: GoogleSignInProvider()),
+            ChangeNotifierProvider<LoadingProvider>(
+              create: (context) => LoadingProvider(),
+            ),
           ],
           child: Consumer<GoogleSignInProvider>(
-            builder:(context, value, child) =>  MaterialApp(
+            builder: (context, value, child) => MaterialApp(
               theme: AppTheme.light,
               debugShowCheckedModeBanner: false,
               home: snapshot.connectionState == ConnectionState.waiting
@@ -55,7 +59,8 @@ class _MyAppState extends State<MyApp> {
                       : const SignIn(),
               routes: <String, WidgetBuilder>{
                 HomeScreen.route: (BuildContext context) => const HomeScreen(),
-                EventScreen.route: (BuildContext context) => const EventScreen(),
+                EventScreen.route: (BuildContext context) =>
+                    const EventScreen(),
                 ClubDetail.route: (BuildContext context) => const ClubDetail(),
                 ExploreScreen.route: (BuildContext context) =>
                     const ExploreScreen(),
