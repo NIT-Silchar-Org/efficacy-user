@@ -21,30 +21,40 @@ class _AboutUsPageState extends State<AboutUsPage>
     super.initState();
   }
 
+  void backButton(){
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Efficacy'),
-      ),
-      body: SlidingUpPanel(
-        controller: panelController,
-        minHeight: MediaQuery.of(context).size.height - 250,
-        maxHeight: MediaQuery.of(context).size.height,
-        defaultPanelState: PanelState.CLOSED,
-        body: Image.asset('assets/efficacy_cover.png',
-        // height: 300,
-          fit: BoxFit.fitWidth,
-          alignment: AlignmentDirectional.topCenter,
+    return WillPopScope(
+      onWillPop: () {
+        backButton();
+        return Future.value(false);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Efficacy'),
         ),
-        panelBuilder: (controller) => PanelWidget(
-          controller: controller,
-          panelController: panelController,
-          tabController: tabController,
-        ),
-        borderRadius: const BorderRadius.horizontal(
-          left: Radius.circular(20),
-          right: Radius.circular(20),
+        body: SlidingUpPanel(
+          controller: panelController,
+          minHeight: MediaQuery.of(context).size.height - 250,
+          maxHeight: MediaQuery.of(context).size.height,
+          defaultPanelState: PanelState.CLOSED,
+          body: Image.asset('assets/efficacy_cover.png',
+          // height: 300,
+            fit: BoxFit.fitWidth,
+            alignment: AlignmentDirectional.topCenter,
+          ),
+          panelBuilder: (controller) => PanelWidget(
+            controller: controller,
+            panelController: panelController,
+            tabController: tabController,
+          ),
+          borderRadius: const BorderRadius.horizontal(
+            left: Radius.circular(20),
+            right: Radius.circular(20),
+          ),
         ),
       ),
     );
