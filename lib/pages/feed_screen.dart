@@ -23,7 +23,7 @@ class _FeedScreenState extends State<FeedScreen> {
 
   @override
   void initState() {
-    engine = Provider.of<FeedscreenProvider>(context);
+    engine = Provider.of<FeedscreenProvider>(context, listen: false);
     getFeedScreen();
     super.initState();
     _controller.animateTo(-100,
@@ -51,7 +51,7 @@ class _FeedScreenState extends State<FeedScreen> {
         isLoading = true;
       });
       engineVar = await engine.fetchfeed([
-        'wqvJ98qg2sa1X23gRmVX',
+        'SBwINoIKUukguKZrT3Wx',
       ]);
       setState(() {
         isLoading = false;

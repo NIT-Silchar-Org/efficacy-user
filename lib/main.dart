@@ -9,6 +9,7 @@ import 'package:efficacy_user/pages/homescreen.dart';
 import 'package:efficacy_user/provider/event_provider.dart';
 import 'package:efficacy_user/provider/feedscreen_provider.dart';
 import 'package:efficacy_user/provider/google_signin_provider.dart';
+import 'package:efficacy_user/provider/loading_provider.dart';
 import 'package:efficacy_user/themes/efficacy_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/pages/google_sign_in.dart';
@@ -44,6 +45,9 @@ class _MyAppState extends State<MyApp> {
                 value: GoogleSignInProvider()),
             ChangeNotifierProvider<FeedscreenProvider>.value(
                 value: FeedscreenProvider()),
+            ChangeNotifierProvider<LoadingProvider>(
+              create: (context) => LoadingProvider(),
+            ),
           ],
           child: Consumer<GoogleSignInProvider>(
             builder: (context, value, child) => MaterialApp(
