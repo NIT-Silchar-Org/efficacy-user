@@ -1,20 +1,19 @@
+import 'package:efficacy_user/models/event_model.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-class EventTile extends StatefulWidget {
-  const EventTile({
-    Key? key,
-    required this.cardBannerUrl,
-    required this.gdscImageUrl,
-    required this.onPressed,
-  }) : super(key: key);
+import '../pages/event_screen.dart';
 
-  final String cardBannerUrl;
-  final String gdscImageUrl;
-  final Function onPressed;
+class EventTile extends StatefulWidget {
+  final EventModel eventModel;
+  const EventTile({Key? key, required this.eventModel}) : super(key: key);
+
+  // final String cardBannerUrl;
+  // final String gdscImageUrl;
+  // final Function onPressed;
 
   @override
   State<EventTile> createState() => _EventTileState();
@@ -56,6 +55,14 @@ class _EventTileState extends State<EventTile>
     super.dispose();
   }
 
+  // void _animateToIndex(int index) {
+  //   _controller.animateTo(
+  //     index * 100,
+  //     duration: const Duration(milliseconds: 1000),
+  //     curve: Curves.easeIn,
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -81,10 +88,30 @@ class _EventTileState extends State<EventTile>
                 child: Column(
                   children: [
                     GestureDetector(
-                      onTap: () => widget.onPressed(),
+                      onTap: () {
+                        // _animateToIndex(10);
+                        // Navigator.pushNamed(context, '/event_screen');
+                        Navigator.of(context).push(PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, anotherAnimation) {
+                              return EventScreen(
+                                  eventId: widget.eventModel.eventId);
+                            },
+                            transitionDuration:
+                                const Duration(milliseconds: 1200),
+                            transitionsBuilder:
+                                (context, animation, anotherAnimation, child) {
+                              animation = CurvedAnimation(
+                                  curve: Curves.easeIn, parent: animation);
+                              return FadeTransition(
+                                opacity: animation,
+                                child: child,
+                              );
+                            }));
+                      },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(widget.cardBannerUrl,
+                        child: Image.asset(widget.eventModel.posterURL!,
                             fit: BoxFit.cover),
                       ),
                     ),
@@ -102,7 +129,8 @@ class _EventTileState extends State<EventTile>
                             borderRadius: BorderRadius.circular(10),
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(20, 10, 0, 10),
-                              child: Image.network(widget.gdscImageUrl,
+                              child: Image.network(
+                                  widget.eventModel.clubLogoURL!,
                                   fit: BoxFit.cover),
                             ),
                           ),

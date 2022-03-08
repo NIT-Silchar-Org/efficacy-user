@@ -1,4 +1,5 @@
 import 'package:efficacy_user/models/club_model.dart';
+import 'package:efficacy_user/pages/explore_screen.dart';
 import 'package:efficacy_user/provider/club_provider.dart';
 import 'package:efficacy_user/widgets/bell_notification.dart';
 import 'package:efficacy_user/widgets/event_tile.dart';
@@ -193,23 +194,8 @@ class _ClubDetailState extends State<ClubDetail>
                             ),
                             ListView(
                               children: [
-                                EventTile(
-                                  onPressed: () {},
-                                  cardBannerUrl:
-                                      'assets/android_study_jams.png',
-                                  gdscImageUrl: gdscImageUrl,
-                                ),
-                                EventTile(
-                                  onPressed: () {},
-                                  cardBannerUrl: 'assets/flutter_bootcamp.png',
-                                  gdscImageUrl: gdscImageUrl,
-                                ),
-                                EventTile(
-                                  onPressed: () {},
-                                  cardBannerUrl:
-                                      'assets/android_study_jams.png',
-                                  gdscImageUrl: gdscImageUrl,
-                                ),
+                                for (int i = 0; i < 10; i++)
+                                  EventTile(eventModel: tempEvent)
                               ],
                             ),
                           ],

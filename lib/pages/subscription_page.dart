@@ -6,6 +6,7 @@ import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 
 class SubscriptionPage extends StatefulWidget {
+  static const route = '/subscription_page';
   const SubscriptionPage({Key? key}) : super(key: key);
 
   @override

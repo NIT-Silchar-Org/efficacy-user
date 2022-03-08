@@ -69,6 +69,7 @@ class _MyAppState extends State<MyApp> {
                     const ExploreScreen(),
                 FeedScreen.route: (BuildContext context) => const FeedScreen(),
                 SignIn.route: (BuildContext context) => const SignIn(),
+                SubscriptionPage.route: (BuildContext context) => const SubscriptionPage(),
               },
             ),
           ),
