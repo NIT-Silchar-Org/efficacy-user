@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class PhoneWidget extends StatefulWidget {
-  const PhoneWidget({Key? key}) : super(key: key);
+  final TextEditingController controller;
+  const PhoneWidget({Key? key, required this.controller}) : super(key: key);
   @override
   _PhoneWidgetState createState() => _PhoneWidgetState();
 }
@@ -48,6 +49,7 @@ class _PhoneWidgetState extends State<PhoneWidget> {
       width: double.infinity,
       color: Colors.transparent,
       child: TextFormField(
+        controller: widget.controller,
         validator: (value) {
           if (value!.isEmpty) {
             return 'phone number should not be empty';

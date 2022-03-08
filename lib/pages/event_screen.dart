@@ -1,7 +1,10 @@
+import 'package:efficacy_user/models/event_model.dart';
+import 'package:efficacy_user/provider/event_provider.dart';
 import 'package:efficacy_user/widgets/divider.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:efficacy_user/pages/club_details.dart';
 import 'package:efficacy_user/widgets/details_widget.dart';
@@ -15,16 +18,22 @@ import 'package:efficacy_user/widgets/facebook_widget.dart';
 import 'package:efficacy_user/widgets/gform_widget.dart';
 
 class EventScreen extends StatefulWidget {
+  final String? eventId;
   static const route = '/event_screen';
-  const EventScreen({Key? key}) : super(key: key);
+  const EventScreen({
+    Key? key,
+    this.eventId,
+  }) : super(key: key);
 
   @override
   _EventScreenState createState() => _EventScreenState();
 }
 
 class _EventScreenState extends State<EventScreen> {
-  final String description =
-      "Flutter is Google’s mobile UI framework for crafting high-quality native interfaces on iOS and Android in record time. Flutter works with existing code, is used by developers and organizations around the world, and is free and open source.";
+  late EventProvider engine;
+  bool isInit = true;
+  bool isLoading = false;
+
   int _selectedIndex = 0;
   BorderRadiusGeometry sheetRadius = const BorderRadius.only(
     topLeft: Radius.circular(24.0),
@@ -32,197 +41,239 @@ class _EventScreenState extends State<EventScreen> {
   );
 
   @override
+  void initState() {
+    engine = Provider.of<EventProvider>(context);
+    getEvent();
+    super.initState();
+  }
+
+  late EventModel engineVar;
+
+  void getEvent() async {
+    if (isInit) {
+      setState(() {
+        isLoading = true;
+      });
+      engineVar = await engine.fetchEvent(widget.eventId!);
+      setState(() {
+        isLoading = false;
+      });
+    }
+    print(engineVar);
+    isInit = false;
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size devicesize = MediaQuery.of(context).size;
     return Scaffold(
-      body: SlidingUpPanel(
-        maxHeight: devicesize.height,
-        minHeight: devicesize.height * 0.60,
-        panelBuilder: (sc) => Padding(
-          padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
-          child: ListView(
-            // crossAxisAlignment: CrossAxisAlignment.start,
-            shrinkWrap: true,
-            controller: sc,
-            children: [
-              const PanelDivider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, ClubDetail.route);
-                        },
-                        child: SizedBox(
-                          width: 44,
-                          height: 44,
-                          child: Image.network(
-                            'https://res.cloudinary.com/devncode/image/upload/v1575267757/production_devncode/community/1575267756355.jpg',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(left: 12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : SlidingUpPanel(
+              maxHeight: devicesize.height,
+              minHeight: devicesize.height * 0.60,
+              panelBuilder: (sc) => Padding(
+                padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
+                child: ListView(
+                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  shrinkWrap: true,
+                  controller: sc,
+                  children: [
+                    const PanelDivider(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              "Organized by",
-                              style: GoogleFonts.poppins(
-                                textStyle: TextStyle(
-                                  color:
-                                      const Color(0xff191C1D).withOpacity(0.7),
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.w400,
-                                  letterSpacing: 0.5,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(context, ClubDetail.route);
+                              },
+                              child: SizedBox(
+                                width: 44,
+                                height: 44,
+                                child: Image.network(
+                                  engineVar.clubLogoURL!,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                             ),
-                            Text(
-                              "Google Developer Student Clubs",
-                              style: GoogleFonts.poppins(
-                                textStyle: TextStyle(
-                                  color:
-                                      const Color(0xff191C1D).withOpacity(0.7),
-                                  fontSize: 8.0,
-                                  fontWeight: FontWeight.w300,
-                                  letterSpacing: 0.5,
-                                ),
+                            Container(
+                              margin: const EdgeInsets.only(left: 12),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Organized by",
+                                    style: GoogleFonts.poppins(
+                                      textStyle: TextStyle(
+                                        color: const Color(0xff191C1D)
+                                            .withOpacity(0.7),
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.w400,
+                                        letterSpacing: 0.5,
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    engineVar.clubName!,
+                                    style: GoogleFonts.poppins(
+                                      textStyle: TextStyle(
+                                        color: const Color(0xff191C1D)
+                                            .withOpacity(0.7),
+                                        fontSize: 8.0,
+                                        fontWeight: FontWeight.w300,
+                                        letterSpacing: 0.5,
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
                             )
                           ],
                         ),
-                      )
-                    ],
-                  ),
-                  const Follow()
-                ],
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 22),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Android Study Jams",
-                      style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
-                          color: const Color(0xff191C1D).withOpacity(0.7),
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w500,
-                          letterSpacing: 0.5,
+                        const Follow()
+                      ],
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 22),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            engineVar.eventName!,
+                            style: GoogleFonts.poppins(
+                              textStyle: TextStyle(
+                                color: const Color(0xff191C1D).withOpacity(0.7),
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 0.5,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 61,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: const [
+                                Like(),
+                                Share(),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    DetailCard(
+                        text1: engineVar.startTime.toString().split(' ')[0],
+                        text2:
+                            '${engineVar.startTime.toString().split(' ')[1]} to ${engineVar.endTime.toString().split(' ')[1]}',
+                        icon: Icons.calendar_today_outlined),
+                    DetailCard(
+                        text1: engineVar.venue!,
+                        text2: "On Campus",
+                        icon: Icons.location_on_outlined),
+                    const Padding(
+                      padding: EdgeInsets.only(right: 180),
+                      child: AddToCalender(),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: Text(
+                        "Event Details",
+                        style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                            color: const Color(0xff191C1D).withOpacity(0.7),
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 0.5,
+                          ),
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: 61,
+                    DetailsWidget(text: engineVar.longDescription!),
+                    Container(
+                      margin: const EdgeInsets.only(top: 29),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Like(),
-                          Share(),
-                        ],
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: const [Gform(), Facebook()],
+                      ),
+                    ),
+                    ListView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: List.generate(
+                        engineVar.contact!.length,
+                        (index) => Column(
+                          children: [
+                            Moderator(
+                              text1: engineVar.contact![index].name,
+                              text2: engineVar.contact![index].position,
+                              icon: Icons.person,
+                            ),
+                            DetailCard(
+                              text1: engineVar.contact![index].phNumber,
+                              icon: Icons.call_outlined,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 12, bottom: 20),
+                      child: Text(
+                        "published on 12 March,2021",
+                        style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                              color: const Color(0xff191C1D).withOpacity(0.7),
+                              fontSize: 8.0,
+                              fontWeight: FontWeight.w300,
+                              letterSpacing: 0.5,
+                              fontStyle: FontStyle.italic),
+                        ),
                       ),
                     )
                   ],
                 ),
               ),
-              DetailCard(
-                  text1: "Fri, 20 March, 2021",
-                  text2: "6:00 PM to 7:00 PM",
-                  icon: Icons.calendar_today_outlined),
-              DetailCard(
-                  text1: "NIT Silchar",
-                  text2: "On Campus",
-                  icon: Icons.location_on_outlined),
-              const Padding(
-                padding: EdgeInsets.only(right: 180),
-                child: AddToCalender(),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 20),
-                child: Text(
-                  "Event Details",
-                  style: GoogleFonts.poppins(
-                    textStyle: TextStyle(
-                      color: const Color(0xff191C1D).withOpacity(0.7),
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: 0.5,
+              body: SafeArea(
+                child: Stack(
+                  children: [
+                    Container(
+                      height: 250,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(engineVar.posterURL!),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
-                  ),
+                    Positioned(
+                      left: 20.0,
+                      top: 25.0,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/home_screen');
+                        },
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: const Color(0xffDFE5E7).withOpacity(0.2),
+                          ),
+                          child: const Icon(
+                            Icons.arrow_back_ios_new_rounded,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ),
-              DetailsWidget(text: description),
-              Container(
-                margin: const EdgeInsets.only(top: 29),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: const [Gform(), Facebook()],
-                ),
-              ),
-              Moderator(
-                  text1: "Random Name", text2: "Moderator", icon: Icons.person),
-              DetailCard(text1: "9876543210", icon: Icons.call_outlined),
-              Container(
-                margin: const EdgeInsets.only(top: 12, bottom: 20),
-                child: Text(
-                  "published on 12 March,2021",
-                  style: GoogleFonts.poppins(
-                    textStyle: TextStyle(
-                        color: const Color(0xff191C1D).withOpacity(0.7),
-                        fontSize: 8.0,
-                        fontWeight: FontWeight.w300,
-                        letterSpacing: 0.5,
-                        fontStyle: FontStyle.italic),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-        body: SafeArea(
-          child: Stack(
-            children: [
-              Container(
-                height: 250,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/gdsc_android.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 20.0,
-                top: 25.0,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/home_screen');
-                  },
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: const Color(0xffDFE5E7).withOpacity(0.2),
-                    ),
-                    child: const Icon(
-                      Icons.arrow_back_ios_new_rounded,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-        borderRadius: sheetRadius,
-      ),
+              borderRadius: sheetRadius,
+            ),
       bottomNavigationBar: ClipRRect(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(16),

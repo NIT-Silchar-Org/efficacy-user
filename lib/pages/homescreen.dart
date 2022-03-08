@@ -1,9 +1,14 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:efficacy_user/pages/account_screen.dart';
 import 'package:efficacy_user/pages/explore_screen.dart';
 import 'package:efficacy_user/pages/feed_screen.dart';
+import 'package:efficacy_user/pages/subscription_page.dart';
+import 'package:efficacy_user/provider/google_signin_provider.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:efficacy_user/widgets/filter_menu_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   static const route = '/home_screen';
@@ -16,13 +21,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   String selectedValue = 'Upcoming';
-  List<String> pageTitles = ['Feed', 'Clubs', 'Explore', 'Profile'];
+  List<String> pageTitles = ['Feed', 'Explore', 'Profile'];
   List<String> filterOptions = ['Upcoming', 'Ongoing', 'Completed'];
   List<Widget> screens = const [
     FeedScreen(),
-    Text('clubs page'),
     ExploreScreen(),
-    Text('accounts page'),
+    SubscriptionPage(),
   ];
   String gdscImageUrl =
       'https://res.cloudinary.com/devncode/image/upload/v1575267757/production_devncode/community/1575267756355.jpg';
@@ -83,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                     },
                     itemHeight: size.height * 0.05,
-                    itemWidth: size.width * 0.5,
+                    //itemWidth: size.width * 0.5,
                     dropdownPadding: const EdgeInsets.symmetric(vertical: 20),
                     dropdownDecoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
@@ -95,8 +99,31 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.all(10),
-                child: CircleAvatar(
-                  backgroundColor: AppColorLight.secondary,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(PageRouteBuilder(
+                        pageBuilder: (context, animation, anotherAnimation) {
+                          return const AccountScreen();
+                        },
+                        transitionDuration: const Duration(milliseconds: 1200),
+                        transitionsBuilder:
+                            (context, animation, anotherAnimation, child) {
+                          animation = CurvedAnimation(
+                              curve: Curves.easeIn, parent: animation);
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        }));
+
+                    // Provider.of<GoogleSignInProvider>(context, listen: false)
+                    //     .logOut();
+                    // Navigator.of(context).pushNamedAndRemoveUntil(
+                    //     '/', (Route<dynamic> route) => false);
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: AppColorLight.secondary,
+                  ),
                 ),
               )
             ],
@@ -132,12 +159,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   tooltip: 'Home',
                   icon: Icon(
                     Icons.home_outlined,
-                  ),
-                ),
-                BottomNavigationBarItem(
-                  label: 'Clubs',
-                  icon: Icon(
-                    Icons.people_alt_outlined,
                   ),
                 ),
                 BottomNavigationBarItem(
