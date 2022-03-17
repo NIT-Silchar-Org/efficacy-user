@@ -1,4 +1,5 @@
 import 'package:efficacy_user/models/feed_screen_model.dart';
+import 'package:efficacy_user/pages/explore_screen.dart';
 import 'package:efficacy_user/provider/feedscreen_provider.dart';
 import 'package:efficacy_user/widgets/event_tile.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class _FeedScreenState extends State<FeedScreen> {
 
   @override
   void initState() {
-    engine = Provider.of<FeedscreenProvider>(context);
+    engine = Provider.of<FeedscreenProvider>(context, listen: false);
     getFeedScreen();
     super.initState();
     _controller.animateTo(-100,
@@ -51,7 +52,7 @@ class _FeedScreenState extends State<FeedScreen> {
         isLoading = true;
       });
       engineVar = await engine.fetchfeed([
-        'wqvJ98qg2sa1X23gRmVX',
+        'SBwINoIKUukguKZrT3Wx',
       ]);
       setState(() {
         isLoading = false;
@@ -71,46 +72,7 @@ class _FeedScreenState extends State<FeedScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 children: [
-                  EventTile(
-                    onPressed: () {
-                      _animateToIndex(10);
-                      // Navigator.pushNamed(context, '/event_screen');
-                      Navigator.of(context).push(PageRouteBuilder(
-                          pageBuilder: (context, animation, anotherAnimation) {
-                            return EventScreen(eventId: engineVar.eventID);
-                          },
-                          transitionDuration:
-                              const Duration(milliseconds: 1200),
-                          transitionsBuilder:
-                              (context, animation, anotherAnimation, child) {
-                            animation = CurvedAnimation(
-                                curve: Curves.easeIn, parent: animation);
-                            return FadeTransition(
-                              opacity: animation,
-                              child: child,
-                            );
-                          }));
-                    },
-                    cardBannerUrl: 'assets/android_study_jams.png',
-                    gdscImageUrl: gdscImageUrl,
-                  ),
-                  EventTile(
-                    onPressed: () {},
-                    cardBannerUrl: 'assets/flutter_bootcamp.png',
-                    gdscImageUrl: gdscImageUrl,
-                  ),
-                  EventTile(
-                    onPressed: () {},
-                    cardBannerUrl: 'assets/android_study_jams.png',
-                    gdscImageUrl: gdscImageUrl,
-                  ),
-                  EventTile(
-                    onPressed: () {
-                      _animateup();
-                    },
-                    cardBannerUrl: 'assets/flutter_bootcamp.png',
-                    gdscImageUrl: gdscImageUrl,
-                  ),
+                  for (int i = 0; i < 10; i++) EventTile(eventModel: tempEvent)
                 ],
               ),
             ),

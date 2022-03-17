@@ -7,8 +7,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 class SignUp extends StatefulWidget {
-  GoogleSignInAccount? user;
-  SignUp({Key? key, required this.user}) : super(key: key);
+  final GoogleSignInAccount? user;
+  const SignUp({Key? key, required this.user}) : super(key: key);
   @override
   _SignUpState createState() => _SignUpState();
 }

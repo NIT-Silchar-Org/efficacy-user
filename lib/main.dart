@@ -7,6 +7,7 @@ import 'package:efficacy_user/pages/explore_screen.dart';
 import 'package:efficacy_user/pages/feed_screen.dart';
 import 'package:efficacy_user/pages/homescreen.dart';
 import 'package:efficacy_user/provider/event_provider.dart';
+import 'package:efficacy_user/provider/feedscreen_provider.dart';
 import 'package:efficacy_user/provider/google_signin_provider.dart';
 import 'package:efficacy_user/provider/loading_provider.dart';
 import 'package:efficacy_user/themes/efficacy_theme.dart';
@@ -42,6 +43,8 @@ class _MyAppState extends State<MyApp> {
             ChangeNotifierProvider<EventProvider>.value(value: EventProvider()),
             ChangeNotifierProvider<GoogleSignInProvider>.value(
                 value: GoogleSignInProvider()),
+            ChangeNotifierProvider<FeedscreenProvider>.value(
+                value: FeedscreenProvider()),
             ChangeNotifierProvider<LoadingProvider>(
               create: (context) => LoadingProvider(),
             ),
@@ -66,6 +69,7 @@ class _MyAppState extends State<MyApp> {
                     const ExploreScreen(),
                 FeedScreen.route: (BuildContext context) => const FeedScreen(),
                 SignIn.route: (BuildContext context) => const SignIn(),
+                SubscriptionPage.route: (BuildContext context) => const SubscriptionPage(),
               },
             ),
           ),
