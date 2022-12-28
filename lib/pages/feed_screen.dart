@@ -3,7 +3,6 @@ import 'package:efficacy_user/pages/explore_screen.dart';
 import 'package:efficacy_user/provider/feedscreen_provider.dart';
 import 'package:efficacy_user/widgets/event_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:efficacy_user/pages/event_screen.dart';
 import 'package:provider/provider.dart';
 
 class FeedScreen extends StatefulWidget {
@@ -25,10 +24,12 @@ class _FeedScreenState extends State<FeedScreen> {
   @override
   void initState() {
     engine = Provider.of<FeedscreenProvider>(context, listen: false);
-    getFeedScreen();
+    // getFeedScreen();
     super.initState();
-    _controller.animateTo(-100,
-        duration: const Duration(milliseconds: 1000), curve: Curves.easeIn);
+    if (_controller.hasClients) {
+      _controller.animateTo(-100,
+          duration: const Duration(milliseconds: 1000), curve: Curves.easeIn);
+    }
   }
 
   void _animateup() {
@@ -64,18 +65,16 @@ class _FeedScreenState extends State<FeedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? const Center(child: CircularProgressIndicator())
-        : SingleChildScrollView(
-            controller: _controller,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                children: [
-                  for (int i = 0; i < 10; i++) EventTile(eventModel: tempEvent)
-                ],
-              ),
-            ),
-          );
+    return SingleChildScrollView(
+      controller: _controller,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          children: [
+            for (int i = 0; i < 10; i++) EventTile(eventModel: tempEvent)
+          ],
+        ),
+      ),
+    );
   }
 }

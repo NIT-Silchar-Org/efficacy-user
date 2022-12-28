@@ -28,6 +28,8 @@ final Map<String, dynamic> json = {
   "usersWhoLiked": [],
   "venue": "Teams",
   "eventId": "yHZG2GhfYzQgS5MwDnzP",
+  "clubLogoURL":
+      'https://res.cloudinary.com/devncode/image/upload/v1575267757/production_devncode/community/1575267756355.jpg',
 };
 EventModel tempEvent = EventModel.fromJson(json);
 
