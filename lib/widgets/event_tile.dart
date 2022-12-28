@@ -111,7 +111,7 @@ class _EventTileState extends State<EventTile>
                       },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(widget.eventModel.posterURL!,
+                        child: Image.network(widget.eventModel.posterURL!,
                             fit: BoxFit.cover),
                       ),
                     ),

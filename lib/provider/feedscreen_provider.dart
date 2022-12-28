@@ -13,6 +13,7 @@ class FeedscreenProvider with ChangeNotifier {
       final response = await NetworkEngine()
           .post(endPoint: newendpoint, data: {'clubID': clubsID});
       var details = response.data['data'];
+      print(details);
       FeedScreenModel dev = FeedScreenModel.fromJson(details);
       return dev;
     } catch (e) {

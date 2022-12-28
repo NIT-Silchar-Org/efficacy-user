@@ -1,4 +1,5 @@
 import 'package:efficacy_user/models/event_model.dart';
+import 'package:efficacy_user/pages/explore_screen.dart';
 import 'package:efficacy_user/provider/event_provider.dart';
 import 'package:efficacy_user/widgets/divider.dart';
 import 'package:flutter/material.dart';
@@ -40,11 +41,41 @@ class _EventScreenState extends State<EventScreen> {
     topRight: Radius.circular(24.0),
   );
 
+  final Map<String, dynamic> json = {
+    "eventID": "yHZG2GhfYzQgS5MwDnzP",
+    "clubID": "94Pkmpbj0qzBCkiSQ6Yr",
+    "clubName": "Illuminits",
+    "eventName": "Illuminits Event",
+    "description": "notification",
+    "longDescription":
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.",
+    "duration": "Temporary",
+    "startTime": "2022-02-18T18:30:00.000Z",
+    "endTime": "2022-03-18T18:30:00.000Z",
+    "fbPostURL": "fb",
+    "googleFormURL": "gf",
+    "posterURL":
+        "https://logos-world.net/wp-content/uploads/2020/06/ETSU-Buccaneers-emblem.jpg",
+    "clubLogoURL":
+        'https://res.cloudinary.com/devncode/image/upload/v1575267757/production_devncode/community/1575267756355.jpg',
+    "venue": "Teams",
+    "likeCount": 0,
+    "usersWhoLiked": [],
+    "contact": [
+      {
+        "name": "Soumya Ranjan Mohapatro",
+        "email": "moderator@gmail.com",
+        "phNumber": "9876543210",
+        "position": "Moderator"
+      }
+    ]
+  };
   @override
   void initState() {
-    engine = Provider.of<EventProvider>(context);
-    getEvent();
+    // engine = Provider.of<EventProvider>(context);
+    // getEvent();
     super.initState();
+    engineVar = EventModel.fromJson(json);
   }
 
   late EventModel engineVar;
@@ -76,7 +107,7 @@ class _EventScreenState extends State<EventScreen> {
                 padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
                 child: ListView(
                   // crossAxisAlignment: CrossAxisAlignment.start,
-                  shrinkWrap: true,
+                  // shrinkWrap: true,
                   controller: sc,
                   children: [
                     const PanelDivider(),
@@ -202,6 +233,8 @@ class _EventScreenState extends State<EventScreen> {
                     ),
                     ListView(
                       physics: const NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
                       children: List.generate(
                         engineVar.contact!.length,
                         (index) => Column(
