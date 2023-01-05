@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Center(
                           child: Icon(
                             Icons.filter_alt_outlined,
-                            size: 30,
+                            size: 3100,
                             color: Theme.of(context).primaryIconTheme.color,
                           ),
                         ),
