@@ -13,6 +13,7 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
   int _selectedIndex = 0;
+
   BorderRadiusGeometry sheetRadius = const BorderRadius.only(
     topLeft: Radius.circular(24.0),
     topRight: Radius.circular(24.0),
@@ -79,7 +80,7 @@ class _AccountScreenState extends State<AccountScreen> {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
             child: ListView(
-              // crossAxisAlignment: CrossAxisAlignment.start,
+              // scrollDirection: Axis.vertical,
               shrinkWrap: false,
               controller: sc,
               children: [
@@ -110,19 +111,23 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
                 Row(
                   children: [
-                    RadioButton(
-                      description: "Dark",
-                      value: "Dark",
-                      onChanged: (S) {
-                        setState(() {});
-                      },
-                      groupValue: 2,
+                    Expanded(
+                      child: RadioButton(
+                        description: "Dark",
+                        value: "Dark",
+                        onChanged: (S) {
+                          //setState(() {});
+                        },
+                        groupValue: 2,
+                      ),
                     ),
-                    RadioButton(
-                      description: "Light",
-                      value: "Light",
-                      onChanged: (S) {},
-                      groupValue: 2,
+                    Expanded(
+                      child: RadioButton(
+                        description: "Light",
+                        value: "Light",
+                        onChanged: (S) {},
+                        groupValue: 2,
+                      ),
                     ),
                   ],
                 ),
