@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             actions: [
               Visibility(
-                visible: _selectedIndex == 2,
+                visible: _selectedIndex == 3,
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton2(
                     customButton: Padding(
