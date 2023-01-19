@@ -122,7 +122,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
               ),
             ],
           ),
-          bottomNavigationBar: const BottomBar(),
+          // bottomNavigationBar: const BottomBar(),
         ),
       ),
     );
