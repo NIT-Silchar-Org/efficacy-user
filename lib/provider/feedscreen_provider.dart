@@ -8,8 +8,6 @@ import 'package:efficacy_user/widgets/utils.dart';
 import 'package:flutter/material.dart';
 
 class FeedscreenProvider extends BaseModel {
-
-  
   List<AllEvent>? allevents = [];
 
   Future<List<AllEvent>?> fetchAllEvents(
@@ -40,7 +38,6 @@ class FeedscreenProvider extends BaseModel {
       notifyListeners();
       return null;
     } catch (e) {
-
       state = ViewState.idle;
       showSnackBar(context: context, text: 'Something went wrong');
       rethrow;

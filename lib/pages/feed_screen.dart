@@ -69,31 +69,33 @@ class _FeedScreenState extends State<FeedScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseView<FeedscreenProvider>(
-        onModelReady: (model) async {
-          model.fetchAllEvents(context: context);
-          allEvent = model.allevents;
-        },
-        builder: (_, model, __) => model.state == ViewState.busy
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      
-                      const SizedBox(height: 10),
-                      Flexible(
-                        child: ListView.builder(
-                            itemCount: allEvent?.length ?? 0,
-                            itemBuilder: (context, index) {
-                              return EventTile(
-                                eventModel: allEvent?[index],
-                              );
-                            }),
-                      )
-                    ],),),);
+      onModelReady: (model) async {
+        model.fetchAllEvents(context: context);
+        allEvent = model.allevents;
+      },
+      builder: (_, model, __) => model.state == ViewState.busy
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 10),
+                  Flexible(
+                    child: ListView.builder(
+                        itemCount: allEvent?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          return EventTile(
+                            eventModel: allEvent?[index],
+                          );
+                        }),
+                  )
+                ],
+              ),
+            ),
+    );
   }
 }
