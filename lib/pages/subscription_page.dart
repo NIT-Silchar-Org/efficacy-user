@@ -111,18 +111,28 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                         trailing: TextButton(
                           child: SizedBox(
                             width: (size.width * 0.3),
-                            child: const Subscribe(),
+                            child: Subscribe(),
                           ),
                           onPressed: () {},
                         ),
-                      )
+                      ),
+                      ListTile(
+                        leading: const CircleAvatar(),
+                        title: const Text('Illuminatis'),
+                        trailing: TextButton(
+                          child: SizedBox(
+                            width: (size.width * 0.3),
+                            child: Subscribe(),
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
             ],
           ),
-          // bottomNavigationBar: const BottomBar(),
         ),
       ),
     );

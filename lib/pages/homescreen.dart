@@ -74,12 +74,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     items: filterOptions
-                        .map((item) => DropdownMenuItem<String>(
+                        .map(
+                          (item) => DropdownMenuItem<String>(
                             value: item,
                             child: FilterMenuItem(
                               text: item,
                               isSelected: selectedValue == item,
-                            )))
+                            ),
+                          ),
+                        )
                         .toList(),
                     onChanged: (value) {
                       setState(() {
