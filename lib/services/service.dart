@@ -8,9 +8,8 @@ class NetworkEngine {
   NetworkEngine() {
     _dio = Dio(
       BaseOptions(
+        headers: {"accept": "application/json"},
         baseUrl: baseUrl,
-        connectTimeout: 25,
-        receiveTimeout: 60,
       ),
     );
     initializeInterceptor();
@@ -28,6 +27,22 @@ class NetworkEngine {
     }
   }
 
+  // Future<Response> postWithoutData({required String endPoint}) async {
+  //   Response response;
+  //   print('trying to post method call');
+  //   try {
+  //     response = await _dio.post(
+  //       endPoint,
+  //     );
+  //     print(response);
+
+  //     return response;
+  //   } on DioError catch (e) {
+  //     print(e.message);
+  //     throw Exception(e.message);
+  //   }
+  // }
+
   Future<Response> get({required String endPoint}) async {
     Response response;
     try {
@@ -43,10 +58,24 @@ class NetworkEngine {
     _dio.interceptors
         .add(InterceptorsWrapper(onError: (error, errorInterceptorHandler) {
       print(error.message);
+      return errorInterceptorHandler.next(error);
     }, onRequest: (request, requestInterceptorHandler) {
-      print("${request.method} | ${request.path}");
+      print('''
+        ******************************************************************************************************
+
+        ${request.method} || ${request.path}
+
+        ******************************************************************************************************
+        ''');
+      return requestInterceptorHandler.next(request);
     }, onResponse: (response, responseInterceptorHandler) {
-      print('${response.statusCode} ${response.statusCode} ${response.data}');
+      print('''
+          -******************************************************************************************************
+          ${response.statusMessage} || ${response.statusCode} |||| ${response.data}
+          --******************************************************************************************************
+          ''');
+
+      return responseInterceptorHandler.next(response);
     }));
   }
 }

@@ -194,8 +194,8 @@ class _ClubDetailState extends State<ClubDetail>
                             ),
                             ListView(
                               children: [
-                                for (int i = 0; i < 10; i++)
-                                  EventTile(eventModel: tempEvent)
+                                // for (int i = 0; i < 10; i++)
+                                // EventTile(eventModel: tempEvent)
                               ],
                             ),
                           ],

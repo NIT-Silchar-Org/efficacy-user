@@ -1,13 +1,15 @@
 import 'dart:convert';
-
 import 'package:efficacy_user/models/all_events.dart';
 import 'package:efficacy_user/services/service.dart';
 import 'package:efficacy_user/utils/basemodel.dart';
 import 'package:efficacy_user/utils/enums.dart';
 import 'package:efficacy_user/widgets/utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class FeedscreenProvider extends BaseModel {
+class ExploreScreenProvider extends BaseModel {
+
+  
   List<AllEvent>? allevents = [];
 
   Future<List<AllEvent>?> fetchAllEvents(
@@ -38,6 +40,7 @@ class FeedscreenProvider extends BaseModel {
       notifyListeners();
       return null;
     } catch (e) {
+
       state = ViewState.idle;
       showSnackBar(context: context, text: 'Something went wrong');
       rethrow;
