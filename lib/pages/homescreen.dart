@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:efficacy_user/models/user_model.dart';
 import 'package:efficacy_user/pages/account_screen.dart';
 import 'package:efficacy_user/pages/explore_screen.dart';
 import 'package:efficacy_user/pages/feed_screen.dart';
@@ -12,6 +14,7 @@ import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   static const route = '/home_screen';
+
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -28,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ExploreScreen(),
     SubscriptionPage(),
   ];
+
   String gdscImageUrl =
       'https://res.cloudinary.com/devncode/image/upload/v1575267757/production_devncode/community/1575267756355.jpg';
 
