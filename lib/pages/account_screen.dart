@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:efficacy_user/models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,7 +15,26 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  FirebaseAuth auth = FirebaseAuth.instance;
+
   int _selectedIndex = 0;
+  //late UserModel user;
+  UserModel user = UserModel(
+      name: '---',
+      scholarid: '---',
+      year: '---',
+      branch: '---',
+      degree: '---',
+      email: '---',
+      phonenum: '---');
+  //late UserModel user;
+
+  @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
+
   BorderRadiusGeometry sheetRadius = const BorderRadius.only(
     topLeft: Radius.circular(24.0),
     topRight: Radius.circular(24.0),
@@ -79,7 +101,7 @@ class _AccountScreenState extends State<AccountScreen> {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
             child: ListView(
-              // crossAxisAlignment: CrossAxisAlignment.start,
+              // scrollDirection: Axis.vertical,
               shrinkWrap: false,
               controller: sc,
               children: [
@@ -97,32 +119,36 @@ class _AccountScreenState extends State<AccountScreen> {
                   'Personal Information',
                   style: TextStyle(color: Color(0xff213F8D), fontSize: 22),
                 ),
-                infoFun('Name', 'Lorem Ipsum'),
-                infoFun('Scholar ID', '2012***'),
-                infoFun('Year ', '2021'),
-                infoFun('Branch ', 'CSE'),
-                infoFun('Degree', 'BTECH'),
-                infoFun('Email', 'ashas@gmail.com'),
-                infoFun('Phone No.', '8203887***'),
+                infoFun('Name', user.name),
+                infoFun('Scholar ID', user.scholarid),
+                infoFun('Year ', user.year),
+                infoFun('Branch ', user.branch),
+                infoFun('Degree', user.degree),
+                infoFun('Email', user.email),
+                infoFun('Phone No.', user.phonenum),
                 const Text(
                   'Theme',
                   style: TextStyle(color: Color(0xff213F8D), fontSize: 22),
                 ),
                 Row(
                   children: [
-                    RadioButton(
-                      description: "Dark",
-                      value: "Dark",
-                      onChanged: (S) {
-                        setState(() {});
-                      },
-                      groupValue: 2,
+                    Expanded(
+                      child: RadioButton(
+                        description: "Dark",
+                        value: "Dark",
+                        onChanged: (S) {
+                          //setState(() {});
+                        },
+                        groupValue: 2,
+                      ),
                     ),
-                    RadioButton(
-                      description: "Light",
-                      value: "Light",
-                      onChanged: (S) {},
-                      groupValue: 2,
+                    Expanded(
+                      child: RadioButton(
+                        description: "Light",
+                        value: "Light",
+                        onChanged: (S) {},
+                        groupValue: 2,
+                      ),
                     ),
                   ],
                 ),
@@ -148,7 +174,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   height: 10,
                 ),
                 Text(
-                  'Lorem Ipsum',
+                  user.name,
                   style: TextStyle(color: AppColorLight.primary, fontSize: 20),
                 )
               ],
@@ -158,5 +184,25 @@ class _AccountScreenState extends State<AccountScreen> {
         borderRadius: sheetRadius,
       ),
     );
+  }
+
+  Future<void> getdata() async {
+    late UserModel userfetched;
+    User? userloggedin = auth.currentUser;
+    String? uuid = userloggedin?.uid;
+    print('Inside Get Data');
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc('abcde') //'abcde' is for reference will be replaced by uuid
+        .get()
+        .then((snapshot) {
+      userfetched = UserModel.fromJson(snapshot.data()!);
+      print('Name Printing');
+      print(user.name);
+    });
+
+    setState(() {
+      user = userfetched;
+    });
   }
 }
