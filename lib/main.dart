@@ -1,4 +1,3 @@
-
 import 'package:efficacy_user/pages/about_us.dart';
 import 'package:efficacy_user/pages/club_details.dart';
 import 'package:efficacy_user/pages/event_screen.dart';
