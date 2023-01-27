@@ -1,5 +1,10 @@
+import 'dart:html';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:efficacy_user/models/client_user_model.dart';
 import 'package:efficacy_user/provider/google_signin_provider.dart';
 import 'package:efficacy_user/widgets/loading_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 import 'package:efficacy_user/widgets/phone_widget.dart';
@@ -100,8 +105,8 @@ class _SignUpState extends State<SignUp> {
                             ),
                             filled: true,
                             fillColor: Colors.transparent,
-                            prefixIcon: Icon(Icons.person),
-                            labelText: 'Name',
+                            prefixIcon: Icon(Icons.mail),
+                            labelText: 'Email',
                             enabled: false,
                           ),
                           validator: (val) {
@@ -162,6 +167,25 @@ class _SignUpState extends State<SignUp> {
                                 } else {
                                   setState(() => isLoading = !isLoading);
                                 }
+
+                                ClientUserModel client = ClientUserModel(
+                                  name: namecontroller.text,
+                                  userID: "1",
+                                  Email: emailcontroller.text,
+                                  phNumber: phonenocontroller.text,
+                                );
+
+                                FirebaseFirestore.instance
+                                    .collection('clientUser')
+                                    .add(
+                                  {
+                                    'name': client.name,
+                                    'userId': FirebaseAuth.instance.currentUser!.uid,
+                                    'Email': client.Email,
+                                    'phNumber': client.phNumber,
+                                    'subscriptions': FieldValue.arrayUnion(client.subscriptions!)
+                                  },
+                                );
                               }
                             },
                             child: const Text('FINISH'),

@@ -1,11 +1,11 @@
 // import 'package:efficacy_user/pages/homescreen.dart';
 // import 'package:efficacy_user/pages/sign_up.dart';
-import 'package:efficacy_user/pages/about_us.dart';
 import 'package:efficacy_user/pages/club_details.dart';
 import 'package:efficacy_user/pages/event_screen.dart';
 import 'package:efficacy_user/pages/explore_screen.dart';
 import 'package:efficacy_user/pages/feed_screen.dart';
 import 'package:efficacy_user/pages/homescreen.dart';
+import 'package:efficacy_user/provider/eventApi.dart';
 import 'package:efficacy_user/provider/event_provider.dart';
 import 'package:efficacy_user/provider/feedscreen_provider.dart';
 import 'package:efficacy_user/provider/google_signin_provider.dart';
@@ -14,7 +14,6 @@ import 'package:efficacy_user/themes/efficacy_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/pages/google_sign_in.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:efficacy_user/pages/subscription_page.dart';
 
@@ -40,13 +39,18 @@ class _MyAppState extends State<MyApp> {
       builder: (context, snapshot) {
         return MultiProvider(
           providers: [
-            ChangeNotifierProvider<EventProvider>.value(value: EventProvider()),
+            ChangeNotifierProvider<EventProvider>.value(
+              value: EventProvider(),
+            ),
             ChangeNotifierProvider<GoogleSignInProvider>.value(
                 value: GoogleSignInProvider()),
             ChangeNotifierProvider<FeedscreenProvider>.value(
                 value: FeedscreenProvider()),
             ChangeNotifierProvider<LoadingProvider>(
               create: (context) => LoadingProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (BuildContext context) => EventApi(),
             ),
           ],
           child: Consumer<GoogleSignInProvider>(
@@ -69,7 +73,8 @@ class _MyAppState extends State<MyApp> {
                     const ExploreScreen(),
                 FeedScreen.route: (BuildContext context) => const FeedScreen(),
                 SignIn.route: (BuildContext context) => const SignIn(),
-                SubscriptionPage.route: (BuildContext context) => const SubscriptionPage(),
+                SubscriptionPage.route: (BuildContext context) =>
+                    const SubscriptionPage(),
               },
             ),
           ),

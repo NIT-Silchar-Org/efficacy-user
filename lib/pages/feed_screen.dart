@@ -1,5 +1,7 @@
+import 'package:efficacy_user/models/event_model.dart';
 import 'package:efficacy_user/models/feed_screen_model.dart';
 import 'package:efficacy_user/pages/explore_screen.dart';
+import 'package:efficacy_user/provider/eventApi.dart';
 import 'package:efficacy_user/provider/feedscreen_provider.dart';
 import 'package:efficacy_user/widgets/event_tile.dart';
 import 'package:flutter/material.dart';
@@ -22,13 +24,17 @@ class _FeedScreenState extends State<FeedScreen> {
   String gdscImageUrl =
       'https://res.cloudinary.com/devncode/image/upload/v1575267757/production_devncode/community/1575267756355.jpg';
 
+  List<EventModel>? events;
+
   @override
   void initState() {
-    engine = Provider.of<FeedscreenProvider>(context, listen: false);
+    // engine = Provider.of<FeedscreenProvider>(context, listen: false);
     getFeedScreen();
     super.initState();
     _controller.animateTo(-100,
         duration: const Duration(milliseconds: 1000), curve: Curves.easeIn);
+
+    events = Provider.of<EventApi>(context, listen: false).event;
   }
 
   void _animateup() {
@@ -65,15 +71,20 @@ class _FeedScreenState extends State<FeedScreen> {
   @override
   Widget build(BuildContext context) {
     return isLoading
-        ? const Center(child: CircularProgressIndicator())
+        ? const Center(
+            child: CircularProgressIndicator(),
+          )
         : SingleChildScrollView(
             controller: _controller,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
-                children: [
-                  for (int i = 0; i < 10; i++) EventTile(eventModel: tempEvent)
-                ],
+                children: events!.map(
+                  (e) {
+                    print(e.clubId);
+                    return EventTile(eventModel: e);
+                  },
+                ).toList(),
               ),
             ),
           );
