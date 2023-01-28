@@ -1,3 +1,5 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:efficacy_user/pages/account_screen.dart';
 import 'package:efficacy_user/pages/explore_screen.dart';
 import 'package:efficacy_user/pages/feed_screen.dart';
 import 'package:efficacy_user/pages/subscription_page.dart';
@@ -18,7 +20,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  String selectedValue = 'Upcoming';
   List<String> pageTitles = ['Feed', 'Explore', 'Profile'];
+  List<String> filterOptions = ['Upcoming', 'Ongoing', 'Completed'];
   List<Widget> screens = const [
     FeedScreen(),
     ExploreScreen(),
@@ -35,6 +39,98 @@ class _HomeScreenState extends State<HomeScreen> {
       width: size.width,
       child: SafeArea(
         child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+            shadowColor: Theme.of(context).appBarTheme.shadowColor,
+            foregroundColor: Theme.of(context).appBarTheme.foregroundColor,
+            elevation: Theme.of(context).appBarTheme.elevation,
+            title: Text(
+              pageTitles[_selectedIndex],
+              style: Theme.of(context).textTheme.headline1?.copyWith(
+                    fontSize: 24,
+                  ),
+            ),
+            actions: [
+              Visibility(
+                visible: _selectedIndex == 3,
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton2(
+                    customButton: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.filter_alt_outlined,
+                            size: 3100,
+                            color: Theme.of(context).primaryIconTheme.color,
+                          ),
+                        ),
+                      ),
+                    ),
+                    items: filterOptions
+                        .map(
+                          (item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: FilterMenuItem(
+                              text: item,
+                              isSelected: selectedValue == item,
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        selectedValue = value.toString();
+                      });
+                    },
+                    itemHeight: size.height * 0.05,
+                    //itemWidth: size.width * 0.5,
+                    dropdownPadding: const EdgeInsets.symmetric(vertical: 20),
+                    dropdownDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    offset: Offset(size.width * -0.35, 0),
+                    dropdownOverButton: false,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(PageRouteBuilder(
+                        pageBuilder: (context, animation, anotherAnimation) {
+                          return const AccountScreen();
+                        },
+                        transitionDuration: const Duration(milliseconds: 1200),
+                        transitionsBuilder:
+                            (context, animation, anotherAnimation, child) {
+                          animation = CurvedAnimation(
+                              curve: Curves.easeIn, parent: animation);
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        }));
+
+                    // Provider.of<GoogleSignInProvider>(context, listen: false)
+                    //     .logOut();
+                    // Navigator.of(context).pushNamedAndRemoveUntil(
+                    //     '/', (Route<dynamic> route) => false);
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: AppColorLight.secondary,
+                  ),
+                ),
+              )
+            ],
+          ),
           body: screens[_selectedIndex],
           bottomNavigationBar: ClipRRect(
             borderRadius: const BorderRadius.only(

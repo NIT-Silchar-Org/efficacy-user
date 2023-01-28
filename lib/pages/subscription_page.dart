@@ -1,12 +1,9 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:efficacy_user/widgets/bottom_navigation_bar.dart';
 import 'package:efficacy_user/widgets/subscribe_button.dart';
 import 'package:efficacy_user/widgets/subscription_tab_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:flutter_portal/flutter_portal.dart';
-import '../widgets/filter_menu_item.dart';
-import 'account_screen.dart';
 
 class SubscriptionPage extends StatefulWidget {
   static const route = '/subscription_page';
@@ -17,12 +14,7 @@ class SubscriptionPage extends StatefulWidget {
 }
 
 class _SubscriptionPageState extends State<SubscriptionPage> {
-  String selectedValue = 'All Clubs';
-  List<String> filterOptions = [
-    'All Clubs',
-    'Subscribed Clubs',
-    'Unsubscribed Clubs'
-  ];
+  bool isMenuOpen = false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,101 +23,83 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       child: Portal(
         child: Scaffold(
           appBar: AppBar(
-            automaticallyImplyLeading: false,
-            backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-            shadowColor: Theme.of(context).appBarTheme.shadowColor,
-            foregroundColor: Theme.of(context).appBarTheme.foregroundColor,
-            elevation: Theme.of(context).appBarTheme.elevation,
+            elevation: 0.0,
+            backgroundColor: AppColorLight.background,
             title: Text(
-              'Subsciptions',
-              style: Theme.of(context).textTheme.headline1?.copyWith(
-                    fontSize: 24,
-                  ),
+              'Subscriptions',
+              style: TextStyle(color: AppColorLight.mainText),
             ),
-            actions: [
-              DropdownButtonHideUnderline(
-                child: DropdownButton2(
-                  customButton: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.filter_alt_outlined,
-                          size: 30,
-                          color: Theme.of(context).primaryIconTheme.color,
-                        ),
+          ),
+          body: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.only(top: 10),
+                width: size.width,
+                height: size.height * 0.1,
+                color: AppColorLight.primary,
+                child: PortalEntry(
+                  visible: isMenuOpen,
+                  portalAnchor: Alignment.topLeft,
+                  childAnchor: Alignment.bottomLeft,
+                  portal: Material(
+                    borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(16),
+                        bottomRight: Radius.circular(16)),
+                    elevation: 8,
+                    child: IntrinsicWidth(
+                      stepWidth: size.width,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SubscriptionTabButton(title: 'All Clubs'),
+                          SubscriptionTabButton(title: 'Subscribed Clubs'),
+                          SubscriptionTabButton(title: 'Unsubscribed Clubs'),
+                        ],
                       ),
                     ),
                   ),
-                  items: filterOptions
-                      .map((item) => DropdownMenuItem<String>(
-                          value: item,
-                          child: FilterMenuItem(
-                            text: item,
-                            isSelected: selectedValue == item,
-                          )))
-                      .toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      selectedValue = value.toString();
-                    });
-                  },
-                  itemHeight: size.height * 0.07,
-                  dropdownWidth: size.width * 0.6,
-                  dropdownPadding: const EdgeInsets.symmetric(vertical: 20),
-                  dropdownDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  offset: Offset(size.width * -0.30, 0),
-                  dropdownOverButton: false,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(PageRouteBuilder(
-                        pageBuilder: (context, animation, anotherAnimation) {
-                          return const AccountScreen();
-                        },
-                        transitionDuration: const Duration(milliseconds: 1200),
-                        transitionsBuilder:
-                            (context, animation, anotherAnimation, child) {
-                          animation = CurvedAnimation(
-                              curve: Curves.easeIn, parent: animation);
-                          return FadeTransition(
-                            opacity: animation,
-                            child: child,
-                          );
-                        }));
-                  },
-                  child: CircleAvatar(
-                    backgroundColor: AppColorLight.secondary,
-                  ),
-                ),
-              )
-            ],
-          ),
-          body: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    ' $selectedValue',
-                    style: Theme.of(context).textTheme.headline3?.copyWith(),
+                  child: TextButton(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'Filters',
+                          style: TextStyle(
+                              color: AppColorLight.mainText,
+                              fontSize: size.height * 0.025,
+                              fontWeight: FontWeight.w300),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: AppColorLight.mainText),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(8)),
+                          ),
+                          child: Icon(
+                            Icons.filter_list_outlined,
+                            color: AppColorLight.mainText,
+                          ),
+                        )
+                      ],
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        if (isMenuOpen) {
+                          isMenuOpen = false;
+                        } else {
+                          isMenuOpen = true;
+                        }
+                      });
+                    },
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
               SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(5),
@@ -136,7 +110,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                         title: const Text('Illuminatis'),
                         trailing: TextButton(
                           child: SizedBox(
-                            width: (size.width * 0.35),
+                            width: (size.width * 0.3),
                             child: Subscribe(),
                           ),
                           onPressed: () {},
@@ -147,7 +121,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                         title: const Text('Illuminatis'),
                         trailing: TextButton(
                           child: SizedBox(
-                            width: (size.width * 0.35),
+                            width: (size.width * 0.3),
                             child: Subscribe(),
                           ),
                           onPressed: () {},
