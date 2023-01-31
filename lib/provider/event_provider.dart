@@ -62,18 +62,19 @@ class EventProvider extends BaseModel {
     }
   }
 
-  Future<bool> likeunlikeevent(bool action, String eventId) async {
+  Future<bool> likeUnlikeEvent(bool like, String eventId) async {
     try {
-      final token = await FirebaseAuth.instance.currentUser!.getIdToken();
-      final newendpoint = likeunlikepost + token.toString();
-      final response = await NetworkEngine().post(
-          endPoint: newendpoint, data: {'eventId': eventId, 'action': action});
+      final token = await FirebaseAuth.instance.currentUser?.getIdToken();
+      const newEndPoint = likeunlikepost;
+      final response = await NetworkEngine().post(endPoint: newEndPoint, data: {
+        'eventId': eventId,
+        'action': like == true ? "LIKE" : "UNLIKE",
+        "userId": token.toString()
+      });
       var detail = response.data['success'] as bool;
       return detail;
     } catch (e) {
-      rethrow;
+      return like;
     }
   }
-
- 
 }
