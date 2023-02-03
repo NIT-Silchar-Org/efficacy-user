@@ -1,45 +1,22 @@
-import 'dart:convert';
-
-import 'package:efficacy_user/models/all_events.dart';
+import 'package:efficacy_user/constant/endpoints.dart';
+import 'package:efficacy_user/models/feed_screen_model.dart';
 import 'package:efficacy_user/services/service.dart';
-import 'package:efficacy_user/utils/basemodel.dart';
-import 'package:efficacy_user/utils/enums.dart';
-import 'package:efficacy_user/widgets/utils.dart';
-import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 
-class FeedscreenProvider extends BaseModel {
-  List<AllEvent>? allevents = [];
-
-  Future<List<AllEvent>?> fetchAllEvents(
-      {required BuildContext context}) async {
+class FeedscreenProvider with ChangeNotifier {
+  Future<FeedScreenModel> fetchfeed(List<String> clubsID) async {
     try {
-      state = ViewState.busy;
-      await NetworkEngine().post(
-        data: {},
-        endPoint: 'all-events/',
-      ).then((response) {
-        if (response.statusCode == 200) {
-          print('Response : ${jsonEncode(response.data)}');
+      final token = await FirebaseAuth.instance.currentUser!.getIdToken();
+      final newendpoint = getfeed + token.toString();
 
-          List<AllEvent> temp = allEventFromJson(jsonEncode(response.data));
-          allevents?.clear();
-          allevents?.addAll(temp);
-
-          return temp;
-        } else {
-          showSnackBar(context: context, text: 'Something went wrong');
-        }
-      }).onError((error, stackTrace) {
-        print(error.toString());
-        print(stackTrace.toString());
-      });
-
-      state = ViewState.idle;
-      notifyListeners();
-      return null;
+      final response = await NetworkEngine()
+          .post(endPoint: newendpoint, data: {'clubID': clubsID});
+      var details = response.data['data'];
+      print(details);
+      FeedScreenModel dev = FeedScreenModel.fromJson(details);
+      return dev;
     } catch (e) {
-      state = ViewState.idle;
-      showSnackBar(context: context, text: 'Something went wrong');
       rethrow;
     }
   }

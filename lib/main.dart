@@ -1,4 +1,5 @@
-
+// import 'package:efficacy_user/pages/homescreen.dart';
+// import 'package:efficacy_user/pages/sign_up.dart';
 import 'package:efficacy_user/pages/about_us.dart';
 import 'package:efficacy_user/pages/club_details.dart';
 import 'package:efficacy_user/pages/event_screen.dart';
@@ -6,12 +7,10 @@ import 'package:efficacy_user/pages/explore_screen.dart';
 import 'package:efficacy_user/pages/feed_screen.dart';
 import 'package:efficacy_user/pages/homescreen.dart';
 import 'package:efficacy_user/provider/event_provider.dart';
-import 'package:efficacy_user/provider/explore_screen_provider.dart';
 import 'package:efficacy_user/provider/feedscreen_provider.dart';
 import 'package:efficacy_user/provider/google_signin_provider.dart';
 import 'package:efficacy_user/provider/loading_provider.dart';
 import 'package:efficacy_user/themes/efficacy_theme.dart';
-import 'package:efficacy_user/utils/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/pages/google_sign_in.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -21,7 +20,6 @@ import 'package:efficacy_user/pages/subscription_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  setUpLocator();
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
@@ -50,9 +48,6 @@ class _MyAppState extends State<MyApp> {
             ChangeNotifierProvider<LoadingProvider>(
               create: (context) => LoadingProvider(),
             ),
-            ChangeNotifierProvider<ExploreScreenProvider>(
-              create: (context) => ExploreScreenProvider(),
-            ),
           ],
           child: Consumer<GoogleSignInProvider>(
             builder: (context, value, child) => MaterialApp(
@@ -64,8 +59,7 @@ class _MyAppState extends State<MyApp> {
                     )
                   : value.currentUser()
                       ? const HomeScreen()
-                      //                      : const SignIn(),
-                      : const HomeScreen(),
+                      : const SignIn(),
               routes: <String, WidgetBuilder>{
                 HomeScreen.route: (BuildContext context) => const HomeScreen(),
                 EventScreen.route: (BuildContext context) =>
@@ -75,8 +69,7 @@ class _MyAppState extends State<MyApp> {
                     const ExploreScreen(),
                 FeedScreen.route: (BuildContext context) => const FeedScreen(),
                 SignIn.route: (BuildContext context) => const SignIn(),
-                SubscriptionPage.route: (BuildContext context) =>
-                    const SubscriptionPage(),
+                SubscriptionPage.route: (BuildContext context) => const SubscriptionPage(),
               },
             ),
           ),

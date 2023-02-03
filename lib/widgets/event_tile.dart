@@ -1,17 +1,14 @@
-import 'package:efficacy_user/models/all_events.dart';
 import 'package:efficacy_user/models/event_model.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
-import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 import '../pages/event_screen.dart';
 
 class EventTile extends StatefulWidget {
-  final AllEvent? eventModel;
+  final EventModel eventModel;
   const EventTile({Key? key, required this.eventModel}) : super(key: key);
 
   // final String cardBannerUrl;
@@ -89,7 +86,6 @@ class _EventTileState extends State<EventTile>
               child: Padding(
                 padding: EdgeInsets.all(_sizeAnimation.value),
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
                   children: [
                     GestureDetector(
                       onTap: () {
@@ -99,7 +95,7 @@ class _EventTileState extends State<EventTile>
                             pageBuilder:
                                 (context, animation, anotherAnimation) {
                               return EventScreen(
-                                  eventId: widget.eventModel?.eventId ?? '');
+                                  eventId: widget.eventModel.eventId);
                             },
                             transitionDuration:
                                 const Duration(milliseconds: 1200),
@@ -114,18 +110,10 @@ class _EventTileState extends State<EventTile>
                             }));
                       },
                       child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: CachedNetworkImage(
-                              height: 200,
-                              width: MediaQuery.of(context).size.width,
-                              imageUrl: widget.eventModel?.posterUrl ?? '',
-                              fit: BoxFit.cover,
-                              errorWidget: (context, url, _) =>
-                                  const Center(child: Icon(Icons.error)),
-                              progressIndicatorBuilder:
-                                  (context, url, progress) => Center(
-                                      child: CircularProgressIndicator(
-                                          value: progress.progress)))),
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(widget.eventModel.posterURL!,
+                            fit: BoxFit.cover),
+                      ),
                     ),
                     ExpandablePanel(
                         controller: _expandController,
@@ -141,20 +129,12 @@ class _EventTileState extends State<EventTile>
                             borderRadius: BorderRadius.circular(10),
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(20, 10, 0, 10),
-                              child: CachedNetworkImage(
-                                  height: 30,
-                                  width: 30,
-                                  imageUrl: widget.eventModel?.posterUrl ?? '',
-                                  fit: BoxFit.cover,
-                                  errorWidget: (context, url, _) =>
-                                      const Center(child: Icon(Icons.error)),
-                                  progressIndicatorBuilder:
-                                      (context, url, progress) => Center(
-                                          child: CircularProgressIndicator(
-                                              value: progress.progress))),
+                              child: Image.network(
+                                  widget.eventModel.clubLogoURL!,
+                                  fit: BoxFit.cover),
                             ),
                           ),
-                          title: Text(widget.eventModel?.name ?? '',
+                          title: Text('Flutter Bootcamp',
                               style: Theme.of(context).textTheme.headline3),
                           subtitle: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -166,9 +146,7 @@ class _EventTileState extends State<EventTile>
                               ),
                               const SizedBox(width: 5),
                               Text(
-                                DateFormat.yMd().format(
-                                    widget.eventModel?.startTime ??
-                                        DateTime(0)),
+                                'Sep 28',
                                 style: Theme.of(context).textTheme.subtitle1,
                               ),
                               const SizedBox(width: 10),
@@ -179,9 +157,7 @@ class _EventTileState extends State<EventTile>
                               ),
                               const SizedBox(width: 5),
                               Text(
-                                DateFormat.jms().format(
-                                    widget.eventModel?.startTime ??
-                                        DateTime(0)),
+                                '6:00 PM',
                                 style: Theme.of(context).textTheme.subtitle1,
                               ),
                             ],
@@ -189,7 +165,7 @@ class _EventTileState extends State<EventTile>
                         ),
                         collapsed: const SizedBox(),
                         expanded: Text(
-                          widget.eventModel?.description.toString() ?? '',
+                          lorem(paragraphs: 1, words: 30),
                           textAlign: TextAlign.justify,
                           style: Theme.of(context)
                               .textTheme
