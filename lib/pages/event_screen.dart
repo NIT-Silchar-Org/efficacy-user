@@ -4,6 +4,7 @@ import 'package:efficacy_user/provider/event_provider.dart';
 import 'package:efficacy_user/utils/base_viewmodel.dart';
 import 'package:efficacy_user/utils/enums.dart';
 import 'package:efficacy_user/widgets/divider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -223,9 +224,11 @@ class _EventScreenState extends State<EventScreen> {
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
-                                    children: const [
-                                      Like(),
-                                      Share(),
+                                    children: [
+                                      Like(
+                                          eventId: widget.eventId ?? '',
+                                          isLiked: false),
+                                      const Share(),
                                     ],
                                   ),
                                 )
@@ -256,10 +259,8 @@ class _EventScreenState extends State<EventScreen> {
                               text1: event.venue!,
                               text2: "On Campus",
                               icon: Icons.location_on_outlined),
-                          const Padding(
-                            padding: EdgeInsets.only(right: 180),
-                            child: AddToCalender(),
-                          ),
+
+                          Wrap(children: const [AddToCalender()]),
                           Container(
                             margin: const EdgeInsets.only(top: 20),
                             child: Text(

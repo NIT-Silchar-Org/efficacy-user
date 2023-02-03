@@ -8,8 +8,8 @@ class AddToCalender extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 20),
-      width: 24,
-      height: 20,
+      width: 160,
+      height: 30,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
         color: const Color(0xffDAE5FF),
