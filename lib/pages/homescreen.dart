@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
+import '../provider/explore_screen_provider.dart';
+
 class HomeScreen extends StatefulWidget {
   static const route = '/home_screen';
   const HomeScreen({Key? key}) : super(key: key);
@@ -26,6 +28,13 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   String gdscImageUrl =
       'https://res.cloudinary.com/devncode/image/upload/v1575267757/production_devncode/community/1575267756355.jpg';
+
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<ExploreScreenProvider>(context, listen: false)
+        .fetchAllEvents(context: context);
+  }
 
   @override
   Widget build(BuildContext context) {
