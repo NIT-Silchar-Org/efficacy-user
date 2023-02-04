@@ -8,42 +8,41 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ExploreScreenProvider extends BaseModel {
-
-  
   List<AllEvent>? allevents = [];
 
   Future<List<AllEvent>?> fetchAllEvents(
       {required BuildContext context}) async {
-    try {
-      state = ViewState.busy;
-      await NetworkEngine().post(
-        data: {},
-        endPoint: 'all-events/',
-      ).then((response) {
-        if (response.statusCode == 200) {
-          print('Response : ${jsonEncode(response.data)}');
+    if (state != ViewState.busy && (allevents == null || allevents!.isEmpty)) {
+      try {
+        state = ViewState.busy;
+        await NetworkEngine().post(
+          data: {},
+          endPoint: 'all-events/',
+        ).then((response) {
+          if (response.statusCode == 200) {
+            print('Response : ${jsonEncode(response.data)}');
 
-          List<AllEvent> temp = allEventFromJson(jsonEncode(response.data));
-          allevents?.clear();
-          allevents?.addAll(temp);
+            List<AllEvent> temp = allEventFromJson(jsonEncode(response.data));
+            allevents?.clear();
+            allevents?.addAll(temp);
 
-          return temp;
-        } else {
-          showSnackBar(context: context, text: 'Something went wrong');
-        }
-      }).onError((error, stackTrace) {
-        print(error.toString());
-        print(stackTrace.toString());
-      });
+            return temp;
+          } else {
+            showSnackBar(context: context, text: 'Something went wrong');
+          }
+        }).onError((error, stackTrace) {
+          print(error.toString());
+          print(stackTrace.toString());
+        });
 
-      state = ViewState.idle;
-      notifyListeners();
-      return null;
-    } catch (e) {
-
-      state = ViewState.idle;
-      showSnackBar(context: context, text: 'Something went wrong');
-      rethrow;
+        state = ViewState.idle;
+        notifyListeners();
+        return null;
+      } catch (e) {
+        state = ViewState.idle;
+        showSnackBar(context: context, text: 'Something went wrong');
+        rethrow;
+      }
     }
   }
 }

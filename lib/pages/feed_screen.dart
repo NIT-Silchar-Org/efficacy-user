@@ -85,7 +85,7 @@ class _FeedScreenState extends State<FeedScreen> {
         elevation: Theme.of(context).appBarTheme.elevation,
         title: Text(
           'Feed',
-          style: Theme.of(context).textTheme.headline1?.copyWith(
+          style: Theme.of(context).textTheme.displayLarge?.copyWith(
                 fontSize: 24,
               ),
         ),
