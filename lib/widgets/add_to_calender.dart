@@ -6,36 +6,45 @@ class AddToCalender extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 20),
-      width: 24,
-      height: 20,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
-        color: const Color(0xffDAE5FF),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(
-            Icons.event_note_outlined,
-            size: 12,
-            color: Color(0xff213F8D),
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(top: 20),
+          // width: 50,
+          height: 30,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: const Color(0xffDAE5FF),
           ),
-          Text(
-            "Add to Calender",
-            style: GoogleFonts.poppins(
-              textStyle: const TextStyle(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(width: 10,),
+              const Icon(
+                Icons.event_note_outlined,
+                size: 13,
                 color: Color(0xff213F8D),
-                fontSize: 12.0,
-                fontWeight: FontWeight.w300,
-                letterSpacing: 0.5,
               ),
-            ),
-          )
-        ],
-      ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(
+                  "Add to Calender",
+                  style: GoogleFonts.poppins(
+                    textStyle: const TextStyle(
+                      color: Color(0xff213F8D),
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w300,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

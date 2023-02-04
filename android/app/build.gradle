@@ -46,6 +46,7 @@ android {
         applicationId "com.efficacyuser.app"
         minSdkVersion 21
         targetSdkVersion 30
+        compileSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Follow extends StatelessWidget {
   const Follow({Key? key}) : super(key: key);
@@ -7,8 +8,8 @@ class Follow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 61,
-      height: 20,
+      width: MediaQuery.of(context).size.width*0.25,
+      height: 30,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
         color: const Color(0xffDAE5FF),
@@ -17,16 +18,16 @@ class Follow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           const Icon(
-            Icons.add_to_photos_outlined,
-            size: 10,
+            FontAwesomeIcons.bell,
+            size: 13,
             color: Color(0xff213F8D),
           ),
           Text(
-            "Follow",
+            "Subscribe",
             style: GoogleFonts.poppins(
               textStyle: const TextStyle(
                 color: Color(0xff213F8D),
-                fontSize: 10.0,
+                fontSize: 12.0,
                 fontWeight: FontWeight.w300,
                 letterSpacing: 0.5,
               ),
