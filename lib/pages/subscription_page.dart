@@ -7,8 +7,10 @@ import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import '../widgets/filter_menu_item.dart';
 import 'account_screen.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 
 class SubscriptionPage extends StatefulWidget {
   static const route = '/subscription_page';
@@ -63,6 +65,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                         ),
                       ),
                     ),
+
                   ),
                   items: filterOptions
                       .map((item) => DropdownMenuItem<String>(
@@ -124,6 +127,70 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                   child: Text(
                     ' $selectedValue',
                     style: Theme.of(context).textTheme.headline3?.copyWith(),
+
+                  ),
+                  items: filterOptions
+                      .map((item) => DropdownMenuItem<String>(
+                          value: item,
+                          child: FilterMenuItem(
+                            text: item,
+                            isSelected: selectedValue == item,
+                          )))
+                      .toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedValue = value.toString();
+                    });
+                  },
+                  itemHeight: size.height * 0.07,
+                  dropdownWidth: size.width * 0.6,
+                  dropdownPadding: const EdgeInsets.symmetric(vertical: 20),
+                  dropdownDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  offset: Offset(size.width * -0.30, 0),
+                  dropdownOverButton: false,
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(PageRouteBuilder(
+                        pageBuilder: (context, animation, anotherAnimation) {
+                          return const AccountScreen();
+                        },
+                        transitionDuration: const Duration(milliseconds: 1200),
+                        transitionsBuilder:
+                            (context, animation, anotherAnimation, child) {
+                          animation = CurvedAnimation(
+                              curve: Curves.easeIn, parent: animation);
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        }));
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: AppColorLight.secondary,
+                  ),
+                ),
+              )
+            ],
+          ),
+          body: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    ' $selectedValue',
+                    style: Theme.of(context).textTheme.headline3?.copyWith(),
+
                   ),
                 ),
               ),

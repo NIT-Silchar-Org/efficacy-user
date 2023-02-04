@@ -6,6 +6,7 @@ class AddToCalender extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -16,6 +17,7 @@ class AddToCalender extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             color: const Color(0xffDAE5FF),
+
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

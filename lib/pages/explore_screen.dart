@@ -190,9 +190,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     ),
                     const SizedBox(height: 10),
                     Flexible(
+
                       child: events?.length == 0  
                       ? Center(child: Lottie.asset("lottie/noEvent.json"),)  
                       : ListView.builder(
+
                           itemCount: events?.length ?? 0,
                           itemBuilder: (context, index) {
                             return EventTile(
@@ -221,4 +223,5 @@ class _ExploreScreenState extends State<ExploreScreen> {
       }
     }).toList();
   }
+
 }

@@ -86,7 +86,9 @@ class _FeedScreenState extends State<FeedScreen> {
         elevation: Theme.of(context).appBarTheme.elevation,
         title: Text(
           'Feed',
+
           style: Theme.of(context).textTheme.headline1?.copyWith(
+
                 fontSize: 24,
               ),
         ),
@@ -172,8 +174,10 @@ class _FeedScreenState extends State<FeedScreen> {
           filterEvents();
         },
         builder: (_, model, __) => model.state == ViewState.busy
+
             ? Center(
                 child:Lottie.asset("lottie/loading.json", height: MediaQuery.of(context).size.height*0.3),
+
               )
             : Padding(
                 padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
@@ -191,9 +195,11 @@ class _FeedScreenState extends State<FeedScreen> {
                     ),
                     const SizedBox(height: 10),
                     Flexible(
+
                       child: events?.length == 0  
                       ? Center(child: Lottie.asset("lottie/noEvent.json"),)  
                       : ListView.builder(
+
                           itemCount: events?.length ?? 0,
                           itemBuilder: (context, index) {
                             return EventTile(
@@ -222,4 +228,6 @@ class _FeedScreenState extends State<FeedScreen> {
       }
     }).toList();
   }
+
 }
+

@@ -1,10 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:efficacy_user/provider/google_signin_provider.dart';
 import 'package:efficacy_user/widgets/loading_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 import 'package:efficacy_user/widgets/phone_widget.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
+
+import '../models/client_user_model.dart';
 
 class SignUp extends StatefulWidget {
   final GoogleSignInAccount? user;
@@ -152,16 +157,39 @@ class _SignUpState extends State<SignUp> {
                               if (isvalid) {
                                 setState(() => isLoading = !isLoading);
                                 _formkey.currentState!.save();
+
                                 var status =
                                     await Provider.of<GoogleSignInProvider>(
                                             context,
                                             listen: false)
                                         .googleLogin();
-                                if (status.toString() == "Logged In") {
-                                  setState(() => isLoading = !isLoading);
-                                } else {
-                                  setState(() => isLoading = !isLoading);
-                                }
+
+                                ClientUserModel client = ClientUserModel(
+                                  name: namecontroller.text,
+                                  userID: FirebaseAuth.instance.currentUser?.uid.toString() ?? "",
+                                  Email: emailcontroller.text,
+                                  phNumber: phonenocontroller.text,
+                                );
+                                FirebaseFirestore.instance
+                                    .collection('clientUser')
+                                    .doc(FirebaseAuth.instance.currentUser?.uid)
+                                    .set(
+                                  {
+                                    'name': client.name,
+                                    'userId':
+                                        FirebaseAuth.instance.currentUser?.uid,
+                                    'Email': client.Email,
+                                    'phNumber': client.phNumber,
+                                    'subscriptions': FieldValue.arrayUnion(
+                                        client.subscriptions ?? [])
+                                  },
+                                ).then((value) async {
+                                  if (status.toString() == "Logged In") {
+                                    setState(() => isLoading = !isLoading);
+                                  } else {
+                                    setState(() => isLoading = !isLoading);
+                                  }
+                                });
                               }
                             },
                             child: const Text('FINISH'),
