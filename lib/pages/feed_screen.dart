@@ -7,6 +7,7 @@ import 'package:efficacy_user/utils/base_viewmodel.dart';
 import 'package:efficacy_user/utils/enums.dart';
 import 'package:efficacy_user/widgets/event_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import '../provider/explore_screen_provider.dart';
 import '../themes/efficacy_usercolor.dart';
@@ -85,7 +86,9 @@ class _FeedScreenState extends State<FeedScreen> {
         elevation: Theme.of(context).appBarTheme.elevation,
         title: Text(
           'Feed',
-          style: Theme.of(context).textTheme.displayLarge?.copyWith(
+
+          style: Theme.of(context).textTheme.headline1?.copyWith(
+
                 fontSize: 24,
               ),
         ),
@@ -171,8 +174,10 @@ class _FeedScreenState extends State<FeedScreen> {
           filterEvents();
         },
         builder: (_, model, __) => model.state == ViewState.busy
-            ? const Center(
-                child: CircularProgressIndicator(),
+
+            ? Center(
+                child:Lottie.asset("lottie/loading.json", height: MediaQuery.of(context).size.height*0.3),
+
               )
             : Padding(
                 padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
@@ -190,7 +195,11 @@ class _FeedScreenState extends State<FeedScreen> {
                     ),
                     const SizedBox(height: 10),
                     Flexible(
-                      child: ListView.builder(
+
+                      child: events?.length == 0  
+                      ? Center(child: Lottie.asset("lottie/noEvent.json"),)  
+                      : ListView.builder(
+
                           itemCount: events?.length ?? 0,
                           itemBuilder: (context, index) {
                             return EventTile(
@@ -219,4 +228,6 @@ class _FeedScreenState extends State<FeedScreen> {
       }
     }).toList();
   }
+
 }
+

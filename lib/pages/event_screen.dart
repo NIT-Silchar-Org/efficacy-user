@@ -1,3 +1,4 @@
+import 'package:add_2_calendar/add_2_calendar.dart' as calendar;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:efficacy_user/models/all_events.dart';
 import 'package:efficacy_user/provider/event_provider.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:efficacy_user/pages/club_details.dart';
 import 'package:efficacy_user/widgets/details_widget.dart';
@@ -42,6 +44,21 @@ class _EventScreenState extends State<EventScreen> {
   BorderRadiusGeometry sheetRadius = const BorderRadius.only(
     topLeft: Radius.circular(24.0),
     topRight: Radius.circular(24.0),
+  );
+
+  final calendar.Event addevent = calendar.Event(
+    title: 'Event title',
+    description: 'Event description',
+    location: 'Event location',
+    startDate: DateTime.now(),
+    endDate: DateTime.now(),
+    // iosParams: IOSParams(
+    //   reminder: Duration(/* Ex. hours:1 */), // on iOS, you can set alarm notification after your event.
+    //   url: 'https://www.example.com', // on iOS, you can set url to your event.
+    // ),
+    // androidParams: AndroidParams(
+    //   emailInvites: [], // on Android, you can add invite emails to your event.
+    // ),
   );
 
   // final Map<String, dynamic> json = {
@@ -85,6 +102,7 @@ class _EventScreenState extends State<EventScreen> {
   // }
 
   late AllEvent event;
+  // late Event engineVar;
 
   // void getEvent() async {
   //   if (isInit) {
@@ -110,17 +128,32 @@ class _EventScreenState extends State<EventScreen> {
       onModelReady: (model) async {
         await model.fetchEvent(eventId: widget.eventId ?? '', context: context);
         event = model.event;
+        //   engineVar = Event(
+        // title: 'Event title',
+        // description: 'Event description',
+        // location: 'Event location',
+        // startDate: DateTime(22, 21, 2022),
+        // endDate: DateTime(01, 01, 01),
+        //   iosParams: IOSParams(
+        //     reminder: Duration(/* Ex. hours:1 */), // on iOS, you can set alarm notification after your event.
+        //     url: 'https://www.example.com', // on iOS, you can set url to your event.
+        //   ),
+        //   androidParams: AndroidParams(
+        //     emailInvites: [], // on Android, you can add invite emails to your event.
+        //   ),
+        // );
       },
-      builder: (_, model, __) => Scaffold(
+      builder: (BuildContext, model, _) => Scaffold(
         body: model.state == ViewState.busy
-            ? const Center(
-                child: CircularProgressIndicator(),
+            ? Center(
+                child: Lottie.asset("lottie/loading.json",
+                    height: MediaQuery.of(context).size.height * 0.3),
               )
             : event.name == null
                 ? const Center(child: Text('Something went wrong'))
                 : SlidingUpPanel(
                     maxHeight: devicesize.height,
-                    minHeight: devicesize.height * 0.60,
+                    minHeight: devicesize.height * 0.450,
                     panelBuilder: (sc) => Padding(
                       padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
                       child: ListView(
@@ -153,10 +186,15 @@ class _EventScreenState extends State<EventScreen> {
                                             progressIndicatorBuilder: (context,
                                                     url, progress) =>
                                                 Center(
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                            value: progress
-                                                                .progress)))),
+                                                  child: Lottie.asset(
+                                                    "lottie/loading.json",
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.3,
+                                                  ),
+                                                ))),
 
                                     // Image.network(
                                     //   event.posterUrl ?? '',
@@ -260,7 +298,28 @@ class _EventScreenState extends State<EventScreen> {
                               text2: "On Campus",
                               icon: Icons.location_on_outlined),
 
-                          Wrap(children: const [AddToCalender()]),
+                          GestureDetector(
+                            onTap: () {
+                              calendar.Add2Calendar.addEvent2Cal(
+                                calendar.Event(
+                                  title: event.name ?? '',
+                                  description: event.description ?? '',
+                                  location: event.venue ?? '',
+                                  startDate: event.startTime ?? DateTime.now(),
+                                  endDate: event.endTime ?? DateTime.now(),
+                                  // iosParams: IOSParams(
+                                  //   reminder: Duration(/* Ex. hours:1 */), // on iOS, you can set alarm notification after your event.
+                                  //   url: 'https://www.example.com', // on iOS, you can set url to your event.
+                                  // ),
+                                  // androidParams: AndroidParams(
+                                  //   emailInvites: [], // on Android, you can add invite emails to your event.
+                                  // ),
+                                ),
+                              );
+                            },
+                            child: AddToCalender(),
+                          ),
+
                           Container(
                             margin: const EdgeInsets.only(top: 20),
                             child: Text(
@@ -281,7 +340,10 @@ class _EventScreenState extends State<EventScreen> {
                             margin: const EdgeInsets.only(top: 29),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: const [Gform(), Facebook()],
+                              children: [
+                                Gform(googleFormUrl: event.googleFormUrl),
+                                Facebook(fbPostUrl: event.fbPostUrl),
+                              ],
                             ),
                           ),
                           ListView(
@@ -327,7 +389,7 @@ class _EventScreenState extends State<EventScreen> {
                       child: Stack(
                         children: [
                           CachedNetworkImage(
-                              height: 250,
+                              height: MediaQuery.of(context).size.height * 0.5,
                               width: devicesize.width,
                               imageUrl: event.posterUrl ?? '',
                               fit: BoxFit.cover,

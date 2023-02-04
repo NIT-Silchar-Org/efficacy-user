@@ -7,6 +7,7 @@ import 'package:efficacy_user/utils/base_viewmodel.dart';
 import 'package:efficacy_user/utils/enums.dart';
 import 'package:efficacy_user/widgets/event_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import '../models/all_events.dart';
@@ -189,7 +190,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     ),
                     const SizedBox(height: 10),
                     Flexible(
-                      child: ListView.builder(
+
+                      child: events?.length == 0  
+                      ? Center(child: Lottie.asset("lottie/noEvent.json"),)  
+                      : ListView.builder(
+
                           itemCount: events?.length ?? 0,
                           itemBuilder: (context, index) {
                             return EventTile(
@@ -218,4 +223,5 @@ class _ExploreScreenState extends State<ExploreScreen> {
       }
     }).toList();
   }
+
 }
