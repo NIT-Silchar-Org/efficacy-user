@@ -90,7 +90,7 @@ class _ClubDetailState extends State<ClubDetail>
                             engineVar.clubName,
                             style: const TextStyle(fontSize: 20),
                           ),
-                           Subscribe(),
+                           Subscribe(clubId: engineVar.clubId,),
                         ],
                       ),
                       Padding(

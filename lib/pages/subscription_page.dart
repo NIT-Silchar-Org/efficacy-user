@@ -1,4 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:efficacy_user/models/club_model.dart';
+import 'package:efficacy_user/provider/club_provider.dart';
 import 'package:efficacy_user/widgets/bottom_navigation_bar.dart';
 import 'package:efficacy_user/widgets/subscribe_button.dart';
 import 'package:efficacy_user/widgets/subscription_tab_buttons.dart';
@@ -7,6 +9,7 @@ import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import '../widgets/filter_menu_item.dart';
 import 'account_screen.dart';
+import 'package:provider/provider.dart';
 
 class SubscriptionPage extends StatefulWidget {
   static const route = '/subscription_page';
@@ -23,6 +26,17 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     'Subscribed Clubs',
     'Unsubscribed Clubs'
   ];
+
+  int selectedIndex = 0;
+
+  List<ClubModel> clubs = [];
+  List<ClubModel> subscribedClubs = [];
+  List<ClubModel> unsubscribedClus = [];
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +87,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                   onChanged: (value) {
                     setState(() {
                       selectedValue = value.toString();
+                      selectedIndex = filterOptions.indexOf(value.toString());
                     });
                   },
                   itemHeight: size.height * 0.07,
@@ -129,20 +144,125 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
               SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(5),
-                  child: Column(
-                    children: [
-                      ListTile(
-                        leading: const CircleAvatar(),
-                        title: const Text('Illuminatis'),
-                        trailing: TextButton(
-                          child: SizedBox(
-                            width: (size.width * 0.35),
-                            child: Subscribe(),
+                  child: FutureBuilder(
+                    future: Provider.of<ClubProvider>(context, listen: false)
+                        .fetchAllClub(),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      print(snapshot.data);
+                      if (snapshot.hasData) {
+                        clubs = snapshot.data;
+                        // subscribedClubs = snapshot.data.where((e) async {
+                        //   int len = await FirebaseFirestore.instance
+                        //       .collection('clientUser')
+                        //       .doc(FirebaseAuth.instance.currentUser?.uid)
+                        //       .get()
+                        //       .then((value) => value["subscriptions"].length);
+                        //   for (int i = 0; i < len; i++) {
+                        //     if (FirebaseFirestore.instance
+                        //             .collection('clientUser')
+                        //             .doc(FirebaseAuth.instance.currentUser?.uid)
+                        //             .get()
+                        //             .then(
+                        //                 (value) => value["subscriptions"][i]) ==
+                        //         e.clubId) {
+                        //       return e;
+                        //     }
+                        //   }
+                        // }).toList();
+                        // return Lis(
+                        //   children: [
+                        //     ListTile(
+                        //       leading: const CircleAvatar(),
+                        //       title: const Text('Illuminatis'),
+                        //       trailing: TextButton(
+                        //         child: SizedBox(
+                        //           width: (size.width * 0.35),
+                        //           child: Subscribe(),
+                        //         ),
+                        //         onPressed: () {},
+                        //       ),
+                        //     ),
+                        //   ],
+                        if (selectedIndex == 0) {
+                          return Container(
+                            height: 500,
+                            width: double.infinity,
+                            child: ListView(
+                              children: clubs.map((e) {
+                                return ListTile(
+                                  leading: const CircleAvatar(),
+                                  title: Text(e.clubName),
+                                  trailing: TextButton(
+                                    child: SizedBox(
+                                      width: (size.width * 0.35),
+                                      child: Subscribe(
+                                        clubId: e.clubId,
+                                      ),
+                                    ),
+                                    onPressed: () {},
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          );
+                        } else if (selectedIndex == 1) {
+                          return Container(
+                            height: 500,
+                            width: double.infinity,
+                            child: ListView(
+                              children: subscribedClubs.map((e) {
+                                return ListTile(
+                                  leading: const CircleAvatar(),
+                                  title: Text(e.clubName),
+                                  trailing: TextButton(
+                                    child: SizedBox(
+                                      width: (size.width * 0.35),
+                                      child: Subscribe(
+                                        clubId: e.clubId,
+                                      ),
+                                    ),
+                                    onPressed: () {},
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          );
+                        } else {
+                          return Container(
+                            height: 500,
+                            width: double.infinity,
+                            child: ListView(
+                              children: unsubscribedClus.map((e) {
+                                return ListTile(
+                                  leading: const CircleAvatar(),
+                                  title: Text(e.clubName),
+                                  trailing: TextButton(
+                                    child: SizedBox(
+                                      width: (size.width * 0.35),
+                                      child: Subscribe(
+                                        clubId: e.clubId,
+                                      ),
+                                    ),
+                                    onPressed: () {},
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          );
+                        }
+                      } else {
+                        return SizedBox(
+                          height: MediaQuery.of(context).size.height - 400,
+                          child: const Center(
+                            child: SizedBox(
+                              height: 70,
+                              width: 70,
+                              child: CircularProgressIndicator(),
+                            ),
                           ),
-                          onPressed: () {},
-                        ),
-                      ),
-                    ],
+                        );
+                      }
+                    },
                   ),
                 ),
               ),

@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:efficacy_user/models/contacts_model.dart';
 import 'package:flutter/material.dart';
 
 import '../constant/endpoints.dart';
@@ -7,6 +11,41 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../models/club_model.dart';
 
 class ClubProvider with ChangeNotifier {
+  Future<List<ClubModel>?> fetchAllClub() async {
+    try {
+      var snapshot = await FirebaseFirestore.instance.collection('Clubs').get();
+      List<ClubModel> clubs = [];
+      List<Contact> moderators = [];
+      for (int i = 0; i < snapshot.docs.length; i++) {
+        Map clubData = snapshot.docs.elementAt(i).data();
+        moderators.clear();
+        if (clubData["moderators"] != null) {
+          for (int j = 0; j < (clubData["moderators"] ?? []).length; j++) {
+            if (clubData["moderators"][j] != null) {
+              moderators.add(Contact(
+                  name: clubData["moderators"][j]["name"] ?? '',
+                  phNumber: clubData["moderators"][j]["phone"] ?? '',
+                  position: clubData["moderators"][j]["position"] ?? ''));
+            }
+          }
+        }
+        clubs.add(ClubModel(
+            clubId: snapshot.docs.elementAt(i).id,
+            clubName: clubData["clubName"] ?? '',
+            clubLogoURL: clubData["clubLogoUrl"] ?? '',
+            clubDescription: clubData["clubDescription"] ?? '',
+            fbPageUrl: clubData["fbPageUrl"] ?? '',
+            instagramUrl: clubData["instagramUrl"] ?? '',
+            linkedlnURL: clubData["linkedlnURL"] ?? '',
+            moderators: moderators,
+            followers: []));
+      }
+      return clubs;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<ClubModel> fetchClub(String clubId) async {
     try {
       final token = await FirebaseAuth.instance.currentUser!.getIdToken();
