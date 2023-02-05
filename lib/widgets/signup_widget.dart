@@ -166,7 +166,9 @@ class _SignUpState extends State<SignUp> {
 
                                 ClientUserModel client = ClientUserModel(
                                   name: namecontroller.text,
-                                  userID: FirebaseAuth.instance.currentUser?.uid.toString() ?? "",
+                                  userID: FirebaseAuth.instance.currentUser?.uid
+                                          .toString() ??
+                                      "",
                                   Email: emailcontroller.text,
                                   phNumber: phonenocontroller.text,
                                 );
@@ -181,7 +183,7 @@ class _SignUpState extends State<SignUp> {
                                     'Email': client.Email,
                                     'phNumber': client.phNumber,
                                     'subscriptions': FieldValue.arrayUnion(
-                                        client.subscriptions ?? [])
+                                        ['FQ0YthDf9vh5sG2uU0vI'])
                                   },
                                 ).then((value) async {
                                   if (status.toString() == "Logged In") {
