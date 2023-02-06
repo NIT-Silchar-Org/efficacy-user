@@ -1,9 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:efficacy_user/models/club_model.dart';
 import 'package:efficacy_user/provider/club_provider.dart';
-import 'package:efficacy_user/widgets/bottom_navigation_bar.dart';
 import 'package:efficacy_user/widgets/subscribe_button.dart';
-import 'package:efficacy_user/widgets/subscription_tab_buttons.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:flutter_portal/flutter_portal.dart';
@@ -27,15 +27,38 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     'Unsubscribed Clubs'
   ];
 
-  int selectedIndex = 0;
+  int selectedIndex = 3;
 
   List<ClubModel> clubs = [];
   List<ClubModel> subscribedClubs = [];
-  List<ClubModel> unsubscribedClus = [];
+  List<ClubModel> unsubscribedClubs = [];
 
   @override
   void initState() {
+    getData();
     super.initState();
+  }
+
+  void getData() async {
+    clubs = (await Provider.of<ClubProvider>(context, listen: false)
+        .fetchAllClub())!;
+    await FirebaseFirestore.instance
+        .collection('clientUser')
+        .doc('0AH4606SVPfKps1tfH9OjkXnT5z2')
+        .get()
+        .then((value) => {
+              for (int i = 0; i < value["subscriptions"].length; i++)
+                {
+                  value["subscriptions"][i],
+                  if (clubs[i].clubId == value["subscriptions"][i])
+                    {subscribedClubs.add(clubs[i])}
+                  else
+                    {unsubscribedClubs.add(clubs[i])}
+                }
+            });
+    setState(() {
+      selectedIndex = 0;
+    });
   }
 
   @override
@@ -51,7 +74,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
             foregroundColor: Theme.of(context).appBarTheme.foregroundColor,
             elevation: Theme.of(context).appBarTheme.elevation,
             title: Text(
-              'Subsciptions',
+              'Subscriptions',
               style: Theme.of(context).textTheme.headline1?.copyWith(
                     fontSize: 24,
                   ),
@@ -143,48 +166,9 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
               const SizedBox(height: 10),
               SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: FutureBuilder(
-                    future: Provider.of<ClubProvider>(context, listen: false)
-                        .fetchAllClub(),
-                    builder: (context, AsyncSnapshot snapshot) {
-                      print(snapshot.data);
-                      if (snapshot.hasData) {
-                        clubs = snapshot.data;
-                        // subscribedClubs = snapshot.data.where((e) async {
-                        //   int len = await FirebaseFirestore.instance
-                        //       .collection('clientUser')
-                        //       .doc(FirebaseAuth.instance.currentUser?.uid)
-                        //       .get()
-                        //       .then((value) => value["subscriptions"].length);
-                        //   for (int i = 0; i < len; i++) {
-                        //     if (FirebaseFirestore.instance
-                        //             .collection('clientUser')
-                        //             .doc(FirebaseAuth.instance.currentUser?.uid)
-                        //             .get()
-                        //             .then(
-                        //                 (value) => value["subscriptions"][i]) ==
-                        //         e.clubId) {
-                        //       return e;
-                        //     }
-                        //   }
-                        // }).toList();
-                        // return Lis(
-                        //   children: [
-                        //     ListTile(
-                        //       leading: const CircleAvatar(),
-                        //       title: const Text('Illuminatis'),
-                        //       trailing: TextButton(
-                        //         child: SizedBox(
-                        //           width: (size.width * 0.35),
-                        //           child: Subscribe(),
-                        //         ),
-                        //         onPressed: () {},
-                        //       ),
-                        //     ),
-                        //   ],
-                        if (selectedIndex == 0) {
-                          return Container(
+                    padding: const EdgeInsets.all(5),
+                    child: selectedIndex == 0
+                        ? Container(
                             height: 500,
                             width: double.infinity,
                             child: ListView(
@@ -204,67 +188,62 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                 );
                               }).toList(),
                             ),
-                          );
-                        } else if (selectedIndex == 1) {
-                          return Container(
-                            height: 500,
-                            width: double.infinity,
-                            child: ListView(
-                              children: subscribedClubs.map((e) {
-                                return ListTile(
-                                  leading: const CircleAvatar(),
-                                  title: Text(e.clubName),
-                                  trailing: TextButton(
-                                    child: SizedBox(
-                                      width: (size.width * 0.35),
-                                      child: Subscribe(
-                                        clubId: e.clubId,
+                          )
+                        : selectedIndex == 1
+                            ? Container(
+                                height: 500,
+                                width: double.infinity,
+                                child: ListView(
+                                  children: subscribedClubs.map((e) {
+                                    return ListTile(
+                                      leading: const CircleAvatar(),
+                                      title: Text(e.clubName),
+                                      trailing: TextButton(
+                                        child: SizedBox(
+                                          width: (size.width * 0.35),
+                                          child: Subscribe(
+                                            clubId: e.clubId,
+                                          ),
+                                        ),
+                                        onPressed: () {},
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              )
+                            : selectedIndex == 2
+                                ? Container(
+                                    height: 500,
+                                    width: double.infinity,
+                                    child: ListView(
+                                      children: unsubscribedClubs.map((e) {
+                                        return ListTile(
+                                          leading: const CircleAvatar(),
+                                          title: Text(e.clubName),
+                                          trailing: TextButton(
+                                            child: SizedBox(
+                                              width: (size.width * 0.35),
+                                              child: Subscribe(
+                                                clubId: e.clubId,
+                                              ),
+                                            ),
+                                            onPressed: () {},
+                                          ),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  )
+                                : SizedBox(
+                                    height: MediaQuery.of(context).size.height -
+                                        400,
+                                    child: const Center(
+                                      child: SizedBox(
+                                        height: 70,
+                                        width: 70,
+                                        child: CircularProgressIndicator(),
                                       ),
                                     ),
-                                    onPressed: () {},
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          );
-                        } else {
-                          return Container(
-                            height: 500,
-                            width: double.infinity,
-                            child: ListView(
-                              children: unsubscribedClus.map((e) {
-                                return ListTile(
-                                  leading: const CircleAvatar(),
-                                  title: Text(e.clubName),
-                                  trailing: TextButton(
-                                    child: SizedBox(
-                                      width: (size.width * 0.35),
-                                      child: Subscribe(
-                                        clubId: e.clubId,
-                                      ),
-                                    ),
-                                    onPressed: () {},
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          );
-                        }
-                      } else {
-                        return SizedBox(
-                          height: MediaQuery.of(context).size.height - 400,
-                          child: const Center(
-                            child: SizedBox(
-                              height: 70,
-                              width: 70,
-                              child: CircularProgressIndicator(),
-                            ),
-                          ),
-                        );
-                      }
-                    },
-                  ),
-                ),
+                                  )),
               ),
             ],
           ),

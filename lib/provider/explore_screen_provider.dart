@@ -8,8 +8,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ExploreScreenProvider extends BaseModel {
-
-  
   List<AllEvent>? allevents = [];
 
   Future<List<AllEvent>?> fetchAllEvents(
@@ -34,13 +32,13 @@ class ExploreScreenProvider extends BaseModel {
       }).onError((error, stackTrace) {
         print(error.toString());
         print(stackTrace.toString());
+        return null;
       });
 
       state = ViewState.idle;
       notifyListeners();
       return null;
     } catch (e) {
-
       state = ViewState.idle;
       showSnackBar(context: context, text: 'Something went wrong');
       rethrow;
