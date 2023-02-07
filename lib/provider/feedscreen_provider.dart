@@ -32,6 +32,7 @@ class FeedscreenProvider extends BaseModel {
       }).onError((error, stackTrace) {
         print(error.toString());
         print(stackTrace.toString());
+        return null;
       });
 
       state = ViewState.idle;
