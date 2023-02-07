@@ -1,9 +1,10 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:efficacy_user/models/club_model.dart';
 import 'package:efficacy_user/provider/club_provider.dart';
 import 'package:efficacy_user/widgets/subscribe_button.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:flutter_portal/flutter_portal.dart';
@@ -42,20 +43,27 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   void getData() async {
     clubs = (await Provider.of<ClubProvider>(context, listen: false)
         .fetchAllClub())!;
+    // add subscribe and unsubcribe club
+
     await FirebaseFirestore.instance
         .collection('clientUser')
         .doc('0AH4606SVPfKps1tfH9OjkXnT5z2')
         .get()
         .then((value) => {
-              for (int i = 0; i < value["subscriptions"].length; i++)
+              json.encode(value.data()!),
+              for (int i = 0; i < clubs.length; i++)
                 {
-                  value["subscriptions"][i],
-                  if (clubs[i].clubId == value["subscriptions"][i])
+                  if (value["subscriptions"] != null &&
+                      value["subscriptions"].contains(clubs[i].clubId))
                     {subscribedClubs.add(clubs[i])}
                   else
                     {unsubscribedClubs.add(clubs[i])}
                 }
             });
+    print('//////////////////');
+    print(subscribedClubs.length);
+    print(unsubscribedClubs.length);
+    print('//////////////////');
     setState(() {
       selectedIndex = 0;
     });

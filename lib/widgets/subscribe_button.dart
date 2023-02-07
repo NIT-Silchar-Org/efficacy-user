@@ -24,8 +24,8 @@ class _SubscribeState extends State<Subscribe> {
     return FutureBuilder(
       future: FirebaseFirestore.instance
           .collection('clientUser')
-          .doc(FirebaseAuth.instance.currentUser
-              ?.uid) //'abcde' is for reference will be replaced by uuid
+          .doc(
+              '0AH4606SVPfKps1tfH9OjkXnT5z2') //'abcde' is for reference will be replaced by uuid
           .get(),
       builder: (BuildContext context,
           AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
@@ -96,8 +96,8 @@ class _SubscribeState extends State<Subscribe> {
                 });
                 Map<String, dynamic>? data = (await FirebaseFirestore.instance
                         .collection('clientUser')
-                        .doc(FirebaseAuth.instance.currentUser
-                            ?.uid) //'abcde' is for reference will be replaced by uuid
+                        .doc(
+                            '0AH4606SVPfKps1tfH9OjkXnT5z2') //'abcde' is for reference will be replaced by uuid
                         .get())
                     .data();
                 if (subscribe_button_state) {
@@ -119,7 +119,7 @@ class _SubscribeState extends State<Subscribe> {
                 try {
                   FirebaseFirestore.instance
                       .collection('clientUser')
-                      .doc(FirebaseAuth.instance.currentUser?.uid)
+                      .doc('0AH4606SVPfKps1tfH9OjkXnT5z2')
                       .set(data ?? {})
                       .then((value) => setState(() {
                             subscribe_button_state = !subscribe_button_state;
