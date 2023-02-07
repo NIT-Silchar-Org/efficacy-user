@@ -10,8 +10,9 @@ class ClientUserModel {
   final String phNumber;
   String? scholarID;
   String? branch;
-
-  List<String>? subscriptions = ["FQ0YthDf9vh5sG2uU0vI"];
+  String? year;
+  String? degree;
+  List<String>? subscriptions;
 
   ClientUserModel({
     required this.name,
@@ -21,9 +22,12 @@ class ClientUserModel {
     this.scholarID,
     this.branch,
     this.subscriptions,
+    this.year,
+    this.degree,
   });
 
-  // factory ClientUserModel.fromJson(Map<String, dynamic> json) => _$ClientUserModelFromJson(json);
+  factory ClientUserModel.fromJson(Map<String, dynamic> json) =>
+      _$ClientUserModelFromJson(json);
 
-  //  Map<String, dynamic> toJson() => _$ClientUserModelFromJson(this);
+  Map<String, dynamic> toJson() => _$ClientUserModelToJson(this);
 }

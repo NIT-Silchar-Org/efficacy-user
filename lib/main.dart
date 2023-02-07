@@ -63,8 +63,8 @@ class _MyAppState extends State<MyApp> {
                     )
                   : value.currentUser()
                       ? const HomeScreen()
-                      //                      : const SignIn(),
-                      : const HomeScreen(),
+                      : const SignIn(),
+              // : const HomeScreen(),
               routes: <String, WidgetBuilder>{
                 HomeScreen.route: (BuildContext context) => const HomeScreen(),
                 EventScreen.route: (BuildContext context) =>
