@@ -1,4 +1,4 @@
-import 'package:add_2_calendar/add_2_calendar.dart' as calendar;
+// import 'package:add_2_calendar/add_2_calendar.dart' as calendar;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:efficacy_user/models/all_events.dart';
 import 'package:efficacy_user/provider/event_provider.dart';
@@ -46,20 +46,20 @@ class _EventScreenState extends State<EventScreen> {
     topRight: Radius.circular(24.0),
   );
 
-  final calendar.Event addevent = calendar.Event(
-    title: 'Event title',
-    description: 'Event description',
-    location: 'Event location',
-    startDate: DateTime.now(),
-    endDate: DateTime.now(),
-    // iosParams: IOSParams(
-    //   reminder: Duration(/* Ex. hours:1 */), // on iOS, you can set alarm notification after your event.
-    //   url: 'https://www.example.com', // on iOS, you can set url to your event.
-    // ),
-    // androidParams: AndroidParams(
-    //   emailInvites: [], // on Android, you can add invite emails to your event.
-    // ),
-  );
+  // final calendar.Event addevent = calendar.Event(
+  //   title: 'Event title',
+  //   description: 'Event description',
+  //   location: 'Event location',
+  //   startDate: DateTime.now(),
+  //   endDate: DateTime.now(),
+  //   // iosParams: IOSParams(
+  //   //   reminder: Duration(/* Ex. hours:1 */), // on iOS, you can set alarm notification after your event.
+  //   //   url: 'https://www.example.com', // on iOS, you can set url to your event.
+  //   // ),
+  //   // androidParams: AndroidParams(
+  //   //   emailInvites: [], // on Android, you can add invite emails to your event.
+  //   // ),
+  // );
 
   // final Map<String, dynamic> json = {
   //   "eventID": "yHZG2GhfYzQgS5MwDnzP",
@@ -300,22 +300,22 @@ class _EventScreenState extends State<EventScreen> {
 
                           GestureDetector(
                             onTap: () {
-                              calendar.Add2Calendar.addEvent2Cal(
-                                calendar.Event(
-                                  title: event.name ?? '',
-                                  description: event.description ?? '',
-                                  location: event.venue ?? '',
-                                  startDate: event.startTime ?? DateTime.now(),
-                                  endDate: event.endTime ?? DateTime.now(),
-                                  // iosParams: IOSParams(
-                                  //   reminder: Duration(/* Ex. hours:1 */), // on iOS, you can set alarm notification after your event.
-                                  //   url: 'https://www.example.com', // on iOS, you can set url to your event.
-                                  // ),
-                                  // androidParams: AndroidParams(
-                                  //   emailInvites: [], // on Android, you can add invite emails to your event.
-                                  // ),
-                                ),
-                              );
+                              // calendar.Add2Calendar.addEvent2Cal(
+                              //   calendar.Event(
+                              //     title: event.name ?? '',
+                              //     description: event.description ?? '',
+                              //     location: event.venue ?? '',
+                              //     startDate: event.startTime ?? DateTime.now(),
+                              //     endDate: event.endTime ?? DateTime.now(),
+                              //     // iosParams: IOSParams(
+                              //     //   reminder: Duration(/* Ex. hours:1 */), // on iOS, you can set alarm notification after your event.
+                              //     //   url: 'https://www.example.com', // on iOS, you can set url to your event.
+                              //     // ),
+                              //     // androidParams: AndroidParams(
+                              //     //   emailInvites: [], // on Android, you can add invite emails to your event.
+                              //     // ),
+                              //   ),
+                              // );
                             },
                             child: AddToCalender(),
                           ),
