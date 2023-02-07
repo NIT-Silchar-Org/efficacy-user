@@ -5,6 +5,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:efficacy_user/models/club_model.dart';
 import 'package:efficacy_user/provider/club_provider.dart';
 import 'package:efficacy_user/widgets/subscribe_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:flutter_portal/flutter_portal.dart';
@@ -67,6 +68,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     setState(() {
       selectedIndex = 0;
     });
+    // get gmail photo url
   }
 
   @override
@@ -182,7 +184,10 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                             child: ListView(
                               children: clubs.map((e) {
                                 return ListTile(
-                                  leading: const CircleAvatar(),
+                                  leading: CircleAvatar(
+                                    backgroundImage:
+                                        NetworkImage(e.clubLogoURL),
+                                  ),
                                   title: Text(e.clubName),
                                   trailing: TextButton(
                                     child: SizedBox(
@@ -204,7 +209,10 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                 child: ListView(
                                   children: subscribedClubs.map((e) {
                                     return ListTile(
-                                      leading: const CircleAvatar(),
+                                      leading: CircleAvatar(
+                                        backgroundImage:
+                                            NetworkImage(e.clubLogoURL),
+                                      ),
                                       title: Text(e.clubName),
                                       trailing: TextButton(
                                         child: SizedBox(
@@ -226,7 +234,10 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                     child: ListView(
                                       children: unsubscribedClubs.map((e) {
                                         return ListTile(
-                                          leading: const CircleAvatar(),
+                                          leading: CircleAvatar(
+                                            backgroundImage:
+                                                NetworkImage(e.clubLogoURL),
+                                          ),
                                           title: Text(e.clubName),
                                           trailing: TextButton(
                                             child: SizedBox(
