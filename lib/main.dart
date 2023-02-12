@@ -54,7 +54,7 @@ class _MyAppState extends State<MyApp> {
               create: (context) => ExploreScreenProvider(),
             ),
             ChangeNotifierProvider<ClubProvider>(
-              create: (context)=>ClubProvider(),
+              create: (context) => ClubProvider(),
             )
           ],
           child: Consumer<GoogleSignInProvider>(

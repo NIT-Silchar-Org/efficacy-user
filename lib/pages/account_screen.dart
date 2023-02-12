@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:efficacy_user/models/client_user_model.dart';
 import 'package:efficacy_user/models/user_model.dart';
+import 'package:efficacy_user/pages/edit_Account.dart';
+import 'package:efficacy_user/pages/google_sign_in.dart';
+import 'package:efficacy_user/widgets/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
@@ -20,11 +23,13 @@ class _AccountScreenState extends State<AccountScreen> {
 
   int _selectedIndex = 0;
   ClientUserModel user = ClientUserModel(
-    Email: '---',
-    phNumber: '---',
-    userID: '---',
-    name: '---',
-  );
+      Email: '---',
+      phNumber: '---',
+      userID: '---',
+      name: '---',
+      scholarID: '---',
+      year: '---',
+      branch: '---');
   bool isloading = true;
 
   @override
@@ -94,6 +99,35 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget build(BuildContext context) {
     Size devicesize = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Account'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.edit,
+              color: Colors.blueAccent,
+            ),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => EditAccount()));
+              // do something
+            },
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.logout,
+              color: Colors.blueAccent,
+            ),
+            onPressed: () async {
+              // do something
+              await auth.signOut();
+              showSnackBar(context: context, text: 'Succesfully Logged Out');
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => SignIn()));
+            },
+          ),
+        ],
+      ),
       body: isloading
           ? const Center(child: CircularProgressIndicator())
           : SlidingUpPanel(
@@ -123,12 +157,11 @@ class _AccountScreenState extends State<AccountScreen> {
                             TextStyle(color: Color(0xff213F8D), fontSize: 22),
                       ),
                       infoFun('Name', user.name),
-                      infoFun('Scholar ID', user.scholarID ?? '---'),
-                      infoFun('Year ', user.year ?? '---'),
-                      infoFun('Branch ', user.branch ?? '---'),
-                      infoFun('Degree', user.degree ?? '---'),
                       infoFun('Email', user.Email),
                       infoFun('Phone No.', user.phNumber),
+                      infoFun('Scholar ID', user.scholarID!),
+                      infoFun('Year', user.year!),
+                      infoFun('Branch', user.branch!),
                       const Text(
                         'Theme',
                         style:
@@ -156,6 +189,21 @@ class _AccountScreenState extends State<AccountScreen> {
                           ),
                         ],
                       ),
+                      SizedBox(
+                        height: 50,
+                        width: 50,
+                      ),
+                      // ElevatedButton(
+                      //   onPressed: () async {
+                      //     await auth.signOut();
+                      //     Navigator.push(
+                      //       context,
+                      //       MaterialPageRoute(builder: (context) => SignIn()),
+                      //     );
+                      //     // Perform some action
+                      //   },
+                      //   child: Text('Log Out'),
+                      // ),
                     ],
                   ),
                 ),
@@ -172,8 +220,9 @@ class _AccountScreenState extends State<AccountScreen> {
                         height: 30,
                       ),
                       const CircleAvatar(
-                        radius: 45,
-                      ),
+                          radius: 45,
+                          backgroundImage: NetworkImage(
+                              'https://cdn-icons-png.flaticon.com/512/2922/2922510.png')),
                       const SizedBox(
                         height: 10,
                       ),
@@ -186,6 +235,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   ),
                 ),
               )),
+
               borderRadius: sheetRadius,
             ),
     );
@@ -198,12 +248,20 @@ class _AccountScreenState extends State<AccountScreen> {
     print('Inside Get Data');
     await FirebaseFirestore.instance
         .collection('clientUser')
-        .doc(uuid) //'abcde' is for reference will be replaced by uuid
+        .doc(uuid)
         .get()
         .then((snapshot) {
       userfetched = ClientUserModel.fromJson(snapshot.data()!);
       print('Name Printing');
-      print(userfetched.name);
+      if (userfetched.scholarID == null) {
+        userfetched.scholarID = '---';
+      }
+      if (userfetched.year == null) {
+        userfetched.year = '---';
+      }
+      if (userfetched.branch == null) {
+        userfetched.branch = '---';
+      }
     });
 
     setState(() {
