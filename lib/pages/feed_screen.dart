@@ -164,6 +164,7 @@ class _FeedScreenState extends State<FeedScreen> {
       ),
       body: BaseView<ExploreScreenProvider>(
         onModelReady: (model) async {
+          
           model.fetchAllEvents(context: context);
           allEvent = model.allevents;
           allEvent!.sort((a, b) {

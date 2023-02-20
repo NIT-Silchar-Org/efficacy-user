@@ -11,7 +11,7 @@ class FeedscreenProvider extends BaseModel {
   List<AllEvent>? allevents = [];
 
   Future<List<AllEvent>?> fetchAllEvents(
-      {required BuildContext context}) async {
+      {required BuildContext context}, List<String> clubList[]) async {
     try {
       state = ViewState.busy;
       await NetworkEngine().post(
