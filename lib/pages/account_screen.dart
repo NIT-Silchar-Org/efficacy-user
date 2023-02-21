@@ -189,7 +189,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 50,
                         width: 50,
                       ),
@@ -253,15 +253,9 @@ class _AccountScreenState extends State<AccountScreen> {
         .then((snapshot) {
       userfetched = ClientUserModel.fromJson(snapshot.data()!);
       print('Name Printing');
-      if (userfetched.scholarID == null) {
-        userfetched.scholarID = '---';
-      }
-      if (userfetched.year == null) {
-        userfetched.year = '---';
-      }
-      if (userfetched.branch == null) {
-        userfetched.branch = '---';
-      }
+      userfetched.scholarID ??= '---';
+      userfetched.year ??= '---';
+      userfetched.branch ??= '---';
     });
 
     setState(() {

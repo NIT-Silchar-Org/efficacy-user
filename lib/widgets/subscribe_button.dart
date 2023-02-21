@@ -30,7 +30,7 @@ class _SubscribeState extends State<Subscribe> {
       builder: (BuildContext context,
           AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
         if (snapshot.hasData) {
-          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+          WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
             setState(() {
               subscribe_button_state = snapshot.data!
                       .data()?['subscriptions']

@@ -1,14 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:efficacy_user/models/all_events.dart';
-import 'package:efficacy_user/models/feed_screen_model.dart';
-import 'package:efficacy_user/pages/explore_screen.dart';
 import 'package:efficacy_user/provider/feedscreen_provider.dart';
 import 'package:efficacy_user/utils/base_viewmodel.dart';
 import 'package:efficacy_user/utils/enums.dart';
 import 'package:efficacy_user/widgets/event_tile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:provider/provider.dart';
 import '../provider/explore_screen_provider.dart';
 import '../themes/efficacy_usercolor.dart';
 import '../widgets/filter_menu_item.dart';
@@ -86,9 +85,7 @@ class _FeedScreenState extends State<FeedScreen> {
         elevation: Theme.of(context).appBarTheme.elevation,
         title: Text(
           'Feed',
-
           style: Theme.of(context).textTheme.headline1?.copyWith(
-
                 fontSize: 24,
               ),
         ),
@@ -162,9 +159,14 @@ class _FeedScreenState extends State<FeedScreen> {
           )
         ],
       ),
-      body: BaseView<ExploreScreenProvider>(
+      body: BaseView<FeedscreenProvider>(
         onModelReady: (model) async {
-          
+          List<String> clubList;
+          FirebaseFirestore.instance
+              .collection('clientUser')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .get()
+              .then((value) => {clubList = value.data()!['subscription']});
           model.fetchAllEvents(context: context);
           allEvent = model.allevents;
           allEvent!.sort((a, b) {
@@ -175,10 +177,9 @@ class _FeedScreenState extends State<FeedScreen> {
           filterEvents();
         },
         builder: (_, model, __) => model.state == ViewState.busy
-
             ? Center(
-                child:Lottie.asset("lottie/loading.json", height: MediaQuery.of(context).size.height*0.3),
-
+                child: Lottie.asset("lottie/loading.json",
+                    height: MediaQuery.of(context).size.height * 0.3),
               )
             : Padding(
                 padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
@@ -196,17 +197,17 @@ class _FeedScreenState extends State<FeedScreen> {
                     ),
                     const SizedBox(height: 10),
                     Flexible(
-
-                      child: events?.length == 0  
-                      ? Center(child: Lottie.asset("lottie/noEvent.json"),)  
-                      : ListView.builder(
-
-                          itemCount: events?.length ?? 0,
-                          itemBuilder: (context, index) {
-                            return EventTile(
-                              eventModel: events?[index],
-                            );
-                          }),
+                      child: events?.length == 0
+                          ? Center(
+                              child: Lottie.asset("lottie/noEvent.json"),
+                            )
+                          : ListView.builder(
+                              itemCount: events?.length ?? 0,
+                              itemBuilder: (context, index) {
+                                return EventTile(
+                                  eventModel: events?[index],
+                                );
+                              }),
                     )
                   ],
                 ),
@@ -229,6 +230,4 @@ class _FeedScreenState extends State<FeedScreen> {
       }
     }).toList();
   }
-
 }
-
