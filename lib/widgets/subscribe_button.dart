@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Subscribe extends StatefulWidget {
-  // const Subscribe({Key? key}) : super(key: key);
-
   final String clubId;
 
   Subscribe({required this.clubId});
@@ -24,8 +22,7 @@ class _SubscribeState extends State<Subscribe> {
     return FutureBuilder(
       future: FirebaseFirestore.instance
           .collection('clientUser')
-          .doc(
-              '0AH4606SVPfKps1tfH9OjkXnT5z2') //'abcde' is for reference will be replaced by uuid
+          .doc(FirebaseAuth.instance.currentUser!.uid)
           .get(),
       builder: (BuildContext context,
           AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
@@ -96,8 +93,7 @@ class _SubscribeState extends State<Subscribe> {
                 });
                 Map<String, dynamic>? data = (await FirebaseFirestore.instance
                         .collection('clientUser')
-                        .doc(
-                            '0AH4606SVPfKps1tfH9OjkXnT5z2') //'abcde' is for reference will be replaced by uuid
+                        .doc(FirebaseAuth.instance.currentUser!.uid)
                         .get())
                     .data();
                 if (subscribe_button_state) {
@@ -119,7 +115,7 @@ class _SubscribeState extends State<Subscribe> {
                 try {
                   FirebaseFirestore.instance
                       .collection('clientUser')
-                      .doc('0AH4606SVPfKps1tfH9OjkXnT5z2')
+                      .doc(FirebaseAuth.instance.currentUser!.uid)
                       .set(data ?? {})
                       .then((value) => setState(() {
                             subscribe_button_state = !subscribe_button_state;
@@ -135,7 +131,7 @@ class _SubscribeState extends State<Subscribe> {
             Container(
               height: 40,
               width: 1,
-              decoration: BoxDecoration(color: Colors.white),
+              decoration: const BoxDecoration(color: Colors.white),
             ),
             GestureDetector(
               child: Container(

@@ -5,6 +5,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:efficacy_user/models/club_model.dart';
 import 'package:efficacy_user/provider/club_provider.dart';
 import 'package:efficacy_user/widgets/subscribe_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:flutter_portal/flutter_portal.dart';
@@ -47,7 +48,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
 
     await FirebaseFirestore.instance
         .collection('clientUser')
-        .doc('0AH4606SVPfKps1tfH9OjkXnT5z2')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .get()
         .then((value) => {
               json.encode(value.data()!),
