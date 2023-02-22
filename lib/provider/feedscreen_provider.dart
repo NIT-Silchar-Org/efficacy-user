@@ -11,11 +11,11 @@ class FeedscreenProvider extends BaseModel {
   List<AllEvent>? allevents = [];
 
   Future<List<AllEvent>?> fetchAllEvents(
-      {required BuildContext context}) async {
+      {required BuildContext context, List<String>? clubList}) async {
     try {
       state = ViewState.busy;
       await NetworkEngine().post(
-        data: {},
+        data: {'clubList': clubList ?? []},
         endPoint: 'all-events/',
       ).then((response) {
         if (response.statusCode == 200) {
@@ -32,6 +32,7 @@ class FeedscreenProvider extends BaseModel {
       }).onError((error, stackTrace) {
         print(error.toString());
         print(stackTrace.toString());
+        return null;
       });
 
       state = ViewState.idle;

@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Subscribe extends StatefulWidget {
-  // const Subscribe({Key? key}) : super(key: key);
+  final String clubId;
+
+  Subscribe({required this.clubId});
 
   @override
   State<Subscribe> createState() => _SubscribeState();
@@ -18,17 +21,17 @@ class _SubscribeState extends State<Subscribe> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: FirebaseFirestore.instance
-          .collection('Users')
-          .doc('abcde') //'abcde' is for reference will be replaced by uuid
+          .collection('clientUser')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
           .get(),
       builder: (BuildContext context,
           AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
         if (snapshot.hasData) {
-          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+          WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
             setState(() {
               subscribe_button_state = snapshot.data!
-                      .data()?['subscription']
-                      ?.contains('Illumnits') ??
+                      .data()?['subscriptions']
+                      ?.contains(widget.clubId) ??
                   false;
             });
           });
@@ -89,30 +92,30 @@ class _SubscribeState extends State<Subscribe> {
                   isLoading = true;
                 });
                 Map<String, dynamic>? data = (await FirebaseFirestore.instance
-                        .collection('Users')
-                        .doc(
-                            'abcde') //'abcde' is for reference will be replaced by uuid
+                        .collection('clientUser')
+                        .doc(FirebaseAuth.instance.currentUser!.uid)
                         .get())
                     .data();
                 if (subscribe_button_state) {
-                  if (data!['subscription'] != null) {
-                    data['subscription']?.remove('Illumnits');
-                    if (data['subscription'] == null) {
-                      data['subscription'] = [];
+                  if (data!['subscriptions'] != null) {
+                    data['subscriptions']?.remove(widget.clubId);
+                    if (data['subscriptions'] == null) {
+                      data['subscriptions'] = [];
                     }
                   }
                 } else {
                   data?.addAll({
-                    'subscription': (data['subscription'] == null)
-                        ? ['Illumnits']
-                        : [...data['subscription'], 'Illumnits']
+                    'subscriptions': (data['subscriptions'] == null ||
+                            data['subscriptions'].isEmpty)
+                        ? [widget.clubId]
+                        : [...data['subscriptions'], widget.clubId]
                   });
                 }
-                print(data);
+                // print(data);
                 try {
                   FirebaseFirestore.instance
-                      .collection("Users")
-                      .doc("abcde")
+                      .collection('clientUser')
+                      .doc(FirebaseAuth.instance.currentUser!.uid)
                       .set(data ?? {})
                       .then((value) => setState(() {
                             subscribe_button_state = !subscribe_button_state;
@@ -128,7 +131,7 @@ class _SubscribeState extends State<Subscribe> {
             Container(
               height: 40,
               width: 1,
-              decoration: BoxDecoration(color: Colors.white),
+              decoration: const BoxDecoration(color: Colors.white),
             ),
             GestureDetector(
               child: Container(

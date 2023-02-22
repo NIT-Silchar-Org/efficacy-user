@@ -4,6 +4,7 @@ import 'package:efficacy_user/pages/event_screen.dart';
 import 'package:efficacy_user/pages/explore_screen.dart';
 import 'package:efficacy_user/pages/feed_screen.dart';
 import 'package:efficacy_user/pages/homescreen.dart';
+import 'package:efficacy_user/provider/club_provider.dart';
 import 'package:efficacy_user/provider/event_provider.dart';
 import 'package:efficacy_user/provider/explore_screen_provider.dart';
 import 'package:efficacy_user/provider/feedscreen_provider.dart';
@@ -52,6 +53,9 @@ class _MyAppState extends State<MyApp> {
             ChangeNotifierProvider<ExploreScreenProvider>(
               create: (context) => ExploreScreenProvider(),
             ),
+            ChangeNotifierProvider<ClubProvider>(
+              create: (context) => ClubProvider(),
+            )
           ],
           child: Consumer<GoogleSignInProvider>(
             builder: (context, value, child) => MaterialApp(
@@ -63,8 +67,8 @@ class _MyAppState extends State<MyApp> {
                     )
                   : value.currentUser()
                       ? const HomeScreen()
-                      //                      : const SignIn(),
-                      : const HomeScreen(),
+                      : const SignIn(),
+              // : const HomeScreen(),
               routes: <String, WidgetBuilder>{
                 HomeScreen.route: (BuildContext context) => const HomeScreen(),
                 EventScreen.route: (BuildContext context) =>
