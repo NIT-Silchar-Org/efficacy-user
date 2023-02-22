@@ -1,139 +1,89 @@
-import 'dart:async';
-import 'package:Efficacy/screens/Team.dart';
-import 'package:Efficacy/screens/noInternet.dart';
-import 'package:Efficacy/screens/clubPage.dart';
-import 'package:Efficacy/screens/eventScreen.dart';
-import 'package:Efficacy/screens/feedScreen.dart';
-import 'package:connectivity/connectivity.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:overlay_support/overlay_support.dart';
-import './screens/profile.dart';
-import './screens/wrapper.dart';
+import 'package:efficacy_user/pages/about_us.dart';
+import 'package:efficacy_user/pages/club_details.dart';
+import 'package:efficacy_user/pages/event_screen.dart';
+import 'package:efficacy_user/pages/explore_screen.dart';
+import 'package:efficacy_user/pages/feed_screen.dart';
+import 'package:efficacy_user/pages/homescreen.dart';
+import 'package:efficacy_user/provider/club_provider.dart';
+import 'package:efficacy_user/provider/event_provider.dart';
+import 'package:efficacy_user/provider/explore_screen_provider.dart';
+import 'package:efficacy_user/provider/feedscreen_provider.dart';
+import 'package:efficacy_user/provider/google_signin_provider.dart';
+import 'package:efficacy_user/provider/loading_provider.dart';
+import 'package:efficacy_user/themes/efficacy_theme.dart';
+import 'package:efficacy_user/utils/locator.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import './screens/clubs.dart';
-import './screens/register_screen.dart';
-import './screens/clubPage.dart';
-import './config.dart';
-import './utilities/utilities.dart';
+import 'package:efficacy_user/pages/google_sign_in.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:efficacy_user/pages/subscription_page.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  setUpLocator();
   await Firebase.initializeApp();
-
-  runApp(OverlaySupport(child: MyApp()));
+  runApp(const MyApp());
 }
 
-final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
-
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-  bool connection = true;
-  var _connectionStatus = 'Unknown';
-  Connectivity connectivity;
-  StreamSubscription<ConnectivityResult> subscription;
-
   @override
-  void initState() {
-    super.initState();
-    connectivity = new Connectivity();
-    subscription =
-        connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
-      _connectionStatus = result.toString();
-      print(_connectionStatus);
-      if (result == ConnectivityResult.wifi ||
-          result == ConnectivityResult.mobile) {
-        setState(() {
-          connection = true;
-        });
-      } else {
-        setState(() {
-          connection = false;
-        });
-      }
-    });
-    _firebaseMessaging.getToken().then((value) => print("token" + value));
-    _firebaseMessaging.subscribeToTopic('active');
-    _firebaseMessaging.configure(
-        onMessage: (Map<String, dynamic> message) async {
-      // print("onMessage: $message");
-      showOverlayNotification((context) {
-        return Card(
-          margin: const EdgeInsets.symmetric(horizontal: 4),
-          child: SafeArea(
-            child: ListTile(
-              onTap: () {
-                print("onMessage event id" + message["data"]["id"].toString());
-                navigatorKey.currentState.pushNamed("/event",
-                    arguments: {"id": message["data"]["id"].toString()});
+  Widget build(BuildContext context) {
+    final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+    return FutureBuilder(
+      future: _initialization,
+      builder: (context, snapshot) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider<EventProvider>.value(value: EventProvider()),
+            ChangeNotifierProvider<GoogleSignInProvider>.value(
+                value: GoogleSignInProvider()),
+            ChangeNotifierProvider<FeedscreenProvider>.value(
+                value: FeedscreenProvider()),
+            ChangeNotifierProvider<LoadingProvider>(
+              create: (context) => LoadingProvider(),
+            ),
+            ChangeNotifierProvider<ExploreScreenProvider>(
+              create: (context) => ExploreScreenProvider(),
+            ),
+            ChangeNotifierProvider<ClubProvider>(
+              create: (context) => ClubProvider(),
+            )
+          ],
+          child: Consumer<GoogleSignInProvider>(
+            builder: (context, value, child) => MaterialApp(
+              theme: AppTheme.light,
+              debugShowCheckedModeBanner: false,
+              home: snapshot.connectionState == ConnectionState.waiting
+                  ? const CircularProgressIndicator(
+                      backgroundColor: Colors.orangeAccent,
+                    )
+                  : value.currentUser()
+                      ? const HomeScreen()
+                      : const SignIn(),
+              // : const HomeScreen(),
+              routes: <String, WidgetBuilder>{
+                HomeScreen.route: (BuildContext context) => const HomeScreen(),
+                EventScreen.route: (BuildContext context) =>
+                    const EventScreen(),
+                ClubDetail.route: (BuildContext context) => const ClubDetail(),
+                ExploreScreen.route: (BuildContext context) =>
+                    const ExploreScreen(),
+                FeedScreen.route: (BuildContext context) => const FeedScreen(),
+                SignIn.route: (BuildContext context) => const SignIn(),
+                SubscriptionPage.route: (BuildContext context) =>
+                    const SubscriptionPage(),
               },
-              leading: CircleAvatar(
-                  child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Image.asset("assets/efficacy_logo.jpg"),
-              )),
-              title: Text(message['notification']['title']),
-              subtitle: Text(message['notification']['body']),
-              trailing: IconButton(
-                  icon: Icon(Icons.close),
-                  onPressed: () {
-                    OverlaySupportEntry.of(context).dismiss();
-                  }),
             ),
           ),
         );
-      }, duration: Duration(milliseconds: 4000));
-
-      print(message['notification']['title']);
-    }, onResume: (message) async {
-      print(message["data"]["click_action"]);
-      print("Data ID" +
-          message["data"]["id"] +
-          "type" +
-          (message["data"]["id"] is String).toString());
-      navigatorKey.currentState.pushNamed("/event",
-          arguments: {"id": message["data"]["id"].toString()});
-    }, onLaunch: (Map<String, dynamic> message) async {
-      print("onLaunch: $message");
-      print(message["data"]["id"]);
-      navigatorKey.currentState.pushReplacementNamed("/");
-      navigatorKey.currentState.pushNamed("/event",
-          arguments: {"id": message["data"]["id"].toString()});
-    });
-  }
-
-  @override
-  void dispose() {
-    subscription.cancel();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      navigatorKey: navigatorKey,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        textTheme: TextTheme(),
-        backgroundColor: Colors.blue,
-        primaryColor: Colors.blue,
-        primaryTextTheme: TextTheme(),
-      ),
-      routes: {
-        "/": (context) => (connection) ? Wrapper() : NoInternet(),
-        "/register": (context) => (connection) ? Register() : NoInternet(),
-        "/clubs": (context) => (connection) ? Clubs() : NoInternet(),
-        "/profile": (context) => (connection) ? Profile() : NoInternet(),
-        "/event": (context) => (connection) ? EventScreen() : NoInternet(),
-        "/oneClub": (context) => (connection) ? ClubPage() : NoInternet(),
-        "/about_us": (context) => Team(),
       },
     );
   }
