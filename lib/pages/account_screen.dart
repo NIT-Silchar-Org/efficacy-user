@@ -122,7 +122,7 @@ class _AccountScreenState extends State<AccountScreen> {
               // do something
               await auth.signOut();
               showSnackBar(context: context, text: 'Succesfully Logged Out');
-              Navigator.push(
+              Navigator.pushReplacement(
                   context, MaterialPageRoute(builder: (context) => SignIn()));
             },
           ),
