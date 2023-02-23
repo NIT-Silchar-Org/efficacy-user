@@ -12,7 +12,7 @@ ClientUserModel _$ClientUserModelFromJson(Map<String, dynamic> json) =>
       userID: json['userId'] as String,
       Email: json['Email'] as String,
       phNumber: json['phNumber'] as String,
-      year: json['year'] as String,
+      year: json['year'] as String?,
       scholarID: json['scholarID'] as String?,
       branch: json['branch'] as String?,
       subscriptions: (json['subscriptions'] as List<dynamic>?)
