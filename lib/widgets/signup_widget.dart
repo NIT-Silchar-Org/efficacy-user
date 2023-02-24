@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:efficacy_user/pages/homescreen.dart';
 import 'package:efficacy_user/provider/google_signin_provider.dart';
 import 'package:efficacy_user/widgets/loading_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,14 +21,47 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final _formkey = GlobalKey<FormState>();
-  bool isLoading = false;
+  bool isLoading = true;
   late TextEditingController namecontroller, emailcontroller, phonenocontroller;
   @override
   void initState() {
     namecontroller = TextEditingController(text: widget.user?.displayName);
     emailcontroller = TextEditingController(text: widget.user?.email);
     phonenocontroller = TextEditingController();
+    isUserCreated().then((value) => setState(() {
+          isLoading = false;
+        }));
     super.initState();
+  }
+
+  Future<void> isUserCreated() async {
+    try {
+      if (FirebaseAuth.instance.currentUser?.uid == null) {
+        GoogleSignInAccount? account =
+            Provider.of<GoogleSignInProvider>(context, listen: false).user;
+        if (account != null) {
+          GoogleSignInAuthentication googleSignInAuthentication =
+              await account.authentication;
+          AuthCredential credentials = GoogleAuthProvider.credential(
+              idToken: googleSignInAuthentication.idToken,
+              accessToken: googleSignInAuthentication.accessToken);
+          await FirebaseAuth.instance.signInWithCredential(credentials);
+        }
+      }
+      bool check = (await FirebaseFirestore.instance
+              .collection('clientUser')
+              .doc(FirebaseAuth.instance.currentUser?.uid)
+              .get())['phNumber'] !=
+          null;
+      if (check && mounted) {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (BuildContext context) {
+          return const HomeScreen();
+        }));
+      }
+    } catch (e) {
+      return;
+    }
   }
 
   @override
@@ -188,13 +222,17 @@ class _SignUpState extends State<SignUp> {
                                 ).then((value) async {
                                   if (status.toString() == "Logged In") {
                                     setState(() => isLoading = !isLoading);
+                                    Navigator.pushReplacement(context,
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) {
+                                      return const HomeScreen();
+                                    }));
                                   } else {
                                     setState(() => isLoading = !isLoading);
                                   }
                                 });
                               }
                             },
-                            child: const Text('FINISH'),
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
@@ -202,6 +240,7 @@ class _SignUpState extends State<SignUp> {
                                 ),
                               ),
                             ),
+                            child: const Text('FINISH'),
                           ),
                         ),
                       ],
