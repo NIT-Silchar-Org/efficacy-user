@@ -105,8 +105,8 @@ class _SignUpState extends State<SignUp> {
                             ),
                             filled: true,
                             fillColor: Colors.transparent,
-                            prefixIcon: Icon(Icons.person),
-                            labelText: 'Name',
+                            prefixIcon: Icon(Icons.mail),
+                            labelText: 'Email',
                             enabled: false,
                           ),
                           validator: (val) {
