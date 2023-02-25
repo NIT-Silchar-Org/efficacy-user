@@ -100,21 +100,21 @@ class _AccountScreenState extends State<AccountScreen> {
     Size devicesize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Account'),
+        title: const Text('Account'),
         actions: <Widget>[
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.edit,
               color: Colors.blueAccent,
             ),
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => EditAccount()));
+                  MaterialPageRoute(builder: (context) => const EditAccount()));
               // do something
             },
           ),
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.logout,
               color: Colors.blueAccent,
             ),
@@ -122,8 +122,10 @@ class _AccountScreenState extends State<AccountScreen> {
               // do something
               await auth.signOut();
               showSnackBar(context: context, text: 'Succesfully Logged Out');
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => SignIn()));
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignIn()),
+                  (Route<dynamic> route) => false);
             },
           ),
         ],
