@@ -9,7 +9,7 @@ class PhoneWidget extends StatefulWidget {
 
 class _PhoneWidgetState extends State<PhoneWidget> {
   String _selectedCountryCode = '+91';
-  final List<String> _countryCodes = ['+91', '+23'];
+  final List<String> _countryCodes = ['+91'];
 
   @override
   Widget build(BuildContext context) {
