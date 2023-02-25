@@ -171,7 +171,7 @@ class _SignUpState extends State<SignUp> {
                           ),
                           validator: (val) {
                             if (val!.isEmpty) {
-                              return 'Select a email';
+                              return 'Please enter name';
                             }
                             return null;
                           },
