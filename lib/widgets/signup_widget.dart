@@ -140,7 +140,7 @@ class _SignUpState extends State<SignUp> {
                             filled: true,
                             fillColor: Colors.transparent,
                             prefixIcon: Icon(Icons.person),
-                            labelText: 'Name',
+                            labelText: 'Email',
                             enabled: false,
                           ),
                           validator: (val) {
@@ -171,7 +171,7 @@ class _SignUpState extends State<SignUp> {
                           ),
                           validator: (val) {
                             if (val!.isEmpty) {
-                              return 'Select a email';
+                              return 'Please enter name';
                             }
                             return null;
                           },
