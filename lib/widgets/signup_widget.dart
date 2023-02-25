@@ -139,7 +139,7 @@ class _SignUpState extends State<SignUp> {
                             ),
                             filled: true,
                             fillColor: Colors.transparent,
-                            prefixIcon: Icon(Icons.person),
+                            prefixIcon: Icon(Icons.mail),
                             labelText: 'Email',
                             enabled: false,
                           ),
