@@ -152,8 +152,19 @@ class _FeedScreenState extends State<FeedScreen> {
                       );
                     }));
               },
-              child: CircleAvatar(
-                backgroundColor: AppColorLight.secondary,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.person_outline,
+                    size: 30,
+                    color: Theme.of(context).primaryIconTheme.color,
+                  ),
+                ),
               ),
             ),
           )
