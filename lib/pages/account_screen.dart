@@ -139,7 +139,7 @@ class _AccountScreenState extends State<AccountScreen> {
           ? const Center(child: CircularProgressIndicator())
           : SlidingUpPanel(
               maxHeight: devicesize.height,
-              minHeight: devicesize.height * 0.55,
+              minHeight: devicesize.height * 0.6,
               panelBuilder: (sc) => Center(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
@@ -149,12 +149,8 @@ class _AccountScreenState extends State<AccountScreen> {
                     controller: sc,
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(top: 0, bottom: 10),
-                        child: PanelDivider(
-
-
-                        )
-                        ,
+                        margin: const EdgeInsets.only(top: 15, bottom: 10),
+                        child: const PanelDivider(),
                         // child: Divider(
                         //   color: const Color(0xff180000).withOpacity(0.17),
                         //   height: 20,
@@ -167,6 +163,9 @@ class _AccountScreenState extends State<AccountScreen> {
                         'Personal Information',
                         style:
                             TextStyle(color: Color(0xff213F8D), fontSize: 22),
+                      ),
+                      const SizedBox(
+                        height: 10,
                       ),
                       infoFun('Name', user.name),
                       infoFun('Email', user.Email),
@@ -231,10 +230,10 @@ class _AccountScreenState extends State<AccountScreen> {
                       const SizedBox(
                         height: 50,
                       ),
-                       CircleAvatar(
-                          radius: 45,
-                          backgroundImage: NetworkImage(
-                              auth.currentUser?.photoURL??"")),
+                      CircleAvatar(
+                          radius: devicesize.width * 0.125,
+                          backgroundImage:
+                              NetworkImage(auth.currentUser?.photoURL ?? "")),
                       const SizedBox(
                         height: 10,
                       ),
