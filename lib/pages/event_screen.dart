@@ -1,5 +1,6 @@
 // import 'package:add_2_calendar/add_2_calendar.dart' as calendar;
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:efficacy_user/models/all_events.dart';
 import 'package:efficacy_user/provider/event_provider.dart';
 import 'package:efficacy_user/utils/base_viewmodel.dart';
@@ -102,6 +103,7 @@ class _EventScreenState extends State<EventScreen> {
   // }
 
   late AllEvent event;
+  late String clubName;
   // late Event engineVar;
 
   // void getEvent() async {
@@ -128,6 +130,12 @@ class _EventScreenState extends State<EventScreen> {
       onModelReady: (model) async {
         await model.fetchEvent(eventId: widget.eventId ?? '', context: context);
         event = model.event;
+        await FirebaseFirestore.instance
+            .collection('Clubs')
+            .doc(event.clubId)
+            .get()
+            .then((value) => {clubName = value['clubName']});
+        print('clubName: $clubName');
         //   engineVar = Event(
         // title: 'Event title',
         // description: 'Event description',
@@ -221,7 +229,7 @@ class _EventScreenState extends State<EventScreen> {
                                           ),
                                         ),
                                         Text(
-                                          event.name ?? '',
+                                          clubName,
                                           style: GoogleFonts.poppins(
                                             textStyle: TextStyle(
                                               color: const Color(0xff191C1D)
@@ -275,7 +283,7 @@ class _EventScreenState extends State<EventScreen> {
                           ),
 
                           DetailCard(
-                              text1: DateFormat.yMd()
+                              text1: DateFormat.yMMMEd()
                                   .format(event.startTime ?? DateTime(0))
                                   .toString(),
                               text2: DateFormat.jms()
@@ -370,7 +378,7 @@ class _EventScreenState extends State<EventScreen> {
                           Container(
                             margin: const EdgeInsets.only(top: 12, bottom: 20),
                             child: Text(
-                              "published on 12 March,2021",
+                              "published by ${event.contacts?[0].name ?? ''}",
                               style: GoogleFonts.poppins(
                                 textStyle: TextStyle(
                                     color: const Color(0xff191C1D)

@@ -61,7 +61,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
   List<AllEvent>? allevent;
   List<AllEvent>? events;
   List<String> filterOptions = ['Upcoming', 'Ongoing', 'Completed'];
-  String selectedValue = 'Completed';
+  String selectedValue = 'Upcoming';
   // @override
   // void initState() {
   //   // exploreScreenProvider =Provider.of<ExploreScreenProvider>(context, listen: false);
@@ -190,17 +190,17 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     ),
                     const SizedBox(height: 10),
                     Flexible(
-
-                      child: events?.length == 0  
-                      ? Center(child: Lottie.asset("lottie/noEvent.json"),)  
-                      : ListView.builder(
-
-                          itemCount: events?.length ?? 0,
-                          itemBuilder: (context, index) {
-                            return EventTile(
-                              eventModel: events?[index],
-                            );
-                          }),
+                      child: events?.length == 0
+                          ? Center(
+                              child: Lottie.asset("lottie/noEvent.json"),
+                            )
+                          : ListView.builder(
+                              itemCount: events?.length ?? 0,
+                              itemBuilder: (context, index) {
+                                return EventTile(
+                                  eventModel: events?[index],
+                                );
+                              }),
                     )
                   ],
                 ),
@@ -223,5 +223,4 @@ class _ExploreScreenState extends State<ExploreScreen> {
       }
     }).toList();
   }
-
 }
