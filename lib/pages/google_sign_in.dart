@@ -92,8 +92,7 @@ class _SignInState extends State<SignIn> {
                                 decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
-                                    image:
-                                        AssetImage('assets/efficacy_logo.jpg'),
+                                    image: AssetImage('assets/icon.png'),
                                     fit: BoxFit.cover,
                                   ),
                                 ),

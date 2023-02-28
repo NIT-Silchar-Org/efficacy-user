@@ -103,7 +103,7 @@ class _EventScreenState extends State<EventScreen> {
   // }
 
   late AllEvent event;
-  late String clubName;
+  String clubName = "";
   // late Event engineVar;
 
   // void getEvent() async {
@@ -135,6 +135,7 @@ class _EventScreenState extends State<EventScreen> {
             .doc(event.clubId)
             .get()
             .then((value) => {clubName = value['clubName']});
+        setState(() {});
         print('clubName: $clubName');
         //   engineVar = Event(
         // title: 'Event title',
