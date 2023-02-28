@@ -3,6 +3,7 @@ import 'package:efficacy_user/models/client_user_model.dart';
 import 'package:efficacy_user/models/user_model.dart';
 import 'package:efficacy_user/pages/edit_Account.dart';
 import 'package:efficacy_user/pages/google_sign_in.dart';
+import 'package:efficacy_user/widgets/divider.dart';
 import 'package:efficacy_user/widgets/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -100,12 +101,14 @@ class _AccountScreenState extends State<AccountScreen> {
     Size devicesize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue[900],
+        foregroundColor: Colors.white,
         title: const Text('Account'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
               Icons.edit,
-              color: Colors.blueAccent,
+              color: Colors.white,
             ),
             onPressed: () {
               Navigator.push(context,
@@ -116,7 +119,7 @@ class _AccountScreenState extends State<AccountScreen> {
           IconButton(
             icon: const Icon(
               Icons.logout,
-              color: Colors.blueAccent,
+              color: Colors.white,
             ),
             onPressed: () async {
               // do something
@@ -134,7 +137,7 @@ class _AccountScreenState extends State<AccountScreen> {
           ? const Center(child: CircularProgressIndicator())
           : SlidingUpPanel(
               maxHeight: devicesize.height,
-              minHeight: devicesize.height * 0.65,
+              minHeight: devicesize.height * 0.55,
               panelBuilder: (sc) => Center(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
@@ -145,13 +148,18 @@ class _AccountScreenState extends State<AccountScreen> {
                     children: [
                       Container(
                         margin: const EdgeInsets.only(top: 0, bottom: 10),
-                        child: Divider(
-                          color: const Color(0xff180000).withOpacity(0.17),
-                          height: 20,
-                          thickness: 2,
-                          indent: 100,
-                          endIndent: 100,
-                        ),
+                        child: PanelDivider(
+
+
+                        )
+                        ,
+                        // child: Divider(
+                        //   color: const Color(0xff180000).withOpacity(0.17),
+                        //   height: 20,
+                        //   thickness: 4,
+                        //   indent: 100,
+                        //   endIndent: 100,
+                        // ),
                       ),
                       const Text(
                         'Personal Information',
@@ -164,33 +172,33 @@ class _AccountScreenState extends State<AccountScreen> {
                       infoFun('Scholar ID', user.scholarID!),
                       infoFun('Year', user.year!),
                       infoFun('Branch', user.branch!),
-                      const Text(
-                        'Theme',
-                        style:
-                            TextStyle(color: Color(0xff213F8D), fontSize: 22),
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: RadioButton(
-                              description: "Dark",
-                              value: "Dark",
-                              onChanged: (S) {
-                                //setState(() {});
-                              },
-                              groupValue: 2,
-                            ),
-                          ),
-                          Expanded(
-                            child: RadioButton(
-                              description: "Light",
-                              value: "Light",
-                              onChanged: (S) {},
-                              groupValue: 2,
-                            ),
-                          ),
-                        ],
-                      ),
+                      // const Text(
+                      //   'Theme',
+                      //   style:
+                      //       TextStyle(color: Color(0xff213F8D), fontSize: 22),
+                      // ),
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //       child: RadioButton(
+                      //         description: "Dark",
+                      //         value: "Dark",
+                      //         onChanged: (S) {
+                      //           //setState(() {});
+                      //         },
+                      //         groupValue: 2,
+                      //       ),
+                      //     ),
+                      //     Expanded(
+                      //       child: RadioButton(
+                      //         description: "Light",
+                      //         value: "Light",
+                      //         onChanged: (S) {},
+                      //         groupValue: 2,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       const SizedBox(
                         height: 50,
                         width: 50,
@@ -219,12 +227,12 @@ class _AccountScreenState extends State<AccountScreen> {
                   child: Column(
                     children: [
                       const SizedBox(
-                        height: 30,
+                        height: 50,
                       ),
-                      const CircleAvatar(
+                       CircleAvatar(
                           radius: 45,
                           backgroundImage: NetworkImage(
-                              'https://cdn-icons-png.flaticon.com/512/2922/2922510.png')),
+                              auth.currentUser?.photoURL??"")),
                       const SizedBox(
                         height: 10,
                       ),
