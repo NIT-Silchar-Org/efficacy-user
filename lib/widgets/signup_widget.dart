@@ -3,13 +3,13 @@ import 'package:efficacy_user/pages/homescreen.dart';
 import 'package:efficacy_user/provider/google_signin_provider.dart';
 import 'package:efficacy_user/widgets/loading_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:glassmorphism/glassmorphism.dart';
-import 'package:efficacy_user/widgets/phone_widget.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart' as input;
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:intl_phone_field/phone_number.dart';
 import 'package:provider/provider.dart';
-
+import 'package:efficacy_user/widgets/intl_phone.dart';
 import '../models/client_user_model.dart';
 
 class SignUp extends StatefulWidget {
@@ -22,12 +22,14 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final _formkey = GlobalKey<FormState>();
   bool isLoading = true;
-  late TextEditingController namecontroller, emailcontroller, phonenocontroller;
+  late TextEditingController namecontroller, emailcontroller;
+  // late TextEditingController phonenocontroller;
+  input.PhoneNumber phNumber = input.PhoneNumber();
   @override
   void initState() {
     namecontroller = TextEditingController(text: widget.user?.displayName);
     emailcontroller = TextEditingController(text: widget.user?.email);
-    phonenocontroller = TextEditingController();
+    // phonenocontroller = TextEditingController();
     isUserCreated().then((value) => setState(() {
           isLoading = false;
         }));
@@ -68,7 +70,7 @@ class _SignUpState extends State<SignUp> {
   void dispose() {
     namecontroller.dispose();
     emailcontroller.dispose();
-    phonenocontroller.dispose();
+    // phonenocontroller.dispose();
     super.dispose();
   }
 
@@ -179,7 +181,11 @@ class _SignUpState extends State<SignUp> {
                         const SizedBox(height: 14),
                         Container(
                           padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
-                          child: PhoneWidget(controller: phonenocontroller),
+                          child: IntlPhone(
+                            onInputChanged: (input.PhoneNumber phoneNumber) {
+                              phNumber = phoneNumber;
+                            },
+                          ),
                         ),
                         const SizedBox(height: 10),
                         SizedBox(
@@ -204,7 +210,8 @@ class _SignUpState extends State<SignUp> {
                                           .toString() ??
                                       "",
                                   Email: emailcontroller.text,
-                                  phNumber: phonenocontroller.text,
+                                  phNumber:
+                                      '${phNumber.dialCode!} ${phNumber.phoneNumber!}',
                                 );
                                 FirebaseFirestore.instance
                                     .collection('clientUser')

@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 
@@ -124,6 +125,7 @@ class _AccountScreenState extends State<AccountScreen> {
             onPressed: () async {
               // do something
               await auth.signOut();
+              await GoogleSignIn().signOut();
               showSnackBar(context: context, text: 'Succesfully Logged Out');
               Navigator.pushAndRemoveUntil(
                   context,
