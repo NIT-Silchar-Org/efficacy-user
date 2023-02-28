@@ -53,12 +53,16 @@ class _EditAccountState extends State<EditAccount> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.blue[900],
+          foregroundColor: Colors.white,
+
           title: Text('Account'),
           actions: <Widget>[
             IconButton(
               icon: Icon(
+
                 Icons.save,
-                color: Colors.blueAccent,
+                color: Colors.white,
               ),
               onPressed: () {
                 updateinfo();
