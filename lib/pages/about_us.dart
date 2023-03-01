@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:efficacy_user/widgets/divider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../widgets/about_us_card.dart';
+import '../widgets/loading_screen.dart';
 
 class AboutUsPage extends StatefulWidget {
+  static const id = '/AboutUs';
   const AboutUsPage({Key? key}) : super(key: key);
 
   @override
@@ -18,74 +22,133 @@ class _AboutUsPageState extends State<AboutUsPage>
 
   @override
   void initState() {
+    getdata();
     tabController = TabController(length: 3, vsync: this);
     super.initState();
   }
 
-  void backButton() {
-    Navigator.pop(context);
+  void getdata() async {
+    setState(() {
+      isLoading = true;
+    });
+    await FirebaseFirestore.instance.collection('Developers').get().then(
+      (snapshots) {
+        for (var snapshot in snapshots.docs) {
+          // ClubModel doc = ClubModel.fromJson(snapshot.data());
+          data.add(snapshot.data());
+          print(data);
+        }
+      },
+    );
+    setState(() {
+      print(data);
+      isLoading = false;
+    });
   }
+
+  bool isLoading = false;
+
+  List<Map<String, dynamic>> data = [
+    {
+      "name": "Biju",
+      "position": "Developer",
+      "branch": "EE",
+      "imgUrl": "",
+      "fbUrl": "",
+      "linkedInUrl": ""
+    },
+    {
+      "name": "Biju",
+      "position": "Mentor",
+      "branch": "CSE",
+      "imgUrl": "",
+      "fbUrl": "",
+      "linkedInUrl": ""
+    },
+    {
+      "name": "Biju",
+      "position": "UI/UX",
+      "branch": "ECE",
+      "imgUrl": "",
+      "fbUrl": "",
+      "linkedInUrl": ""
+    }
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () {
-        backButton();
-        return Future.value(false);
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          //Google popin
-          title: Text(
-            'About Us',
-            style: GoogleFonts.poppins(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
+    return isLoading
+        ? const LoadingScreen()
+        : SafeArea(
+            child: Scaffold(
+              body: SlidingUpPanel(
+                controller: panelController,
+                minHeight: MediaQuery.of(context).size.height - 250,
+                maxHeight: MediaQuery.of(context).size.height,
+                defaultPanelState: PanelState.CLOSED,
+                body: Stack(
+                  children: [
+                    Container(
+                      height: 225,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/efficacy_cover.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 10,
+                      top: 10,
+                      child: IconButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                panelBuilder: (controller) => PanelWidget(
+                  controller: controller,
+                  panelController: panelController,
+                  tabController: tabController,
+                  data: data,
+                ),
+                borderRadius: const BorderRadius.horizontal(
+                  left: Radius.circular(20),
+                  right: Radius.circular(20),
+                ),
+              ),
             ),
-          ),
-        ),
-        body: SlidingUpPanel(
-          controller: panelController,
-          minHeight: MediaQuery.of(context).size.height - 250,
-          maxHeight: MediaQuery.of(context).size.height,
-          defaultPanelState: PanelState.CLOSED,
-          body: Image.asset(
-            'assets/efficacy_cover.png',
-            // height: 300,
-            fit: BoxFit.fitWidth,
-            alignment: AlignmentDirectional.topCenter,
-          ),
-          panelBuilder: (controller) => PanelWidget(
-            controller: controller,
-            panelController: panelController,
-            tabController: tabController,
-          ),
-          borderRadius: const BorderRadius.horizontal(
-            left: Radius.circular(20),
-            right: Radius.circular(20),
-          ),
-        ),
-      ),
-    );
+          );
   }
 }
 
-class PanelWidget extends StatelessWidget {
+class PanelWidget extends StatefulWidget {
   final ScrollController controller;
   final PanelController panelController;
   final TabController tabController;
+  final List<Map<String, dynamic>> data;
 
-  const PanelWidget(
+  PanelWidget(
       {Key? key,
       required this.controller,
       required this.panelController,
-      required this.tabController})
+      required this.tabController,
+      required this.data})
       : super(key: key);
 
+  @override
+  State<PanelWidget> createState() => _PanelWidgetState();
+}
+
+class _PanelWidgetState extends State<PanelWidget> {
   void togglePanel() {
-    panelController.isPanelOpen
-        ? panelController.close()
-        : panelController.open();
+    widget.panelController.isPanelOpen
+        ? widget.panelController.close()
+        : widget.panelController.open();
   }
 
   Widget buildDragHandler() => GestureDetector(
@@ -105,32 +168,40 @@ class PanelWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      controller: controller,
+      controller: widget.controller,
       children: <Widget>[
         const SizedBox(height: 8),
-        buildDragHandler(),
+        PanelDivider(),
         const SizedBox(height: 20),
-        // const Text(
-        //   'About Us',
-        //   style: TextStyle(
-        //     fontWeight: FontWeight.bold,
-        //     fontSize: 20,
-        //     color: Color(0xFF213F8D),
-        //   ),
-        // ),
-        // const SizedBox(
-        //   height: 10,
-        // ),
+        Text(
+          'About us',
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            color: Color(0xFF213F8D),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Text(
+          'GDSC NITS develops relevant products to address real-world problems in and around our society.Solving such difficulties provides opportunity for emerging developers to display their talents while also improving and gaining new skillsets.GDSC NITS is not restricted to NITS.Our primary goal is to empower developers in North-East India while simultaneously having a national and worldwide footprint.\n\nOur GDSC is made up of Web, Android Developers, Designers and Cloud enthusiasts .We provide workshops and competitions to help disseminate the developer environment to the aspiring developers in our community.',
+          style: GoogleFonts.poppins(
+            fontSize: 12,
+            color: Color.fromARGB(255, 95, 100, 113),
+          ),
+        ),
+        const SizedBox(height: 20),
         Container(
           decoration: null,
           child: TabBar(
-            controller: tabController,
+            controller: widget.tabController,
             labelColor: const Color(0xFF05354C),
             unselectedLabelColor: const Color(0xFFA4A2A7),
             labelStyle: GoogleFonts.poppins(
               fontSize: 14,
-              fontWeight: FontWeight.w500,
             ),
             tabs: const [
               Tab(text: 'Mentors'),
@@ -142,86 +213,55 @@ class PanelWidget extends StatelessWidget {
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.6,
           child: TabBarView(
-            controller: tabController,
+            controller: widget.tabController,
             children: [
-              ListView(
-                // controller: controller,
-                children: const <Widget>[
-                  AboutUsCard(
-                    name: 'John Doe',
-                    imgUrl: 'assets/default_user.png',
-                    developerTag: 'Flutter Developer',
-                    branch: 'CSE',
-                  ),
-                  AboutUsCard(
-                    name: 'John Doe',
-                    imgUrl: 'assets/default_user.png',
-                    developerTag: 'Flutter Developer',
-                    branch: 'CSE',
-                  ),
-                  AboutUsCard(
-                    name: 'John Doe',
-                    imgUrl: 'assets/default_user.png',
-                    developerTag: 'Flutter Developer',
-                    branch: 'CSE',
-                  ),
-                  AboutUsCard(
-                    name: 'John Doe',
-                    imgUrl: 'assets/default_user.png',
-                    developerTag: 'Flutter Developer',
-                    branch: 'CSE',
-                  ),
-                  AboutUsCard(
-                    name: 'John Doe',
-                    imgUrl: 'assets/default_user.png',
-                    developerTag: 'Flutter Developer',
-                    branch: 'CSE',
-                  ),
-                ],
+              ListView.builder(
+                itemCount: widget.data.length,
+                itemBuilder: (context, index) {
+                  return Visibility(
+                    visible: widget.data[index]["position"] == "Mentor",
+                    child: AboutUsCard(
+                      name: widget.data[index]["name"]!,
+                      imgUrl: 'assets/default_user.png',
+                      subTitle:
+                          "${widget.data[index]["position"]!}     ⦿ ${widget.data[index]["branch"]!}",
+                      fbUrl: widget.data[index]["fbUrl"]!,
+                      instaUrl: widget.data[index]["linkedInUrl"]!,
+                    ),
+                  );
+                },
               ),
-              ListView(
-                children: const <Widget>[
-                  AboutUsCard(
-                    name: 'John Doe',
-                    imgUrl: 'assets/default_user.png',
-                    developerTag: 'Flutter Developer',
-                    branch: 'CSE',
-                  ),
-                  AboutUsCard(
-                    name: 'John Doe',
-                    imgUrl: 'assets/default_user.png',
-                    developerTag: 'Flutter Developer',
-                    branch: 'CSE',
-                  ),
-                  AboutUsCard(
-                    name: 'John Doe',
-                    imgUrl: 'assets/default_user.png',
-                    developerTag: 'Flutter Developer',
-                    branch: 'CSE',
-                  ),
-                ],
+              ListView.builder(
+                itemCount: widget.data.length,
+                itemBuilder: (context, index) {
+                  return Visibility(
+                    visible: widget.data[index]["position"] == "Developer",
+                    child: AboutUsCard(
+                      name: widget.data[index]["name"]!,
+                      imgUrl: 'assets/default_user.png',
+                      subTitle:
+                          "${widget.data[index]["position"]!}     ⦿ ${widget.data[index]["branch"]!}",
+                      fbUrl: widget.data[index]["fbUrl"]!,
+                      instaUrl: widget.data[index]["linkedInUrl"]!,
+                    ),
+                  );
+                },
               ),
-              ListView(
-                children: const <Widget>[
-                  AboutUsCard(
-                    name: 'John Doe',
-                    imgUrl: 'assets/default_user.png',
-                    developerTag: 'Flutter Developer',
-                    branch: 'CSE',
-                  ),
-                  AboutUsCard(
-                    name: 'John Doe',
-                    imgUrl: 'assets/default_user.png',
-                    developerTag: 'Flutter Developer',
-                    branch: 'CSE',
-                  ),
-                  AboutUsCard(
-                    name: 'John Doe',
-                    imgUrl: 'assets/default_user.png',
-                    developerTag: 'Flutter Developer',
-                    branch: 'CSE',
-                  ),
-                ],
+              ListView.builder(
+                itemCount: widget.data.length,
+                itemBuilder: (context, index) {
+                  return Visibility(
+                    visible: widget.data[index]["position"] == "UI/UX",
+                    child: AboutUsCard(
+                      name: widget.data[index]["name"]!,
+                      imgUrl: 'assets/default_user.png',
+                      subTitle:
+                          "${widget.data[index]["position"]!}     ⦿ ${widget.data[index]["branch"]!}",
+                      fbUrl: widget.data[index]["fbUrl"]!,
+                      instaUrl: widget.data[index]["linkedInUrl"]!,
+                    ),
+                  );
+                },
               ),
             ],
           ),
