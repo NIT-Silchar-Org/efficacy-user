@@ -43,16 +43,13 @@ class _SubscribeState extends State<Subscribe> {
               child: Container(
                 padding: const EdgeInsets.all(3),
                 height: 40,
-                width: 85,
+                width: MediaQuery.of(context).size.width*0.3,
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: AppColorLight.primary,
                     width: 0.0,
                   ),
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(7),
-                    topLeft: Radius.circular(7),
-                  ),
+                  borderRadius: BorderRadius.circular(8),
                   color: subscribe_button_state == true
                       ? AppColorLight.primary
                       : Colors.grey,
@@ -133,39 +130,7 @@ class _SubscribeState extends State<Subscribe> {
               width: 1,
               decoration: const BoxDecoration(color: Colors.white),
             ),
-            GestureDetector(
-              child: Container(
-                padding: const EdgeInsets.all(3),
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: AppColorLight.primary,
-                    width: 0.0,
-                  ),
-                  borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(7),
-                    bottomRight: Radius.circular(7),
-                  ),
-                  color: bell_icon_state == true
-                      ? AppColorLight.primary
-                      : Colors.grey,
-                ),
-                child: Icon(
-                  bell_icon_state == true
-                      ? FontAwesomeIcons.bell
-                      : FontAwesomeIcons.bellSlash,
-                  color: bell_icon_state == true
-                      ? Color.fromRGBO(33, 63, 141, 1)
-                      : Colors.white,
-                ),
-              ),
-              onTap: () {
-                setState(() {
-                  bell_icon_state = !bell_icon_state;
-                });
-              },
-            ),
+            
           ],
         );
       },

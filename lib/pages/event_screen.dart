@@ -6,6 +6,7 @@ import 'package:efficacy_user/provider/event_provider.dart';
 import 'package:efficacy_user/utils/base_viewmodel.dart';
 import 'package:efficacy_user/utils/enums.dart';
 import 'package:efficacy_user/widgets/divider.dart';
+import 'package:efficacy_user/widgets/subscribe_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
@@ -246,7 +247,7 @@ class _EventScreenState extends State<EventScreen> {
                                   )
                                 ],
                               ),
-                              const Follow()
+                              Subscribe(clubId: event.clubId!)
                             ],
                           ),
                           Container(
@@ -326,7 +327,7 @@ class _EventScreenState extends State<EventScreen> {
                               //   ),
                               // );
                             },
-                            child: AddToCalender(),
+                            child: const Visibility(visible: false, child: AddToCalender()),
                           ),
 
                           Container(

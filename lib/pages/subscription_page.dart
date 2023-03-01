@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:flutter_portal/flutter_portal.dart';
+import 'package:lottie/lottie.dart';
 import '../widgets/filter_menu_item.dart';
 import 'account_screen.dart';
 import 'package:provider/provider.dart';
@@ -61,10 +62,6 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                     {unsubscribedClubs.add(clubs[i])}
                 }
             });
-    print('//////////////////');
-    print(subscribedClubs.length);
-    print(unsubscribedClubs.length);
-    print('//////////////////');
     setState(() {
       selectedIndex = 0;
     });
@@ -85,7 +82,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
             elevation: Theme.of(context).appBarTheme.elevation,
             title: Text(
               'Subscriptions',
-              style: Theme.of(context).textTheme.headline1?.copyWith(
+              style: Theme.of(context).textTheme.displayLarge?.copyWith(
                     fontSize: 24,
                   ),
             ),
@@ -171,54 +168,29 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
             ],
           ),
           body: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    ' $selectedValue',
-                    style: Theme.of(context).textTheme.headline3?.copyWith(),
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      ' $selectedValue',
+                      style: Theme.of(context).textTheme.displaySmall?.copyWith(),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 10),
-              SingleChildScrollView(
-                child: Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: selectedIndex == 0
-                        ? Container(
-                            height: 500,
-                            width: double.infinity,
-                            child: ListView(
-                              children: clubs.map((e) {
-                                return ListTile(
-                                  leading: CircleAvatar(
-                                    backgroundImage:
-                                        NetworkImage(e.clubLogoURL),
-                                  ),
-                                  title: Text(e.clubName),
-                                  trailing: TextButton(
-                                    child: SizedBox(
-                                      width: (size.width * 0.35),
-                                      child: Subscribe(
-                                        clubId: e.clubId,
-                                      ),
-                                    ),
-                                    onPressed: () {},
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          )
-                        : selectedIndex == 1
+                const SizedBox(height: 10),
+                SingleChildScrollView(
+                    child: Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: selectedIndex == 0
                             ? Container(
                                 height: 500,
                                 width: double.infinity,
                                 child: ListView(
-                                  children: subscribedClubs.map((e) {
+                                  children: clubs.map((e) {
                                     return ListTile(
                                       leading: CircleAvatar(
                                         backgroundImage:
@@ -238,12 +210,12 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                   }).toList(),
                                 ),
                               )
-                            : selectedIndex == 2
+                            : selectedIndex == 1
                                 ? Container(
                                     height: 500,
                                     width: double.infinity,
                                     child: ListView(
-                                      children: unsubscribedClubs.map((e) {
+                                      children: subscribedClubs.map((e) {
                                         return ListTile(
                                           leading: CircleAvatar(
                                             backgroundImage:
@@ -251,11 +223,8 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                           ),
                                           title: Text(e.clubName),
                                           trailing: TextButton(
-                                            child: SizedBox(
-                                              width: (size.width * 0.35),
-                                              child: Subscribe(
-                                                clubId: e.clubId,
-                                              ),
+                                            child: Subscribe(
+                                              clubId: e.clubId,
                                             ),
                                             onPressed: () {},
                                           ),
@@ -263,20 +232,41 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                       }).toList(),
                                     ),
                                   )
-                                : SizedBox(
-                                    height: MediaQuery.of(context).size.height -
-                                        400,
-                                    child: const Center(
-                                      child: SizedBox(
-                                        height: 70,
-                                        width: 70,
-                                        child: CircularProgressIndicator(),
-                                      ),
-                                    ),
-                                  )),
-              ),
-            ],
-          ),
+                                : selectedIndex == 2
+                                    ? Container(
+                                        height: 500,
+                                        width: double.infinity,
+                                        child: ListView(
+                                          children: unsubscribedClubs.map((e) {
+                                            return ListTile(
+                                              leading: CircleAvatar(
+                                                backgroundImage:
+                                                    NetworkImage(e.clubLogoURL),
+                                              ),
+                                              title: Text(e.clubName),
+                                              trailing: TextButton(
+                                                child: SizedBox(
+                                                  width: (size.width * 0.35),
+                                                  child: Subscribe(
+                                                    clubId: e.clubId,
+                                                  ),
+                                                ),
+                                                onPressed: () {},
+                                              ),
+                                            );
+                                          }).toList(),
+                                        ),
+                                      )
+                                    : Center(
+                                        child: Lottie.asset(
+                                          "lottie/loading.json",
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.3,
+                                        ),
+                                      ))),
+              ]),
         ),
       ),
     );

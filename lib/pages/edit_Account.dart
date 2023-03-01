@@ -71,68 +71,70 @@ class _EditAccountState extends State<EditAccount> {
             ),
           ],
         ),
-        body: Padding(
-          padding: EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Text(
-                "Edit Profile",
-                style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.w400,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                Text(
+                  "Edit Profile",
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              TextField(
-                controller: name1,
-                enabled: false,
-                decoration: InputDecoration(
-                  labelText: "Name",
+                SizedBox(
+                  height: 20.0,
                 ),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              TextField(
-                controller: email,
-                enabled: false,
-                decoration: InputDecoration(
-                  labelText: "Email",
+                TextField(
+                  controller: name1,
+                  enabled: false,
+                  decoration: InputDecoration(
+                    labelText: "Name",
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              TextField(
-                controller: scholarid,
-                decoration: InputDecoration(
-                  labelText: "Scholar ID",
+                SizedBox(
+                  height: 20.0,
                 ),
-                obscureText: false,
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              TextField(
-                controller: year,
-                decoration: InputDecoration(
-                  labelText: "Year",
+                TextField(
+                  controller: email,
+                  enabled: false,
+                  decoration: InputDecoration(
+                    labelText: "Email",
+                  ),
                 ),
-                // obscureText: true,
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              TextField(
-                controller: branch,
-                decoration: InputDecoration(
-                  labelText: "Branch",
+                SizedBox(
+                  height: 20.0,
                 ),
-                // obscureText: true,
-              ),
-            ],
+                TextField(
+                  controller: scholarid,
+                  decoration: InputDecoration(
+                    labelText: "Scholar ID",
+                  ),
+                  obscureText: false,
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                TextField(
+                  controller: year,
+                  decoration: InputDecoration(
+                    labelText: "Year",
+                  ),
+                  // obscureText: true,
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                TextField(
+                  controller: branch,
+                  decoration: InputDecoration(
+                    labelText: "Branch",
+                  ),
+                  // obscureText: true,
+                ),
+              ],
+            ),
           ),
         ),
       ),
