@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../widgets/about_us_card.dart';
 
@@ -34,7 +35,14 @@ class _AboutUsPageState extends State<AboutUsPage>
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Efficacy'),
+          //Google popin
+          title: Text(
+            'About Us',
+            style: GoogleFonts.poppins(
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ),
         body: SlidingUpPanel(
           controller: panelController,
@@ -120,6 +128,10 @@ class PanelWidget extends StatelessWidget {
             controller: tabController,
             labelColor: const Color(0xFF05354C),
             unselectedLabelColor: const Color(0xFFA4A2A7),
+            labelStyle: GoogleFonts.poppins(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
             tabs: const [
               Tab(text: 'Mentors'),
               Tab(text: 'Developers'),

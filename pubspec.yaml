@@ -67,6 +67,7 @@ dependencies:
 dev_dependencies:
   build_runner: ^2.1.7
   json_serializable: ^6.1.4
+  flutter_native_splash: ^2.2.16
   flutter_test:
     sdk: flutter
 
@@ -79,7 +80,11 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.1
 
-
+flutter_native_splash: 
+  color: "#ffffff"
+  image: assets/icon.png
+  android: true
+  ios: true
 
 
 flutter_icons:

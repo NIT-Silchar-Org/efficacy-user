@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:efficacy_user/models/client_user_model.dart';
 import 'package:efficacy_user/models/user_model.dart';
 import 'package:efficacy_user/pages/edit_Account.dart';
+import 'package:efficacy_user/pages/about_us.dart';
 import 'package:efficacy_user/pages/google_sign_in.dart';
 import 'package:efficacy_user/widgets/divider.dart';
 import 'package:efficacy_user/widgets/utils.dart';
@@ -118,6 +119,15 @@ class _AccountScreenState extends State<AccountScreen> {
             },
           ),
           IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AboutUsPage()));
+              },
+              icon: const Icon(
+                Icons.info_outline,
+                color: Colors.white,
+              )),
+          IconButton(
             icon: const Icon(
               Icons.logout,
               color: Colors.white,
@@ -204,6 +214,27 @@ class _AccountScreenState extends State<AccountScreen> {
                         height: 50,
                         width: 50,
                       ),
+                      Text(
+                        'Developed by',
+                        style: GoogleFonts.poppins(
+                            color: Color(0xff213F8D),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400),
+                      ),
+                      Row(
+                        children: [
+                          Image.asset('assets/gdsc_logo.png',
+                              height: 5, width: 5),
+                          Text(
+                            'Google Developers Student Club, NIT Silchar',
+                            style: GoogleFonts.poppins(
+                                color: Color(0xff213F8D),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400),
+                          )
+                        ],
+                      )
+
                       // ElevatedButton(
                       //   onPressed: () async {
                       //     await auth.signOut();
@@ -246,7 +277,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   ),
                 ),
               )),
-          
+
               borderRadius: sheetRadius,
             ),
     );

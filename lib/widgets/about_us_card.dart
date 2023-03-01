@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AboutUsCard extends StatelessWidget {
   final String name;
   final String imgUrl;
   final String developerTag;
   final String branch;
-  const AboutUsCard({Key? key,
+  const AboutUsCard({
+    Key? key,
     required this.name,
     required this.imgUrl,
     required this.developerTag,
@@ -27,12 +29,12 @@ class AboutUsCard extends StatelessWidget {
         ),
         title: Text(
           name,
-          style:
-              const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF05354C)),
+          style: GoogleFonts.poppins(
+              fontWeight: FontWeight.bold, color: Color(0xFF05354C)),
         ),
         subtitle: Text(
           developerTag + '     ⦿ ' + branch,
-          style: const TextStyle(color: Color(0xFF49454F)),
+          style: GoogleFonts.poppins(color: Color(0xFF49454F)),
         ),
       ),
     );
