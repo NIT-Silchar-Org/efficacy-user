@@ -24,14 +24,15 @@ class _LikeState extends State<Like> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        setState(() => isLiked = !widget.isLiked);
+        print(isLiked);
+        setState(() => isLiked = !isLiked);
         Provider.of<EventProvider>(context, listen: false)
-            .likeUnlikeEvent(!isLiked, widget.eventId)
+            .likeUnlikeEvent(isLiked, widget.eventId)
             .then((value) => setState(() => isLiked = value));
       },
       child: Icon(
         isLiked ? Icons.thumb_up_alt : Icons.thumb_up_alt_outlined,
-        size: 16,
+        size: 20,
         color: const Color(0xff213F8D),
       ),
     );

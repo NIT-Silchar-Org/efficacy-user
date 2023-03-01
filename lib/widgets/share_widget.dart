@@ -8,7 +8,7 @@ class Share extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Icon(
       Icons.share_outlined,
-      size: 16,
+      size: 20,
       color: Color(0xff213F8D),
     );
   }

@@ -72,7 +72,7 @@ class EventProvider extends BaseModel {
         'action': like == true ? "LIKE" : "UNLIKE",
         "userId": token.toString()
       });
-      var detail = response.data['success'] as bool;
+      var detail = response.data['success'] as bool ? like : !like;
       return detail;
     } catch (e) {
       return like;
