@@ -275,7 +275,9 @@ class _EventScreenState extends State<EventScreen> {
                                     children: [
                                       Like(
                                           eventId: widget.eventId ?? '',
-                                          isLiked: false),
+                                          isLiked: event.usersWhoLiked!
+                                              .contains(FirebaseAuth
+                                                  .instance.currentUser!.uid)),
                                       const Share(),
                                     ],
                                   ),
@@ -327,7 +329,8 @@ class _EventScreenState extends State<EventScreen> {
                               //   ),
                               // );
                             },
-                            child: const Visibility(visible: false, child: AddToCalender()),
+                            child: const Visibility(
+                                visible: false, child: AddToCalender()),
                           ),
 
                           Container(
