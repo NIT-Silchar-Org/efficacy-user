@@ -144,7 +144,8 @@ class _EventTileState extends State<EventTile>
                               child: CachedNetworkImage(
                                   height: 30,
                                   width: 30,
-                                  imageUrl: widget.eventModel?.posterUrl ?? '',
+                                  imageUrl:
+                                      widget.eventModel?.clubLogoUrl ?? '',
                                   fit: BoxFit.cover,
                                   errorWidget: (context, url, _) =>
                                       const Center(child: Icon(Icons.error)),

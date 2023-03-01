@@ -224,7 +224,10 @@ class _AccountScreenState extends State<AccountScreen> {
                       Row(
                         children: [
                           Image.asset('assets/gdsc_logo.png',
-                              height: 5, width: 5),
+                              height: 20, width: 20),
+                          const SizedBox(
+                            width: 8,
+                          ),
                           Text(
                             'Google Developers Student Club, NIT Silchar',
                             style: GoogleFonts.poppins(

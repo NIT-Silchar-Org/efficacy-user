@@ -11,23 +11,23 @@ String allEventToJson(List<AllEvent> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class AllEvent {
-  AllEvent({
-    this.eventId,
-    this.clubId,
-    this.name,
-    this.description,
-    this.longDescription,
-    this.duration,
-    this.startTime,
-    this.endTime,
-    this.fbPostUrl,
-    this.googleFormUrl,
-    this.posterUrl,
-    this.venue,
-    this.likeCount,
-    this.usersWhoLiked,
-    this.contacts,
-  });
+  AllEvent(
+      {this.eventId,
+      this.clubId,
+      this.name,
+      this.description,
+      this.longDescription,
+      this.duration,
+      this.startTime,
+      this.endTime,
+      this.fbPostUrl,
+      this.googleFormUrl,
+      this.posterUrl,
+      this.venue,
+      this.likeCount,
+      this.usersWhoLiked,
+      this.contacts,
+      this.clubLogoUrl});
 
   String? eventId;
   String? clubId;
@@ -40,6 +40,7 @@ class AllEvent {
   String? fbPostUrl;
   String? googleFormUrl;
   String? posterUrl;
+  String? clubLogoUrl;
   String? venue;
   int? likeCount;
   List<String>? usersWhoLiked;
@@ -57,6 +58,7 @@ class AllEvent {
         fbPostUrl: json["fbPostURL"],
         googleFormUrl: json["googleFormURL"],
         posterUrl: json["posterURL"],
+        clubLogoUrl: json["clubLogoUrl"],
         venue: json["venue"],
         likeCount: json["likeCount"],
         usersWhoLiked: json["usersWhoLiked"] == null
@@ -80,6 +82,7 @@ class AllEvent {
         "fbPostURL": fbPostUrl,
         "googleFormURL": googleFormUrl,
         "posterURL": posterUrl,
+        "clubLogoURL": clubLogoUrl,
         "venue": venue,
         "likeCount": likeCount,
         "usersWhoLiked": usersWhoLiked == null

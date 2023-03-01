@@ -137,6 +137,7 @@ class _EventScreenState extends State<EventScreen> {
             .get()
             .then((value) => {clubName = value['clubName']});
         setState(() {});
+        print(event.clubLogoUrl);
         print('clubName: $clubName');
         //   engineVar = Event(
         // title: 'Event title',
@@ -188,7 +189,7 @@ class _EventScreenState extends State<EventScreen> {
                                         height: 44,
                                         child: CachedNetworkImage(
                                             height: 200,
-                                            imageUrl: event.posterUrl ?? '',
+                                            imageUrl: event.clubLogoUrl ?? '',
                                             fit: BoxFit.cover,
                                             errorWidget: (context, url, _) =>
                                                 const Center(
@@ -270,15 +271,14 @@ class _EventScreenState extends State<EventScreen> {
                                 SizedBox(
                                   width: 61,
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       Like(
                                           eventId: widget.eventId ?? '',
                                           isLiked: event.usersWhoLiked!
                                               .contains(FirebaseAuth
                                                   .instance.currentUser!.uid)),
-                                      const Share(),
+                                      // const Share(),
                                     ],
                                   ),
                                 )

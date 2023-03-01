@@ -24,7 +24,6 @@ class FeedscreenProvider extends BaseModel {
           List<AllEvent> temp = allEventFromJson(jsonEncode(response.data));
           allevents?.clear();
           allevents?.addAll(temp);
-
           return temp;
         } else {
           showSnackBar(context: context, text: 'Something went wrong');

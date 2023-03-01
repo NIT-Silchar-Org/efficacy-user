@@ -177,7 +177,8 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       ' $selectedValue',
-                      style: Theme.of(context).textTheme.displaySmall?.copyWith(),
+                      style:
+                          Theme.of(context).textTheme.displaySmall?.copyWith(),
                     ),
                   ),
                 ),
