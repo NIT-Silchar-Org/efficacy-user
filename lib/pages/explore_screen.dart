@@ -182,9 +182,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
           filterEvents();
         },
         builder: (_, model, __) => model.state == ViewState.busy
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
+            ? Center(
+                child: Lottie.asset(
+                "lottie/loading.json",
+                height: MediaQuery.of(context).size.height * 0.3,
+              ))
             : Padding(
                 padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
                 child: Column(
