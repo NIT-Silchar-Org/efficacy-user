@@ -290,11 +290,11 @@ class _EventScreenState extends State<EventScreen> {
                               text1: DateFormat.yMMMEd()
                                   .format(event.startTime ?? DateTime(0))
                                   .toString(),
-                              text2: DateFormat.jms()
+                              text2: DateFormat.jm()
                                       .format(event.startTime ?? DateTime(0))
                                       .toString() +
                                   ' to ' +
-                                  DateFormat.jms()
+                                  DateFormat.jm()
                                       .format(event.endTime ?? DateTime(0))
                                       .toString(),
                               icon: Icons.calendar_today_outlined),

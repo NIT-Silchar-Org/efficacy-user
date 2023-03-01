@@ -166,7 +166,7 @@ class _EventTileState extends State<EventTile>
                               ),
                               const SizedBox(width: 5),
                               Text(
-                                DateFormat.yMd().format(
+                                DateFormat.yMMMEd().format(
                                     widget.eventModel?.startTime ??
                                         DateTime(0)),
                                 style: Theme.of(context).textTheme.subtitle1,
@@ -179,7 +179,7 @@ class _EventTileState extends State<EventTile>
                               ),
                               const SizedBox(width: 5),
                               Text(
-                                DateFormat.jms().format(
+                                DateFormat.jm().format(
                                     widget.eventModel?.startTime ??
                                         DateTime(0)),
                                 style: Theme.of(context).textTheme.subtitle1,

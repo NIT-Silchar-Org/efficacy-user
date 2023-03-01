@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:efficacy_user/models/all_events.dart';
+import 'package:efficacy_user/models/client_user_model.dart';
 import 'package:efficacy_user/provider/feedscreen_provider.dart';
 import 'package:efficacy_user/utils/base_viewmodel.dart';
 import 'package:efficacy_user/utils/enums.dart';
@@ -30,6 +31,8 @@ class _FeedScreenState extends State<FeedScreen> {
       'https://res.cloudinary.com/devncode/image/upload/v1575267757/production_devncode/community/1575267756355.jpg';
   String selectedValue = 'Upcoming';
   List<String> filterOptions = ['Upcoming', 'Ongoing', 'Completed'];
+  List<String>? clubList;
+
   // @override
   // void initState() {
   //   engine = Provider.of<FeedscreenProvider>(context, listen: false);
@@ -172,13 +175,15 @@ class _FeedScreenState extends State<FeedScreen> {
       ),
       body: BaseView<FeedscreenProvider>(
         onModelReady: (model) async {
-          List<String> clubList;
-          FirebaseFirestore.instance
+          await FirebaseFirestore.instance
               .collection('clientUser')
               .doc(FirebaseAuth.instance.currentUser!.uid)
               .get()
-              .then((value) => {clubList = value.data()!['subscription']});
-          model.fetchAllEvents(context: context);
+              .then((value) => {
+                    clubList =
+                        ClientUserModel.fromJson(value.data()!).subscriptions
+                  });
+          model.fetchAllEvents(context: context, clubList: clubList);
           allEvent = model.allevents;
           allEvent!.sort((a, b) {
             var adate = a.startTime;
