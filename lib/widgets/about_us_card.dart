@@ -26,7 +26,7 @@ class AboutUsCard extends StatelessWidget {
         child: ListTile(
           leading: CircleAvatar(
             radius: 20,
-            child: Image.asset(
+            child: Image.network(
               imgUrl,
               width: 96,
               height: 96,
