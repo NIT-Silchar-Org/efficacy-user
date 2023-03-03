@@ -33,7 +33,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     Provider.of<ExploreScreenProvider>(context, listen: false)
-        .fetchAllEvents(context: context);
+        .fetchAllEvents(context: context)
+        .then((value) =>
+            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+              setState(() {});
+            }));
   }
 
   @override
