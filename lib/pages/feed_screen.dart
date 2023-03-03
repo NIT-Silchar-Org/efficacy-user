@@ -57,7 +57,7 @@ class _FeedScreenState extends State<FeedScreen> {
   //   );
   // }
 
-  late List<AllEvent>? allEvent;
+  List<AllEvent>? allEvent;
   List<AllEvent>? events;
 
   // void getFeedScreen() async {
@@ -236,7 +236,7 @@ class _FeedScreenState extends State<FeedScreen> {
   }
 
   void filterEvents() {
-    events = allEvent!.where((element) {
+    events = allEvent?.where((element) {
       var startDate = element.startTime;
       var endDate = element.startTime;
       if (selectedValue == 'Upcoming') {
