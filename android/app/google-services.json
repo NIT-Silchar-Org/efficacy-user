@@ -23,11 +23,43 @@
           }
         },
         {
+          "client_id": "322606529493-6alnvblouq43cktnolcnscd4j50fsve6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.efficacyuser.app",
+            "certificate_hash": "970af5cb96465328c957f6641a6d88afdcb722c7"
+          }
+        },
+        {
+          "client_id": "322606529493-a7htcqc6jmc7h5m95vn2gtdgsomblh8v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.efficacyuser.app",
+            "certificate_hash": "cf645417bfd50b0ed7609373c0ea0e713d692aa2"
+          }
+        },
+        {
           "client_id": "322606529493-c32qsk0spuu5vaqilp4n7rt1rmtk9mgj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.efficacyuser.app",
             "certificate_hash": "6d5395ea7f73a6165d1c7afadcfee50e1efbf7f8"
+          }
+        },
+        {
+          "client_id": "322606529493-f7g9d8jatan0sur2b9dmgtttrohs1e44.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.efficacyuser.app",
+            "certificate_hash": "ba1b8d559802bcfab33bd5995e5db20bbd905fa7"
+          }
+        },
+        {
+          "client_id": "322606529493-gnl317a2cnckja3glhbomkgu0da2svgl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.efficacyuser.app",
+            "certificate_hash": "623e6c05bf9cd444c381cfa0e3ea6cb5866cc2b1"
           }
         },
         {
@@ -39,6 +71,14 @@
           }
         },
         {
+          "client_id": "322606529493-mvukmgl3kgkhuqu5v5i8mvuucbh5rin3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.efficacyuser.app",
+            "certificate_hash": "2fc333292f853b571277d24bf5b0f16267f81f39"
+          }
+        },
+        {
           "client_id": "322606529493-pdgk45hpincp0m45iu4rmcq6d0kht4rj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -46,6 +86,59 @@
             "certificate_hash": "84eeeba80d8cb721d9d3dc834006ce09d889e514"
           }
         },
+        {
+          "client_id": "322606529493-qqdfvgtrbtrki6efr33kgglene86so8c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.efficacyuser.app",
+            "certificate_hash": "9bb37c91756c0e16971d64d33fc86b9112622e24"
+          }
+        },
+        {
+          "client_id": "322606529493-rb2jrcqitbkfv76ajtdv0d2jahlvlt04.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.efficacyuser.app",
+            "certificate_hash": "3ea5de3361c550fcc3a8700564db231cf5995406"
+          }
+        },
+        {
+          "client_id": "322606529493-vjm5j1v3j7cqigqvo3m7ij4m22iaa19c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.efficacyuser.app",
+            "certificate_hash": "ad38223baa43aca1cd56e52576b2d40c7ad66c4d"
+          }
+        },
+        {
+          "client_id": "322606529493-9eh970fphfe1t9rtrso8e4pq1doak51a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB63J_qY_82VvROmQH8gZESQ7VajGyKF9Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "322606529493-9eh970fphfe1t9rtrso8e4pq1doak51a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:322606529493:android:f35d108b6ccdc113d9db5c",
+        "android_client_info": {
+          "package_name": "com.efficacyuserv2.app"
+        }
+      },
+      "oauth_client": [
         {
           "client_id": "322606529493-9eh970fphfe1t9rtrso8e4pq1doak51a.apps.googleusercontent.com",
           "client_type": 3
