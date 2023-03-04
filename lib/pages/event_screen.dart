@@ -256,15 +256,17 @@ class _EventScreenState extends State<EventScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  event.name ?? '',
-                                  style: GoogleFonts.poppins(
-                                    textStyle: TextStyle(
-                                      color: const Color(0xff191C1D)
-                                          .withOpacity(0.7),
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.w500,
-                                      letterSpacing: 0.5,
+                                Expanded(
+                                  child: Text(
+                                    event.name ?? '',
+                                    style: GoogleFonts.poppins(
+                                      textStyle: TextStyle(
+                                        color: const Color(0xff191C1D)
+                                            .withOpacity(0.7),
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.w500,
+                                        letterSpacing: 0.5,
+                                      ),
                                     ),
                                   ),
                                 ),
