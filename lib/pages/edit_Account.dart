@@ -55,12 +55,10 @@ class _EditAccountState extends State<EditAccount> {
         appBar: AppBar(
           backgroundColor: Colors.blue[900],
           foregroundColor: Colors.white,
-
-          title: Text('Account'),
+          title: const Text('Account'),
           actions: <Widget>[
             IconButton(
-              icon: Icon(
-
+              icon: const Icon(
                 Icons.save,
                 color: Colors.white,
               ),
@@ -73,17 +71,17 @@ class _EditAccountState extends State<EditAccount> {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
-                Text(
+                const Text(
                   "Edit Profile",
                   style: TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20.0,
                 ),
                 TextField(

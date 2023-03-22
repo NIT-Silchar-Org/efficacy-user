@@ -1,13 +1,16 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:efficacy_user/pages/homescreen.dart';
 import 'package:efficacy_user/provider/google_signin_provider.dart';
 import 'package:efficacy_user/widgets/loading_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart' as input;
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:intl_phone_field/phone_number.dart';
 import 'package:provider/provider.dart';
 import 'package:efficacy_user/widgets/intl_phone.dart';
 import '../models/client_user_model.dart';
@@ -50,19 +53,27 @@ class _SignUpState extends State<SignUp> {
           await FirebaseAuth.instance.signInWithCredential(credentials);
         }
       }
-      bool check = (await FirebaseFirestore.instance
-              .collection('clientUser')
-              .doc(FirebaseAuth.instance.currentUser?.uid)
-              .get())['phNumber'] !=
-          null;
-      if (check && mounted) {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (BuildContext context) {
-          return const HomeScreen();
-        }));
+      try {
+        bool check = (await FirebaseFirestore.instance
+                .collection('clientUser')
+                .doc(FirebaseAuth.instance.currentUser?.uid)
+                .get())['phNumber'] !=
+            null;
+        if (check && mounted) {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (BuildContext context) {
+            return const HomeScreen();
+          }));
+        }
+      } on FirebaseException catch (e) {
+        Fluttertoast.showToast(msg: e.code);
+      } catch (e) {
+        Fluttertoast.showToast(msg: e.toString());
       }
+    } on PlatformException catch (e) {
+      Fluttertoast.showToast(msg: e.code);
     } catch (e) {
-      return;
+      Fluttertoast.showToast(msg: e.toString());
     }
   }
 
@@ -198,46 +209,59 @@ class _SignUpState extends State<SignUp> {
                                 setState(() => isLoading = !isLoading);
                                 _formkey.currentState!.save();
 
-                                var status =
-                                    await Provider.of<GoogleSignInProvider>(
-                                            context,
-                                            listen: false)
-                                        .googleLogin();
+                                try {
+                                  await InternetAddress.lookup(
+                                      "firebasestorage.googleapis.com");
+                                  await InternetAddress.lookup(
+                                      "efficacybackend.onrender.com");
+                                  var status =
+                                      await Provider.of<GoogleSignInProvider>(
+                                              context,
+                                              listen: false)
+                                          .googleLogin();
 
-                                ClientUserModel client = ClientUserModel(
-                                  name: namecontroller.text,
-                                  userID: FirebaseAuth.instance.currentUser?.uid
-                                          .toString() ??
-                                      "",
-                                  Email: emailcontroller.text,
-                                  phNumber:
-                                      '${phNumber.dialCode!} ${phNumber.phoneNumber!}',
-                                );
-                                FirebaseFirestore.instance
-                                    .collection('clientUser')
-                                    .doc(FirebaseAuth.instance.currentUser?.uid)
-                                    .set(
-                                  {
-                                    'name': client.name,
-                                    'userId':
-                                        FirebaseAuth.instance.currentUser?.uid,
-                                    'Email': client.Email,
-                                    'phNumber': client.phNumber,
-                                    'subscriptions': FieldValue.arrayUnion(
-                                        ['FQ0YthDf9vh5sG2uU0vI'])
-                                  },
-                                ).then((value) async {
-                                  if (status.toString() == "Logged In") {
-                                    setState(() => isLoading = !isLoading);
-                                    Navigator.pushReplacement(context,
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) {
-                                      return const HomeScreen();
-                                    }));
-                                  } else {
-                                    setState(() => isLoading = !isLoading);
-                                  }
-                                });
+                                  ClientUserModel client = ClientUserModel(
+                                    name: namecontroller.text,
+                                    userID: FirebaseAuth
+                                            .instance.currentUser?.uid
+                                            .toString() ??
+                                        "",
+                                    Email: emailcontroller.text,
+                                    phNumber:
+                                        '${phNumber.dialCode!} ${phNumber.phoneNumber!}',
+                                  );
+                                  FirebaseFirestore.instance
+                                      .collection('clientUser')
+                                      .doc(FirebaseAuth
+                                          .instance.currentUser?.uid)
+                                      .set(
+                                    {
+                                      'name': client.name,
+                                      'userId': FirebaseAuth
+                                          .instance.currentUser?.uid,
+                                      'Email': client.Email,
+                                      'phNumber': client.phNumber,
+                                      'subscriptions': FieldValue.arrayUnion(
+                                          ['FQ0YthDf9vh5sG2uU0vI'])
+                                    },
+                                  ).then((value) async {
+                                    if (status.toString() == "Logged In") {
+                                      setState(() => isLoading = !isLoading);
+                                      Navigator.pushReplacement(context,
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) {
+                                        return const HomeScreen();
+                                      }));
+                                    } else {
+                                      setState(() => isLoading = !isLoading);
+                                    }
+                                  });
+                                } on SocketException catch (e) {
+                                  setState(() => isLoading = !isLoading);
+                                  Fluttertoast.showToast(
+                                      msg: "Couldn't connect to the internet");
+                                  return;
+                                }
                               }
                             },
                             style: ButtonStyle(

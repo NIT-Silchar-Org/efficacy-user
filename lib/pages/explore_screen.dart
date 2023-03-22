@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:efficacy_user/models/event_model.dart';
@@ -7,6 +8,7 @@ import 'package:efficacy_user/utils/base_viewmodel.dart';
 import 'package:efficacy_user/utils/enums.dart';
 import 'package:efficacy_user/widgets/event_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
@@ -172,6 +174,13 @@ class _ExploreScreenState extends State<ExploreScreen> {
       ),
       body: BaseView<ExploreScreenProvider>(
         onModelReady: (model) async {
+          try {
+            await InternetAddress.lookup("firebasestorage.googleapis.com");
+            await InternetAddress.lookup("efficacybackend.onrender.com");
+          } on SocketException catch (e) {
+            Fluttertoast.showToast(msg: "Couldn't connect to the internet");
+            return;
+          }
           model.fetchAllEvents(context: context);
           allevent = model.allevents;
           allevent!.sort((a, b) {
@@ -203,7 +212,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     ),
                     const SizedBox(height: 10),
                     Flexible(
-                      child: events?.length == 0
+                      child: (events?.isEmpty ?? true)
                           ? Center(
                               child: Lottie.asset("lottie/noEvent.json"),
                             )

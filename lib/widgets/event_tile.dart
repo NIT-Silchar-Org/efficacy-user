@@ -155,10 +155,12 @@ class _EventTileState extends State<EventTile>
                                               value: progress.progress))),
                             ),
                           ),
-                          title: Text(widget.eventModel?.name ?? '',
-                              style: Theme.of(context).textTheme.headline3),
-                          subtitle: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                          title: Text(
+                            widget.eventModel?.name ?? '',
+                            style: Theme.of(context).textTheme.headline3,
+                            maxLines: null,
+                          ),
+                          subtitle: Wrap(
                             children: [
                               Icon(
                                 Icons.calendar_today_rounded,
@@ -170,7 +172,7 @@ class _EventTileState extends State<EventTile>
                                 DateFormat.yMMMEd().format(
                                     widget.eventModel?.startTime ??
                                         DateTime(0)),
-                                style: Theme.of(context).textTheme.subtitle1,
+                                style: Theme.of(context).textTheme.labelMedium,
                               ),
                               const SizedBox(width: 10),
                               Icon(
@@ -183,7 +185,7 @@ class _EventTileState extends State<EventTile>
                                 DateFormat.jm().format(
                                     widget.eventModel?.startTime ??
                                         DateTime(0)),
-                                style: Theme.of(context).textTheme.subtitle1,
+                                style: Theme.of(context).textTheme.labelMedium,
                               ),
                             ],
                           ),

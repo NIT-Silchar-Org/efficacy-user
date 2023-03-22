@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:efficacy_user/models/contacts_model.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../constant/endpoints.dart';
 import '../services/service.dart';
@@ -12,6 +14,13 @@ import '../models/club_model.dart';
 
 class ClubProvider with ChangeNotifier {
   Future<List<ClubModel>?> fetchAllClub() async {
+    try {
+      await InternetAddress.lookup("firebasestorage.googleapis.com");
+      await InternetAddress.lookup("efficacybackend.onrender.com");
+    } on SocketException catch (e) {
+      Fluttertoast.showToast(msg: "Couldn't connect to the internet");
+      return [];
+    }
     try {
       var snapshot = await FirebaseFirestore.instance.collection('Clubs').get();
       List<ClubModel> clubs = [];
@@ -42,7 +51,7 @@ class ClubProvider with ChangeNotifier {
       }
       return clubs;
     } catch (e) {
-      rethrow;
+      Fluttertoast.showToast(msg: e.toString());
     }
   }
 
