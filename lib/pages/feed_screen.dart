@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:efficacy_user/models/all_events.dart';
@@ -8,6 +10,7 @@ import 'package:efficacy_user/utils/enums.dart';
 import 'package:efficacy_user/widgets/event_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import '../provider/explore_screen_provider.dart';
 import '../themes/efficacy_usercolor.dart';
@@ -175,6 +178,13 @@ class _FeedScreenState extends State<FeedScreen> {
       ),
       body: BaseView<FeedscreenProvider>(
         onModelReady: (model) async {
+          try {
+            await InternetAddress.lookup("firebasestorage.googleapis.com");
+            await InternetAddress.lookup("efficacybackend.onrender.com");
+          } on SocketException catch (e) {
+            Fluttertoast.showToast(msg: "Couldn't connect to the internet");
+            return;
+          }
           await FirebaseFirestore.instance
               .collection('clientUser')
               .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -215,7 +225,7 @@ class _FeedScreenState extends State<FeedScreen> {
                       ),
                       const SizedBox(height: 10),
                       Flexible(
-                        child: events?.length == 0
+                        child: (events?.isEmpty ?? true)
                             ? Center(
                                 child: Lottie.asset("lottie/noEvent.json"),
                               )

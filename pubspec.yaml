@@ -51,6 +51,7 @@ dependencies:
   readmore: ^2.1.0
   json_annotation: ^4.4.0
   dio: ^4.0.4
+  fluttertoast: ^8.2.1
   google_sign_in: ^5.2.3
   firebase_core: ^2.4.1
   firebase_core_platform_interface: ^4.5.2

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -9,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:flutter_portal/flutter_portal.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import '../widgets/filter_menu_item.dart';
 import 'account_screen.dart';
@@ -47,6 +49,13 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
         .fetchAllClub())!;
     // add subscribe and unsubcribe club
 
+    try {
+      await InternetAddress.lookup("firebasestorage.googleapis.com");
+      await InternetAddress.lookup("efficacybackend.onrender.com");
+    } on SocketException catch (e) {
+      Fluttertoast.showToast(msg: "Couldn't connect to the internet");
+      return;
+    }
     await FirebaseFirestore.instance
         .collection('clientUser')
         .doc(FirebaseAuth.instance.currentUser!.uid)

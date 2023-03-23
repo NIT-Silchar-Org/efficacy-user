@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleSignInProvider extends ChangeNotifier {
@@ -7,10 +8,16 @@ class GoogleSignInProvider extends ChangeNotifier {
   late GoogleSignInAccount? _user;
   GoogleSignInAccount? get user => _user;
   Future preLogin() async {
-    final googleUser = await googleSignIn.signIn();
-    if (googleUser == null) return;
-    _user = googleUser;
-    return googleUser;
+    try {
+      final googleUser = await googleSignIn.signIn();
+      if (googleUser == null) return;
+      _user = googleUser;
+      return googleUser;
+    } on PlatformException catch (e) {
+      return e.code;
+    } catch (e) {
+      return e.toString();
+    }
   }
 
   Future<String> googleLogin() async {

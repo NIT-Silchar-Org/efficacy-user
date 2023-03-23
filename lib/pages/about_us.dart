@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:efficacy_user/widgets/divider.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../widgets/about_us_card.dart';
@@ -31,6 +34,16 @@ class _AboutUsPageState extends State<AboutUsPage>
     setState(() {
       isLoading = true;
     });
+    try {
+      await InternetAddress.lookup("firebasestorage.googleapis.com");
+      await InternetAddress.lookup("efficacybackend.onrender.com");
+    } on SocketException catch (e) {
+      Fluttertoast.showToast(msg: "Couldn't connect to the internet");
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    }
     await FirebaseFirestore.instance.collection('Developers').get().then(
       (snapshots) {
         for (var snapshot in snapshots.docs) {

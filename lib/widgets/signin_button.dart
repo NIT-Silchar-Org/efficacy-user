@@ -1,6 +1,7 @@
 import 'package:efficacy_user/provider/google_signin_provider.dart';
 import 'package:efficacy_user/provider/loading_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class SignInButton extends StatelessWidget {
@@ -23,12 +24,12 @@ class SignInButton extends StatelessWidget {
               final provider =
                   Provider.of<GoogleSignInProvider>(context, listen: false);
               final user = await provider.preLogin();
-              if (user != null) {
-                loadingprovider.loadingScreen();
+              if (user.runtimeType.toString() == "String") {
+                Fluttertoast.showToast(msg: user);
+              } else if (user != null) {
                 callback(user);
-              } else {
-                loadingprovider.loadingScreen();
               }
+              loadingprovider.loadingScreen();
             },
             child: Row(
               mainAxisSize: MainAxisSize.min,

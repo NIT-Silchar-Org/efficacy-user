@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:efficacy_user/models/club_model.dart';
 import 'package:efficacy_user/pages/explore_screen.dart';
 import 'package:efficacy_user/provider/club_provider.dart';
@@ -6,6 +8,7 @@ import 'package:efficacy_user/widgets/event_tile.dart';
 import 'package:efficacy_user/widgets/expand_text.dart';
 import 'package:efficacy_user/widgets/subscribe_button.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -48,6 +51,16 @@ class _ClubDetailState extends State<ClubDetail>
       setState(() {
         isLoading = true;
       });
+      try {
+        await InternetAddress.lookup("firebasestorage.googleapis.com");
+        await InternetAddress.lookup("efficacybackend.onrender.com");
+      } on SocketException catch (e) {
+        Fluttertoast.showToast(msg: "Couldn't connect to the internet");
+        setState(() {
+          isLoading = false;
+        });
+        return;
+      }
       engineVar = await engine.fetchClub(widget.clubId!);
       setState(() {
         isLoading = false;
@@ -90,7 +103,9 @@ class _ClubDetailState extends State<ClubDetail>
                             engineVar.clubName,
                             style: const TextStyle(fontSize: 20),
                           ),
-                           Subscribe(clubId: engineVar.clubId,),
+                          Subscribe(
+                            clubId: engineVar.clubId,
+                          ),
                         ],
                       ),
                       Padding(

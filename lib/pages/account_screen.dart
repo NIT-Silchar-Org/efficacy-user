@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:efficacy_user/models/client_user_model.dart';
 import 'package:efficacy_user/models/user_model.dart';
@@ -9,6 +11,7 @@ import 'package:efficacy_user/widgets/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -136,11 +139,13 @@ class _AccountScreenState extends State<AccountScreen> {
               // do something
               await auth.signOut();
               await GoogleSignIn().signOut();
-              showSnackBar(context: context, text: 'Succesfully Logged Out');
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SignIn()),
-                  (Route<dynamic> route) => false);
+              if (mounted) {
+                showSnackBar(context: context, text: 'Succesfully Logged Out');
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SignIn()),
+                    (Route<dynamic> route) => false);
+              }
             },
           ),
         ],
@@ -287,6 +292,13 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   Future<void> getdata() async {
+    try {
+      await InternetAddress.lookup("firebasestorage.googleapis.com");
+      await InternetAddress.lookup("efficacybackend.onrender.com");
+    } on SocketException catch (e) {
+      Fluttertoast.showToast(msg: "Couldn't connect to the internet");
+      return;
+    }
     late ClientUserModel userfetched;
     User? userloggedin = auth.currentUser;
     String? uuid = userloggedin?.uid;

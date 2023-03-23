@@ -1,4 +1,6 @@
 // import 'package:add_2_calendar/add_2_calendar.dart' as calendar;
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:efficacy_user/models/all_events.dart';
@@ -10,6 +12,7 @@ import 'package:efficacy_user/widgets/subscribe_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
@@ -103,7 +106,7 @@ class _EventScreenState extends State<EventScreen> {
   //   // engineVar = EventModel.fromJson(json);
   // }
 
-  late AllEvent event;
+  AllEvent? event;
   String clubName = "";
   // late Event engineVar;
 
@@ -129,30 +132,37 @@ class _EventScreenState extends State<EventScreen> {
     // ).event;
     return BaseView<EventProvider>(
       onModelReady: (model) async {
-        await model.fetchEvent(eventId: widget.eventId ?? '', context: context);
-        event = model.event;
-        await FirebaseFirestore.instance
-            .collection('Clubs')
-            .doc(event.clubId)
-            .get()
-            .then((value) => {clubName = value['clubName']});
-        setState(() {});
-        print(event.clubLogoUrl);
-        print('clubName: $clubName');
-        //   engineVar = Event(
-        // title: 'Event title',
-        // description: 'Event description',
-        // location: 'Event location',
-        // startDate: DateTime(22, 21, 2022),
-        // endDate: DateTime(01, 01, 01),
-        //   iosParams: IOSParams(
-        //     reminder: Duration(/* Ex. hours:1 */), // on iOS, you can set alarm notification after your event.
-        //     url: 'https://www.example.com', // on iOS, you can set url to your event.
-        //   ),
-        //   androidParams: AndroidParams(
-        //     emailInvites: [], // on Android, you can add invite emails to your event.
-        //   ),
-        // );
+        try {
+          await InternetAddress.lookup("firebasestorage.googleapis.com");
+          await InternetAddress.lookup("efficacybackend.onrender.com");
+          await model.fetchEvent(
+              eventId: widget.eventId ?? '', context: context);
+          event = model.event;
+          await FirebaseFirestore.instance
+              .collection('Clubs')
+              .doc(event!.clubId)
+              .get()
+              .then((value) => {clubName = value['clubName']});
+          setState(() {});
+          print('clubName: $clubName');
+          //   engineVar = Event(
+          // title: 'Event title',
+          // description: 'Event description',
+          // location: 'Event location',
+          // startDate: DateTime(22, 21, 2022),
+          // endDate: DateTime(01, 01, 01),
+          //   iosParams: IOSParams(
+          //     reminder: Duration(/* Ex. hours:1 */), // on iOS, you can set alarm notification after your event.
+          //     url: 'https://www.example.com', // on iOS, you can set url to your event.
+          //   ),
+          //   androidParams: AndroidParams(
+          //     emailInvites: [], // on Android, you can add invite emails to your event.
+          //   ),
+          // );
+        } on SocketException catch (e) {
+          Fluttertoast.showToast(msg: "Couldn't connect to the internet");
+          return;
+        }
       },
       builder: (BuildContext, model, _) => Scaffold(
         body: model.state == ViewState.busy
@@ -160,7 +170,7 @@ class _EventScreenState extends State<EventScreen> {
                 child: Lottie.asset("lottie/loading.json",
                     height: MediaQuery.of(context).size.height * 0.3),
               )
-            : event.name == null
+            : event?.name == null
                 ? const Center(child: Text('Something went wrong'))
                 : SlidingUpPanel(
                     maxHeight: devicesize.height,
@@ -189,7 +199,7 @@ class _EventScreenState extends State<EventScreen> {
                                         height: 44,
                                         child: CachedNetworkImage(
                                             height: 200,
-                                            imageUrl: event.clubLogoUrl ?? '',
+                                            imageUrl: event?.clubLogoUrl ?? '',
                                             fit: BoxFit.cover,
                                             errorWidget: (context, url, _) =>
                                                 const Center(
@@ -248,23 +258,27 @@ class _EventScreenState extends State<EventScreen> {
                                   )
                                 ],
                               ),
-                              Subscribe(clubId: event.clubId!)
+                              Subscribe(clubId: event?.clubId! ?? '')
                             ],
                           ),
                           Container(
                             margin: const EdgeInsets.only(top: 22),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  event.name ?? '',
-                                  style: GoogleFonts.poppins(
-                                    textStyle: TextStyle(
-                                      color: const Color(0xff191C1D)
-                                          .withOpacity(0.7),
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.w500,
-                                      letterSpacing: 0.5,
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.6,
+                                  child: Text(
+                                    event?.name ?? '',
+                                    maxLines: null,
+                                    style: GoogleFonts.poppins(
+                                      textStyle: TextStyle(
+                                        color: const Color(0xff191C1D)
+                                            .withOpacity(0.7),
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.w500,
+                                        letterSpacing: 0.5,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -275,7 +289,7 @@ class _EventScreenState extends State<EventScreen> {
                                     children: [
                                       Like(
                                           eventId: widget.eventId ?? '',
-                                          isLiked: event.usersWhoLiked!
+                                          isLiked: (event?.usersWhoLiked! ?? [])
                                               .contains(FirebaseAuth
                                                   .instance.currentUser!.uid)),
                                       // const Share(),
@@ -288,15 +302,10 @@ class _EventScreenState extends State<EventScreen> {
 
                           DetailCard(
                               text1: DateFormat.yMMMEd()
-                                  .format(event.startTime ?? DateTime(0))
+                                  .format(event?.startTime ?? DateTime(0))
                                   .toString(),
-                              text2: DateFormat.jm()
-                                      .format(event.startTime ?? DateTime(0))
-                                      .toString() +
-                                  ' to ' +
-                                  DateFormat.jm()
-                                      .format(event.endTime ?? DateTime(0))
-                                      .toString(),
+                              text2:
+                                  '${DateFormat.jm().format(event?.startTime ?? DateTime(0))} to ${DateFormat.jm().format(event?.endTime ?? DateTime(0))}',
                               icon: Icons.calendar_today_outlined),
                           // DetailCard(
                           //     text1: event.startTime
@@ -306,7 +315,7 @@ class _EventScreenState extends State<EventScreen> {
                           //         '${event.startTime.toString().split(' ')[1]} to ${event.endTime.toString().split(' ')[1]}',
                           //     icon: Icons.calendar_today_outlined),
                           DetailCard(
-                              text1: event.venue!,
+                              text1: event?.venue! ?? '',
                               text2: "On Campus",
                               icon: Icons.location_on_outlined),
 
@@ -348,14 +357,14 @@ class _EventScreenState extends State<EventScreen> {
                               ),
                             ),
                           ),
-                          DetailsWidget(text: event.longDescription!),
+                          DetailsWidget(text: event?.longDescription! ?? ''),
                           Container(
                             margin: const EdgeInsets.only(top: 29),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Gform(googleFormUrl: event.googleFormUrl),
-                                Facebook(fbPostUrl: event.fbPostUrl),
+                                Gform(googleFormUrl: event?.googleFormUrl),
+                                Facebook(fbPostUrl: event?.fbPostUrl),
                               ],
                             ),
                           ),
@@ -364,16 +373,16 @@ class _EventScreenState extends State<EventScreen> {
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
                             children: List.generate(
-                              event.contacts?.length ?? 0,
+                              event?.contacts?.length ?? 0,
                               (index) => Column(
                                 children: [
                                   Moderator(
-                                    text1: event.contacts?[index].name ?? '',
-                                    text2: event.contacts?[index].email ?? '',
+                                    text1: event?.contacts?[index].name ?? '',
+                                    text2: event?.contacts?[index].email ?? '',
                                     icon: Icons.person,
                                   ),
                                   DetailCard(
-                                    text1: event.contacts?[index].phone ?? '',
+                                    text1: event?.contacts?[index].phone ?? '',
                                     icon: Icons.call_outlined,
                                   ),
                                 ],
@@ -383,7 +392,7 @@ class _EventScreenState extends State<EventScreen> {
                           Container(
                             margin: const EdgeInsets.only(top: 12, bottom: 20),
                             child: Text(
-                              "published by ${event.contacts?[0].name ?? ''}",
+                              "published by ${event?.contacts?[0].name ?? ''}",
                               style: GoogleFonts.poppins(
                                 textStyle: TextStyle(
                                     color: const Color(0xff191C1D)
@@ -404,7 +413,7 @@ class _EventScreenState extends State<EventScreen> {
                           CachedNetworkImage(
                               height: MediaQuery.of(context).size.height * 0.5,
                               width: devicesize.width,
-                              imageUrl: event.posterUrl ?? '',
+                              imageUrl: event?.posterUrl ?? '',
                               fit: BoxFit.cover,
                               errorWidget: (context, url, _) =>
                                   const Center(child: Icon(Icons.error)),
