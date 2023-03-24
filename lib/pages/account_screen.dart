@@ -2,12 +2,10 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:efficacy_user/models/client_user_model.dart';
-import 'package:efficacy_user/models/user_model.dart';
 import 'package:efficacy_user/pages/edit_Account.dart';
 import 'package:efficacy_user/pages/about_us.dart';
 import 'package:efficacy_user/pages/google_sign_in.dart';
 import 'package:efficacy_user/widgets/divider.dart';
-import 'package:efficacy_user/widgets/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
@@ -140,7 +138,7 @@ class _AccountScreenState extends State<AccountScreen> {
               await auth.signOut();
               await GoogleSignIn().signOut();
               if (mounted) {
-                showSnackBar(context: context, text: 'Succesfully Logged Out');
+                Fluttertoast.showToast(msg: 'Succesfully Logged Out');
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => const SignIn()),

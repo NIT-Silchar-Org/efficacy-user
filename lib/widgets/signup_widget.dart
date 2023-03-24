@@ -227,8 +227,7 @@ class _SignUpState extends State<SignUp> {
                                             .toString() ??
                                         "",
                                     Email: emailcontroller.text,
-                                    phNumber:
-                                        '${phNumber.dialCode!} ${phNumber.phoneNumber!}',
+                                    phNumber: phNumber.phoneNumber!,
                                   );
                                   FirebaseFirestore.instance
                                       .collection('clientUser')

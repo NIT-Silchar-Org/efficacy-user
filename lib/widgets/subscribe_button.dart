@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:efficacy_user/themes/efficacy_usercolor.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Subscribe extends StatefulWidget {
   final String clubId;
@@ -43,7 +42,7 @@ class _SubscribeState extends State<Subscribe> {
               child: Container(
                 padding: const EdgeInsets.all(3),
                 height: 40,
-                width: MediaQuery.of(context).size.width*0.3,
+                width: MediaQuery.of(context).size.width * 0.3,
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: AppColorLight.primary,
@@ -130,7 +129,6 @@ class _SubscribeState extends State<Subscribe> {
               width: 1,
               decoration: const BoxDecoration(color: Colors.white),
             ),
-            
           ],
         );
       },
