@@ -156,7 +156,7 @@ class _PanelWidgetState extends State<PanelWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      physics: const NeverScrollableScrollPhysics(),
+      // physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.symmetric(horizontal: 20),
       controller: widget.controller,
       children: <Widget>[

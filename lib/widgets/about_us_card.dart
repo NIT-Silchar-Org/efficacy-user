@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class AboutUsCard extends StatelessWidget {
   final String name;
@@ -27,8 +28,8 @@ class AboutUsCard extends StatelessWidget {
           leading: CircleAvatar(
             backgroundColor: Colors.transparent,
             radius: 20,
-            child: Image.network(
-              imgUrl,
+            child: CachedNetworkImage(
+              imageUrl: imgUrl,
               width: 96,
               height: 96,
             ),
