@@ -178,6 +178,7 @@ class _FeedScreenState extends State<FeedScreen> {
       ),
       body: BaseView<FeedscreenProvider>(
         onModelReady: (model) async {
+          allEvent?.clear();
           try {
             await InternetAddress.lookup("firebasestorage.googleapis.com");
             await InternetAddress.lookup("efficacybackend.onrender.com");
@@ -185,22 +186,22 @@ class _FeedScreenState extends State<FeedScreen> {
             Fluttertoast.showToast(msg: "Couldn't connect to the internet");
             return;
           }
-          await FirebaseFirestore.instance
+          final res = await FirebaseFirestore.instance
               .collection('clientUser')
               .doc(FirebaseAuth.instance.currentUser!.uid)
-              .get()
-              .then((value) => {
-                    clubList =
-                        ClientUserModel.fromJson(value.data()!).subscriptions
-                  });
-          model.fetchAllEvents(context: context, clubList: clubList);
-          allEvent = model.allevents;
-          allEvent!.sort((a, b) {
-            var adate = a.startTime;
-            var bdate = b.startTime;
-            return adate!.compareTo(bdate!);
-          });
-          filterEvents();
+              .get();
+          clubList = ClientUserModel.fromJson(res.data()!).subscriptions ?? [];
+          clubList = clubList!.toSet().toList();
+          if (clubList?.isNotEmpty ?? false) {
+            await model.fetchAllEvents(context: context, clubList: clubList);
+            allEvent = model.allevents;
+            allEvent!.sort((a, b) {
+              var adate = a.startTime;
+              var bdate = b.startTime;
+              return bdate!.compareTo(adate!);
+            });
+            filterEvents();
+          }
         },
         builder: (_, model, __) {
           filterEvents();
