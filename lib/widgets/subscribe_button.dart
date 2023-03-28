@@ -43,7 +43,7 @@ class _SubscribeState extends State<Subscribe> {
               child: Container(
                 padding: const EdgeInsets.all(3),
                 height: 40,
-                width: MediaQuery.of(context).size.width*0.3,
+                width: MediaQuery.of(context).size.width * 0.3,
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: AppColorLight.primary,
@@ -130,7 +130,6 @@ class _SubscribeState extends State<Subscribe> {
               width: 1,
               decoration: const BoxDecoration(color: Colors.white),
             ),
-            
           ],
         );
       },

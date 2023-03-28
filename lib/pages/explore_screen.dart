@@ -186,7 +186,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
           allevent!.sort((a, b) {
             var adate = a.startTime;
             var bdate = b.startTime;
-            return adate!.compareTo(bdate!);
+            return bdate!.compareTo(adate!);
           });
           filterEvents();
         },
